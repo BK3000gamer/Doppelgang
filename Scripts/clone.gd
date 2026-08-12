@@ -38,7 +38,6 @@ func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
 func _physics_process(delta: float) -> void:
-	print(CurrentState)
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
 	jumpGravity = (-2.0 * jumpHeight) / pow(jumpTimeToPeak, 2.0) * -1.0

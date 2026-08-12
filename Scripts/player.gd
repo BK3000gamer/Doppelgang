@@ -32,8 +32,10 @@ var launchTimer: float = 0.0
 var launchDir: Vector2
 
 var playerNum: int = 1
-var group_1
-var group_2
+var group_1: Array
+var group_2: Array
+var clone_1: Array
+var clone_2: Array
 
 var checkpoint := Vector2.ZERO
 
@@ -71,6 +73,70 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_pressed("merge_2"):
 		if !group_1.is_empty() and !group_2.is_empty():
 			group_1[group_1.size() - 1].queue_free()
+	
+	#TP
+	if playerNum == 1:
+		if Input.is_action_just_pressed("tp_left_1"):
+			var distance = 1000.0
+			var target: CharacterBody2D
+			for i in range(clone_1.size()):
+				if !is_instance_valid(clone_1[i]):
+					continue
+				if clone_1[i].global_position.x < global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					distance = global_position.distance_to(clone_1[i].global_position)
+					target = clone_1[i]
+			if target != null and is_instance_valid(target):
+				var recordPos = global_position
+				global_position = target.global_position
+				target.global_position = recordPos
+			else:
+				target = null
+		elif Input.is_action_just_pressed("tp_right_1"):
+			var distance = 1000.0
+			var target: CharacterBody2D
+			for i in range(clone_1.size()):
+				if !is_instance_valid(clone_1[i]):
+					continue
+				if clone_1[i].global_position.x > global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					distance = global_position.distance_to(clone_1[i].global_position)
+					target = clone_1[i]
+			if target != null and is_instance_valid(target):
+				var recordPos = global_position
+				global_position = target.global_position
+				target.global_position = recordPos
+			else:
+				target = null
+	elif playerNum == 2:
+		if Input.is_action_just_pressed("tp_left_2"):
+			var distance = 1000.0
+			var target: CharacterBody2D
+			for i in range(clone_2.size()):
+				if !is_instance_valid(clone_2[i]):
+					continue
+				if clone_2[i].global_position.x < global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
+					distance = global_position.distance_to(clone_2[i].global_position)
+					target = clone_2[i]
+			if target != null and is_instance_valid(target):
+				var recordPos = global_position
+				global_position = target.global_position
+				target.global_position = recordPos
+			else:
+				target = null
+		elif Input.is_action_just_pressed("tp_right_2"):
+			var distance = 1000.0
+			var target: CharacterBody2D
+			for i in range(clone_2.size()):
+				if !is_instance_valid(clone_2[i]):
+					continue
+				if clone_2[i].global_position.x > global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
+					distance = global_position.distance_to(clone_2[i].global_position)
+					target = clone_2[i]
+			if target != null and is_instance_valid(target):
+				var recordPos = global_position
+				global_position = target.global_position
+				target.global_position = recordPos
+			else:
+				target = null
 	
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
@@ -239,8 +305,22 @@ func _change_state(NewState: States) -> void:
 			var clone: CharacterBody2D
 			if (playerNum == 1 and group_2.is_empty()) or (playerNum == 2 and group_1.is_empty()):
 				clone = playerScene.instantiate()
+				if playerNum == 1:
+					clone.playerNum = 2
+					clone.add_to_group("player_2")
+				elif playerNum == 2:
+					clone.playerNum = 1
+					clone.add_to_group("player_1")
+				clone.name = "Player" + str(clone.playerNum)
 			elif (playerNum == 1 and group_2.size() > 0) or (playerNum == 2 and group_1.size() > 0):
 				clone = cloneScene.instantiate()
+				if playerNum == 1:
+					clone.playerNum = 1
+					clone.add_to_group("player_2")
+					clone.name = "Clone" + str(playerNum) + "-" + str(group_1.size())
+				elif playerNum == 2:
+					clone.playerNum = 2
+					clone.add_to_group("player_1")
 			
 			clone.global_position = global_position
 			parent.add_child(clone)
@@ -262,12 +342,14 @@ func _change_state(NewState: States) -> void:
 				clone._change_state(States.Launch)
 				clone.move_and_slide()
 			
-			if playerNum == 1:
-				clone.playerNum = 2
-				clone.add_to_group("player_2")
-			elif playerNum == 2:
-				clone.playerNum = 1
-				clone.add_to_group("player_1")
+			group_1 = get_tree().get_nodes_in_group("player_1")
+			group_2 = get_tree().get_nodes_in_group("player_2")
+			for i in range(1, group_1.size()):
+				if !clone_2.has(group_1[i]):
+					clone_2.append(group_1[i])
+			for i in range(1, group_2.size()):
+				if !clone_1.has(group_2[i]):
+					clone_1.append(group_2[i])
 
 func _respawn() -> void:
 	global_position = checkpoint

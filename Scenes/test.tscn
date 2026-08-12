@@ -8,7 +8,7 @@ size = Vector2(640, 128)
 
 [node name="Test" type="Node2D" unique_id=739549817]
 
-[node name="Player" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("1_8od7v")]
+[node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("1_8od7v")]
 position = Vector2(104, 328)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=869092821]
