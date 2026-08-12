@@ -16,9 +16,9 @@ class_name Player
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
-@onready var Raycast := $RayCast2D
 @onready var parent := get_parent()
-@onready var cloneScene := load("res://Scenes/player.tscn")
+@onready var playerScene := load("res://Scenes/player.tscn")
+@onready var cloneScene := load("res://Scenes/clone.tscn")
 
 var InputDir := Vector2.ZERO
 var Speed: float
@@ -64,16 +64,13 @@ func _physics_process(delta: float) -> void:
 		InputDir.y = Input.get_action_strength("down_2") - Input.get_action_strength("up_2")
 		InputDir = InputDir.normalized()
 	
-	if InputDir != Vector2.ZERO:
-		Raycast.global_rotation = InputDir.angle() + PI/2
-	else:
-		Raycast.global_rotation = 0.0
-	
 	#Merge
-	if Input.is_action_just_pressed("merge_1") and !group_2.is_empty():
-		group_2[0].queue_free()
-	elif Input.is_action_just_pressed("merge_2") and !group_1.is_empty():
-		group_1[0].queue_free()
+	if Input.is_action_just_pressed("merge_1"):
+		if !group_1.is_empty() and !group_2.is_empty():
+			group_2[group_2.size() - 1].queue_free()
+	elif Input.is_action_just_pressed("merge_2"):
+		if !group_1.is_empty() and !group_2.is_empty():
+			group_1[group_1.size() - 1].queue_free()
 	
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
@@ -155,10 +152,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
 		States.Launch:
-			print(velocity)
 			if launchTimer < 0.0:
-				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
-				velocity.y = max(velocity.y, -maxSpeed)
+				velocity.x = clamp(velocity.x, -baseSpeed, baseSpeed)
+				velocity.y = max(velocity.y, -baseSpeed)
 				_change_state(States.Fall)
 			
 			if (Input.is_action_just_pressed("jump_1") and playerNum == 1) or (Input.is_action_just_pressed("jump_2") and playerNum == 2):
@@ -197,9 +193,9 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	if playerNum == 1:
-		Sprite.modulate = Color.SKY_BLUE
+		Sprite.modulate = Color.NAVY_BLUE
 	elif playerNum == 2:
-		Sprite.modulate = Color.INDIAN_RED
+		Sprite.modulate = Color.DARK_RED
 	
 	group_1 = get_tree().get_nodes_in_group("player_1")
 	group_2 = get_tree().get_nodes_in_group("player_2")
@@ -240,18 +236,38 @@ func _change_state(NewState: States) -> void:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 		States.Clone:
-			if group_1.is_empty() or group_2.is_empty():
-				var clone = cloneScene.instantiate()
-				clone.global_position = global_position
-				clone.launchDir = InputDir
-				parent.add_child(clone)
+			var clone: CharacterBody2D
+			if (playerNum == 1 and group_2.is_empty()) or (playerNum == 2 and group_1.is_empty()):
+				clone = playerScene.instantiate()
+			elif (playerNum == 1 and group_2.size() > 0) or (playerNum == 2 and group_1.size() > 0):
+				clone = cloneScene.instantiate()
+			
+			clone.global_position = global_position
+			parent.add_child(clone)
+			
+			if (InputDir.y > 0.0 and is_on_floor()):
+				launchDir = Vector2(InputDir.x, -InputDir.y)
+				_change_state(States.Launch)
+			elif (Input.is_action_pressed("jump_1") and playerNum == 1) or (Input.is_action_pressed("jump_2") and playerNum == 2):
+				if InputDir == Vector2.ZERO:
+					launchDir = Vector2.UP
+				else:
+					launchDir = InputDir
+				_change_state(States.Launch)
+			else:
+				if InputDir == Vector2.ZERO:
+					clone.launchDir = Vector2.UP
+				else:
+					clone.launchDir = InputDir
 				clone._change_state(States.Launch)
-				if playerNum == 1:
-					clone.playerNum = 2
-					clone.add_to_group("player_2")
-				elif playerNum == 2:
-					clone.playerNum = 1
-					clone.add_to_group("player_1")
+				clone.move_and_slide()
+			
+			if playerNum == 1:
+				clone.playerNum = 2
+				clone.add_to_group("player_2")
+			elif playerNum == 2:
+				clone.playerNum = 1
+				clone.add_to_group("player_1")
 
 func _respawn() -> void:
 	global_position = checkpoint

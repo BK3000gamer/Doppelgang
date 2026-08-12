@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://do4qtrr6np4n5"]
+
+[ext_resource type="Script" uid="uid://cnya5lpt8qwyn" path="res://Scripts/clone.gd" id="1_50nb2"]
+
+[sub_resource type="Gradient" id="Gradient_v0iea"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mm0d5"]
+gradient = SubResource("Gradient_v0iea")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50nb2"]
+size = Vector2(32, 32)
+
+[node name="Clone" type="CharacterBody2D" unique_id=1897861543]
+collision_mask = 2
+script = ExtResource("1_50nb2")
+baseSpeed = 149.9999999999952
+deceleration = 0.9749999999999688
+jumpHeight = 63.999999999997954
+jumpTimeToPeak = 0.249999999999992
+jumpTimeToDecent = 0.1999999999999936
+launchTime = 0.0749999999999976
+launchSpeed = 999.999999999968
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=561660019]
+scale = Vector2(0.125, 32)
+texture = SubResource("GradientTexture1D_mm0d5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2003127166]
+shape = SubResource("RectangleShape2D_50nb2")
