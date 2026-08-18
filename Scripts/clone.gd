@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Clone
 
 @export_category("Stats")
-@export var baseSpeed: float
+@export var maxSpeed: float
 @export var deceleration: float
 @export var jumpHeight: float
 @export var jumpTimeToPeak: float
@@ -29,7 +29,8 @@ enum States {
 	Jump,
 	Fall,
 	Launch,
-	Clone
+	Clone,
+	Disabled
 }
 
 var CurrentState = States.Idle
@@ -59,12 +60,12 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Idle)
 		States.Launch:
 			if launchTimer < 0.0:
-				velocity.x = clamp(velocity.x, -baseSpeed, baseSpeed)
-				velocity.y = max(velocity.y, -baseSpeed)
+				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
+				velocity.y = max(velocity.y, -maxSpeed)
 				_change_state(States.Fall)
-			
-			if is_on_floor():
-				_change_state(States.Idle)
+				
+				if is_on_floor():
+					_change_state(States.Idle)
 	
 	move_and_slide()
 

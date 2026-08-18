@@ -47,7 +47,8 @@ enum States {
 	Jump,
 	Fall,
 	Launch,
-	Clone
+	Clone,
+	Disabled
 }
 
 var CurrentState = States.Idle
@@ -67,10 +68,10 @@ func _physics_process(delta: float) -> void:
 		InputDir = InputDir.normalized()
 	
 	#Merge
-	if Input.is_action_just_pressed("merge_1"):
+	if Input.is_action_just_pressed("merge_1") and playerNum == 1 and CurrentState != States.Disabled:
 		if !group_1.is_empty() and !group_2.is_empty():
 			group_2[group_2.size() - 1].queue_free()
-	elif Input.is_action_just_pressed("merge_2"):
+	elif Input.is_action_just_pressed("merge_2") and playerNum == 2 and CurrentState != States.Disabled:
 		if !group_1.is_empty() and !group_2.is_empty():
 			group_1[group_1.size() - 1].queue_free()
 	
@@ -192,6 +193,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 		States.Fall:
 			Momentum *= deceleration
+			
 			if InputDir.x == 0.0:
 				velocity.x = Momentum
 			else:
@@ -219,9 +221,14 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 		States.Launch:
 			if launchTimer < 0.0:
-				velocity.x = clamp(velocity.x, -baseSpeed, baseSpeed)
-				velocity.y = max(velocity.y, -baseSpeed)
+				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
+				velocity.y = max(velocity.y, -maxSpeed)
 				_change_state(States.Fall)
+				if is_on_floor():
+					if InputDir.x == 0.0:
+						_change_state(States.Idle)
+					else:
+						_change_state(States.Run)
 			
 			if (Input.is_action_just_pressed("jump_1") and playerNum == 1) or (Input.is_action_just_pressed("jump_2") and playerNum == 2):
 				if coyoteTimer > 0:
@@ -234,11 +241,6 @@ func _physics_process(delta: float) -> void:
 				if jumpBufferTimer > 0:
 					jumpBufferTimer = 0.0
 					_change_state(States.Jump)
-				else:
-					if InputDir.x == 0.0:
-						_change_state(States.Idle)
-					else:
-						_change_state(States.Run)
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
@@ -254,6 +256,8 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Idle)
 				else:
 					_change_state(States.Run)
+		States.Disabled:
+			velocity.y += _get_gravity() * delta
 	
 	move_and_slide()
 
@@ -350,6 +354,8 @@ func _change_state(NewState: States) -> void:
 			for i in range(1, group_2.size()):
 				if !clone_1.has(group_2[i]):
 					clone_1.append(group_2[i])
+		States.Disabled:
+			velocity = Vector2.ZERO
 
 func _respawn() -> void:
 	global_position = checkpoint

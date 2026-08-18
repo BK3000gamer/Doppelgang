@@ -12,11 +12,10 @@ gradient = SubResource("Gradient_v0iea")
 size = Vector2(32, 32)
 
 [node name="Clone" type="CharacterBody2D" unique_id=1897861543]
-collision_layer = 3
 collision_mask = 2
 script = ExtResource("1_50nb2")
-baseSpeed = 149.9999999999952
-deceleration = 0.9749999999999688
+maxSpeed = 299.9999999999904
+deceleration = 0.9899999999999683
 jumpHeight = 63.999999999997954
 jumpTimeToPeak = 0.249999999999992
 jumpTimeToDecent = 0.1999999999999936
@@ -29,14 +28,3 @@ texture = SubResource("GradientTexture1D_mm0d5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2003127166]
 shape = SubResource("RectangleShape2D_50nb2")
-one_way_collision = true
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=203235417]
-shape = SubResource("RectangleShape2D_50nb2")
-one_way_collision = true
-one_way_collision_direction = Vector2(1, 0)
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=1094304946]
-shape = SubResource("RectangleShape2D_50nb2")
-one_way_collision = true
-one_way_collision_direction = Vector2(-1, 0)
