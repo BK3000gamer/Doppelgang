@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://c7ems4ky3aqga"]
+
+[ext_resource type="PackedScene" uid="uid://vjft40w36esj" path="res://Scenes/room.tscn" id="1_k5f4k"]
+[ext_resource type="Texture2D" uid="uid://d4a5245braww4" path="res://icon.svg" id="2_6phgx"]
+[ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Scenes/player.tscn" id="3_6phgx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81xng"]
+size = Vector2(640, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f350"]
+size = Vector2(640, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6phgx"]
+size = Vector2(1088, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqkje"]
+size = Vector2(1088, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8c0lf"]
+size = Vector2(640, 1016)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_754fn"]
+size = Vector2(256, 672)
+
+[node name="Level" type="Node2D" unique_id=1337777124]
+
+[node name="Room1" parent="." unique_id=1542920506 instance=ExtResource("1_k5f4k")]
+
+[node name="CollisionShape2D" parent="Room1" index="0" unique_id=299480520]
+shape = SubResource("RectangleShape2D_81xng")
+
+[node name="Checkpoint1" parent="Room1" index="1" unique_id=1564129974]
+position = Vector2(-240, 116)
+
+[node name="Checkpoint2" parent="Room1" index="2" unique_id=417000062]
+position = Vector2(-176, 116)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room1" unique_id=1093544702]
+position = Vector2(0, 196)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Room1/StaticBody2D" unique_id=93546024]
+scale = Vector2(5, 1)
+texture = ExtResource("2_6phgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room1/StaticBody2D" unique_id=601055922]
+shape = SubResource("RectangleShape2D_0f350")
+
+[node name="Room2" parent="." unique_id=1227487037 instance=ExtResource("1_k5f4k")]
+position = Vector2(640, 0)
+roomType = 1
+
+[node name="CollisionShape2D" parent="Room2" index="0" unique_id=299480520]
+position = Vector2(224, 0)
+shape = SubResource("RectangleShape2D_6phgx")
+
+[node name="Checkpoint1" parent="Room2" index="1" unique_id=1564129974]
+position = Vector2(-240, 116)
+
+[node name="Checkpoint2" parent="Room2" index="2" unique_id=417000062]
+position = Vector2(-176, 116)
+
+[node name="CameraCheckpoint2" parent="Room2" index="4" unique_id=92530121]
+position = Vector2(448, 0)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room2" unique_id=2111544783]
+position = Vector2(0, 196)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Room2/StaticBody2D" unique_id=1603336995]
+position = Vector2(224.00002, 0)
+scale = Vector2(8.5, 1)
+texture = ExtResource("2_6phgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room2/StaticBody2D" unique_id=2025916103]
+position = Vector2(224, 0)
+shape = SubResource("RectangleShape2D_wqkje")
+
+[node name="Room3" parent="." unique_id=380648783 instance=ExtResource("1_k5f4k")]
+position = Vector2(1728, 0)
+roomType = 2
+
+[node name="CollisionShape2D" parent="Room3" index="0" unique_id=299480520]
+position = Vector2(0, 328)
+shape = SubResource("RectangleShape2D_8c0lf")
+
+[node name="Checkpoint1" parent="Room3" index="1" unique_id=1564129974]
+position = Vector2(-240, 116)
+
+[node name="Checkpoint2" parent="Room3" index="2" unique_id=417000062]
+position = Vector2(-176, 116)
+
+[node name="CameraCheckpoint2" parent="Room3" index="4" unique_id=92530121]
+position = Vector2(-3.2014214e-09, 656)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Room3" unique_id=1929131218]
+position = Vector2(-192, 196)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Room3/StaticBody2D" unique_id=1445255649]
+position = Vector2(0, 272)
+scale = Vector2(2.0000005, 5.25)
+texture = ExtResource("2_6phgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room3/StaticBody2D" unique_id=695928345]
+position = Vector2(0, 272)
+shape = SubResource("RectangleShape2D_754fn")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Room3" unique_id=1224354979]
+position = Vector2(0, 868)
+collision_layer = 2
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Room3/StaticBody2D2" unique_id=1482017925]
+scale = Vector2(5, 1)
+texture = ExtResource("2_6phgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Room3/StaticBody2D2" unique_id=664005592]
+shape = SubResource("RectangleShape2D_0f350")
+
+[node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("3_6phgx")]
+position = Vector2(-240, 116)
+
+[editable path="Room1"]
+[editable path="Room2"]
+[editable path="Room3"]

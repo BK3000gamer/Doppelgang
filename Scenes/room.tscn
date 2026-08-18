@@ -7,13 +7,15 @@ script = ExtResource("1_mbine")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299480520]
 
-[node name="Checkpoint 1" type="Marker2D" parent="." unique_id=1564129974]
+[node name="Checkpoint1" type="Marker2D" parent="." unique_id=1564129974]
 position = Vector2(80, 328)
 
-[node name="Checkpoint 2" type="Marker2D" parent="." unique_id=417000062]
+[node name="Checkpoint2" type="Marker2D" parent="." unique_id=417000062]
 position = Vector2(144, 328)
 
-[node name="Camera Checkpoint" type="Marker2D" parent="." unique_id=771365507]
+[node name="CameraCheckpoint1" type="Marker2D" parent="." unique_id=771365507]
+
+[node name="CameraCheckpoint2" type="Marker2D" parent="." unique_id=92530121]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

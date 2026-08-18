@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dsvdxvvhy2iwj"]
+
+[ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Scripts/camera_controller.gd" id="1_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Scenes/level.tscn" id="2_wrm1d"]
+
+[node name="Game" type="Node2D" unique_id=739549817]
+
+[node name="CameraController" type="Node2D" parent="." unique_id=388081032]
+script = ExtResource("1_qxrlw")
+
+[node name="NormalViewport" type="SubViewportContainer" parent="." unique_id=70257945]
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="SubViewport" type="SubViewport" parent="NormalViewport" unique_id=1789592896]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Level" parent="NormalViewport/SubViewport" unique_id=1337777124 instance=ExtResource("2_wrm1d")]
+
+[node name="Camera2D" type="Camera2D" parent="NormalViewport/SubViewport" unique_id=1584254544]
+limit_enabled = false
+
+[node name="HorizontalViewport" type="HBoxContainer" parent="." unique_id=1188303144]
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_constants/separation = 0
+
+[node name="SubViewportContainer1" type="SubViewportContainer" parent="HorizontalViewport" unique_id=1532531813]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer1" unique_id=1073894326]
+handle_input_locally = false
+size = Vector2i(320, 360)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer1/SubViewport" unique_id=1582717937]
+limit_enabled = false
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="HorizontalViewport" unique_id=346335202]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer2" unique_id=913816880]
+handle_input_locally = false
+size = Vector2i(320, 360)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer2/SubViewport" unique_id=337165461]
+limit_enabled = false
+
+[node name="VerticalViewport" type="VBoxContainer" parent="." unique_id=58535937]
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_constants/separation = 0
+
+[node name="SubViewportContainer1" type="SubViewportContainer" parent="VerticalViewport" unique_id=1543249038]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer1" unique_id=1594889065]
+handle_input_locally = false
+size = Vector2i(640, 180)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer1/SubViewport" unique_id=880919578]
+limit_enabled = false
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="VerticalViewport" unique_id=1351778111]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer2" unique_id=287266535]
+handle_input_locally = false
+size = Vector2i(640, 180)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=1764857025]
+limit_enabled = false

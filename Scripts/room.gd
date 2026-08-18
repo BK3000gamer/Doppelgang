@@ -3,15 +3,19 @@ class_name Room
 
 @export var roomType: roomTypes
 
-@onready var checkpoint1 := $"Checkpoint 1"
-@onready var checkpoint2 := $"Checkpoint 2"
-@onready var cameraCheckpoint := $"Camera Checkpoint"
-@onready var camera := $"/root/Test/Camera"
+@onready var checkpoint1 := $"Checkpoint1"
+@onready var checkpoint2 := $"Checkpoint2"
+@onready var cameraCheckpoint1 := $"CameraCheckpoint1"
+@onready var cameraCheckpoint2 := $"CameraCheckpoint2"
+@onready var cameraController := $"/root/Game/CameraController"
+@onready var camera := $"/root/Game/NormalViewport/SubViewport/Camera2D"
 
 var player_1: Player
 var player_2: Player
 var group_1: Array
 var group_2: Array
+
+var activated: bool = false
 
 enum roomTypes {
 	Normal,
@@ -24,12 +28,7 @@ func _process(_delta: float) -> void:
 	group_2 = get_tree().get_nodes_in_group("player_2")
 
 func _activate_room() -> void:
-	#move camera
-	var currentPos = camera.global_position
-	var tween := get_tree().create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_QUART)
-	tween.tween_property(camera, "global_position", cameraCheckpoint.global_position, 0.2).from(currentPos)
+	cameraController.currentRoom = self
 	
 	#set checkpoint
 	if player_1:
@@ -40,6 +39,11 @@ func _activate_room() -> void:
 		if player_2.CurrentState == player_2.States.Disabled:
 			player_2._change_state(player_2.States.Idle)
 		player_2.checkpoint = checkpoint2.global_position
+	
+	#move camera
+	if !activated:
+		cameraController.tween_camera()
+		activated = true
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:

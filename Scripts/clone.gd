@@ -33,7 +33,7 @@ enum States {
 	Disabled
 }
 
-var CurrentState = States.Idle
+var CurrentState := States.Idle
 
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
