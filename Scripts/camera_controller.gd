@@ -56,23 +56,23 @@ func _physics_process(_delta: float) -> void:
 				viewType = viewTypes.Normal
 			currentRoom.roomTypes.Horizontal:
 				if player_1 and player_2:
-					if player_1.global_position.x > (currentRoom.cameraCheckpoint2.global_position.x + 160):
-						if abs(player_2.global_position.x - (currentRoom.cameraCheckpoint2.global_position.x + 160)) <= 320:
+					if player_1.global_position.x > (currentRoom.cameraCheckpoint_2.global_position.x + 160):
+						if abs(player_2.global_position.x - (currentRoom.cameraCheckpoint_2.global_position.x + 160)) <= 320:
 							viewType = viewTypes.SingleHorizontal
 						else:
 							viewType = viewTypes.Horizontal
-					elif player_2.global_position.x > (currentRoom.cameraCheckpoint2.global_position.x + 160):
-						if abs(player_1.global_position.x - (currentRoom.cameraCheckpoint2.global_position.x + 160)) <= 320:
+					elif player_2.global_position.x > (currentRoom.cameraCheckpoint_2.global_position.x + 160):
+						if abs(player_1.global_position.x - (currentRoom.cameraCheckpoint_2.global_position.x + 160)) <= 320:
 							viewType = viewTypes.SingleHorizontal
 						else:
 							viewType = viewTypes.Horizontal
-					elif player_1.global_position.x < (currentRoom.cameraCheckpoint1.global_position.x - 160):
-						if abs(player_2.global_position.x - (currentRoom.cameraCheckpoint1.global_position.x - 160)) <= 320:
+					elif player_1.global_position.x < (currentRoom.cameraCheckpoint_1.global_position.x - 160):
+						if abs(player_2.global_position.x - (currentRoom.cameraCheckpoint_1.global_position.x - 160)) <= 320:
 							viewType = viewTypes.SingleHorizontal
 						else:
 							viewType = viewTypes.Horizontal
-					elif player_2.global_position.x < (currentRoom.cameraCheckpoint1.global_position.x - 160):
-						if abs(player_1.global_position.x - (currentRoom.cameraCheckpoint1.global_position.x - 160)) <= 320:
+					elif player_2.global_position.x < (currentRoom.cameraCheckpoint_1.global_position.x - 160):
+						if abs(player_1.global_position.x - (currentRoom.cameraCheckpoint_1.global_position.x - 160)) <= 320:
 							viewType = viewTypes.SingleHorizontal
 						else:
 							viewType = viewTypes.Horizontal
@@ -84,23 +84,23 @@ func _physics_process(_delta: float) -> void:
 					viewType = viewTypes.SingleHorizontal
 			currentRoom.roomTypes.Vertical:
 				if player_1 and player_2:
-					if player_1.global_position.y > (currentRoom.cameraCheckpoint2.global_position.y + 90):
-						if abs(player_2.global_position.y - (currentRoom.cameraCheckpoint2.global_position.y + 90)) <= 180:
+					if player_1.global_position.y > (currentRoom.cameraCheckpoint_2.global_position.y + 90):
+						if abs(player_2.global_position.y - (currentRoom.cameraCheckpoint_2.global_position.y + 90)) <= 180:
 							viewType = viewTypes.SingleVertical
 						else:
 							viewType = viewTypes.Vertical
-					elif player_2.global_position.y > (currentRoom.cameraCheckpoint2.global_position.y + 90):
-						if abs(player_1.global_position.y - (currentRoom.cameraCheckpoint2.global_position.y + 90)) <= 180:
+					elif player_2.global_position.y > (currentRoom.cameraCheckpoint_2.global_position.y + 90):
+						if abs(player_1.global_position.y - (currentRoom.cameraCheckpoint_2.global_position.y + 90)) <= 180:
 							viewType = viewTypes.SingleVertical
 						else:
 							viewType = viewTypes.Vertical
-					elif player_1.global_position.y < (currentRoom.cameraCheckpoint1.global_position.y - 90):
-						if abs(player_2.global_position.y - (currentRoom.cameraCheckpoint1.global_position.y - 90)) <= 180:
+					elif player_1.global_position.y < (currentRoom.cameraCheckpoint_1.global_position.y - 90):
+						if abs(player_2.global_position.y - (currentRoom.cameraCheckpoint_1.global_position.y - 90)) <= 180:
 							viewType = viewTypes.SingleVertical
 						else:
 							viewType = viewTypes.Vertical
-					elif player_2.global_position.y < (currentRoom.cameraCheckpoint1.global_position.y - 90):
-						if abs(player_1.global_position.y - (currentRoom.cameraCheckpoint1.global_position.y - 90)) <= 180:
+					elif player_2.global_position.y < (currentRoom.cameraCheckpoint_1.global_position.y - 90):
+						if abs(player_1.global_position.y - (currentRoom.cameraCheckpoint_1.global_position.y - 90)) <= 180:
 							viewType = viewTypes.SingleVertical
 						else:
 							viewType = viewTypes.Vertical
@@ -120,14 +120,14 @@ func _physics_process(_delta: float) -> void:
 				views["horizontal"].viewport.visible = false
 				views["vertical"].viewport.visible = false
 				
-				views["normal"].camera.global_position = currentRoom.cameraCheckpoint1.global_position
+				views["normal"].camera.global_position = currentRoom.cameraCheckpoint_1.global_position
 			viewTypes.Horizontal:
 				views["normal"].viewport.visible = false
 				views["horizontal"].viewport.visible = true
 				views["vertical"].viewport.visible = false
 				
-				views["horizontal"].camera_1.global_position.y = currentRoom.cameraCheckpoint1.global_position.y
-				views["horizontal"].camera_2.global_position.y = currentRoom.cameraCheckpoint1.global_position.y
+				views["horizontal"].camera_1.global_position.y = currentRoom.cameraCheckpoint_1.global_position.y
+				views["horizontal"].camera_2.global_position.y = currentRoom.cameraCheckpoint_1.global_position.y
 				if player_1.global_position.x < player_2.global_position.x:
 					views["horizontal"].camera_1.global_position.x = player_1.global_position.x
 					views["horizontal"].camera_2.global_position.x = player_2.global_position.x
@@ -135,14 +135,14 @@ func _physics_process(_delta: float) -> void:
 					views["horizontal"].camera_1.global_position.x = player_2.global_position.x
 					views["horizontal"].camera_2.global_position.x = player_1.global_position.x
 				
-				views["horizontal"].camera_1.global_position.x = clamp(views["horizontal"].camera_1.global_position.x, currentRoom.cameraCheckpoint1.global_position.x - 160, currentRoom.cameraCheckpoint2.global_position.x + 160)
-				views["horizontal"].camera_2.global_position.x = clamp(views["horizontal"].camera_2.global_position.x, currentRoom.cameraCheckpoint1.global_position.x - 160, currentRoom.cameraCheckpoint2.global_position.x + 160)
+				views["horizontal"].camera_1.global_position.x = clamp(views["horizontal"].camera_1.global_position.x, currentRoom.cameraCheckpoint_1.global_position.x - 160, currentRoom.cameraCheckpoint_2.global_position.x + 160)
+				views["horizontal"].camera_2.global_position.x = clamp(views["horizontal"].camera_2.global_position.x, currentRoom.cameraCheckpoint_1.global_position.x - 160, currentRoom.cameraCheckpoint_2.global_position.x + 160)
 			viewTypes.SingleHorizontal:
 				views["normal"].viewport.visible = true
 				views["horizontal"].viewport.visible = false
 				views["vertical"].viewport.visible = false
 				
-				views["normal"].camera.global_position.y = currentRoom.cameraCheckpoint1.global_position.y
+				views["normal"].camera.global_position.y = currentRoom.cameraCheckpoint_1.global_position.y
 				if player_1 and player_2:
 					views["normal"].camera.global_position.x = (player_1.global_position.x + player_2.global_position.x) / 2.0
 				elif player_1:
@@ -150,14 +150,14 @@ func _physics_process(_delta: float) -> void:
 				elif player_2:
 					views["normal"].camera.global_position.x = player_2.global_position.x
 				
-				views["normal"].camera.global_position.x = clamp(views["normal"].camera.global_position.x, currentRoom.cameraCheckpoint1.global_position.x, currentRoom.cameraCheckpoint2.global_position.x)
+				views["normal"].camera.global_position.x = clamp(views["normal"].camera.global_position.x, currentRoom.cameraCheckpoint_1.global_position.x, currentRoom.cameraCheckpoint_2.global_position.x)
 			viewTypes.Vertical:
 				views["normal"].viewport.visible = false
 				views["horizontal"].viewport.visible = false
 				views["vertical"].viewport.visible = true
 				
-				views["vertical"].camera_1.global_position.x = currentRoom.cameraCheckpoint1.global_position.x
-				views["vertical"].camera_2.global_position.x = currentRoom.cameraCheckpoint1.global_position.x
+				views["vertical"].camera_1.global_position.x = currentRoom.cameraCheckpoint_1.global_position.x
+				views["vertical"].camera_2.global_position.x = currentRoom.cameraCheckpoint_1.global_position.x
 				if player_1.global_position.y < player_2.global_position.y:
 					views["vertical"].camera_1.global_position.y = player_1.global_position.y
 					views["vertical"].camera_2.global_position.y = player_2.global_position.y
@@ -165,14 +165,14 @@ func _physics_process(_delta: float) -> void:
 					views["vertical"].camera_1.global_position.y = player_2.global_position.y
 					views["vertical"].camera_2.global_position.y = player_1.global_position.y
 				
-				views["vertical"].camera_1.global_position.y = clamp(views["vertical"].camera_1.global_position.y, currentRoom.cameraCheckpoint1.global_position.y - 90, currentRoom.cameraCheckpoint2.global_position.y + 90)
-				views["vertical"].camera_2.global_position.y = clamp(views["vertical"].camera_2.global_position.y, currentRoom.cameraCheckpoint1.global_position.y - 90, currentRoom.cameraCheckpoint2.global_position.y + 90)
+				views["vertical"].camera_1.global_position.y = clamp(views["vertical"].camera_1.global_position.y, currentRoom.cameraCheckpoint_1.global_position.y - 90, currentRoom.cameraCheckpoint_2.global_position.y + 90)
+				views["vertical"].camera_2.global_position.y = clamp(views["vertical"].camera_2.global_position.y, currentRoom.cameraCheckpoint_1.global_position.y - 90, currentRoom.cameraCheckpoint_2.global_position.y + 90)
 			viewTypes.SingleVertical:
 				views["normal"].viewport.visible = true
 				views["horizontal"].viewport.visible = false
 				views["vertical"].viewport.visible = false
 				
-				views["normal"].camera.global_position.x = currentRoom.cameraCheckpoint1.global_position.x
+				views["normal"].camera.global_position.x = currentRoom.cameraCheckpoint_1.global_position.x
 				if player_1 and player_2:
 					views["normal"].camera.global_position.y = (player_1.global_position.y + player_2.global_position.y) / 2.0
 				elif player_1:
@@ -180,7 +180,7 @@ func _physics_process(_delta: float) -> void:
 				elif player_2:
 					views["normal"].camera.global_position.y = player_2.global_position.y
 				
-				views["normal"].camera.global_position.y = clamp(views["normal"].camera.global_position.y, currentRoom.cameraCheckpoint1.global_position.y, currentRoom.cameraCheckpoint2.global_position.y)
+				views["normal"].camera.global_position.y = clamp(views["normal"].camera.global_position.y, currentRoom.cameraCheckpoint_1.global_position.y, currentRoom.cameraCheckpoint_2.global_position.y)
 
 func tween_camera() -> void:
 	transitioning = true
@@ -188,7 +188,7 @@ func tween_camera() -> void:
 	if tween:
 		tween.kill()
 	
-	var target = currentRoom.cameraCheckpoint1.global_position
+	var target = currentRoom.cameraCheckpoint_1.global_position
 	
 	if player_1 and player_2:
 		target.x = (player_1.global_position.x + player_2.global_position.x) / 2.0
@@ -207,14 +207,14 @@ func tween_camera() -> void:
 	
 	target.x = clamp(
 		target.x,
-		currentRoom.cameraCheckpoint1.global_position.x,
-		currentRoom.cameraCheckpoint2.global_position.x
+		currentRoom.cameraCheckpoint_1.global_position.x,
+		currentRoom.cameraCheckpoint_2.global_position.x
 		)
 	
 	target.y = clamp(
 		target.y,
-		currentRoom.cameraCheckpoint1.global_position.y,
-		currentRoom.cameraCheckpoint2.global_position.y
+		currentRoom.cameraCheckpoint_1.global_position.y,
+		currentRoom.cameraCheckpoint_2.global_position.y
 		)
 	
 	var currentPos = views["normal"].camera.global_position
