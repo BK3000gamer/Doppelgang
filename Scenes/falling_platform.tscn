@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://brmmgi5qnoluf"]
+
+[ext_resource type="Script" uid="uid://bxdhkjfqon0r0" path="res://Scripts/falling_platform.gd" id="1_0msxf"]
+[ext_resource type="Texture2D" uid="uid://d4a5245braww4" path="res://icon.svg" id="2_lx48v"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0tybl"]
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+4:2/0 = 0
+6:2/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:2/0 = 0
+3:1/0 = 0
+3:0/0 = 0
+0:5/0 = 0
+2:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vmp38"]
+sources/0 = SubResource("TileSetAtlasSource_0tybl")
+
+[node name="Falling Platform" type="CharacterBody2D" unique_id=1755113744]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_0msxf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=172925066]
+visible = false
+texture = ExtResource("2_lx48v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=37473589]
+
+[node name="Trigger" type="Area2D" parent="." unique_id=863608141]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger" unique_id=1723454800]
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1538671230]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1172451498]
+
+[node name="TileMap" type="TileMap" parent="." unique_id=16074701]
+z_index = 8
+position = Vector2(0, 4)
+tile_set = SubResource("TileSet_vmp38")
+format = 2
+
+[connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

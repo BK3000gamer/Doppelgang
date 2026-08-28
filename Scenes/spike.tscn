@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://br58bq2w5rfyp"]
+
+[ext_resource type="Script" uid="uid://cl3oi3e6aqpaj" path="res://Scripts/spike.gd" id="1_cdj5a"]
+
+[sub_resource type="Gradient" id="Gradient_v0iea"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cdj5a"]
+gradient = SubResource("Gradient_v0iea")
+
+[node name="Spike" type="Area2D" unique_id=851912490]
+script = ExtResource("1_cdj5a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=742742285]
+visible = false
+scale = Vector2(0.125, 32)
+texture = SubResource("GradientTexture1D_cdj5a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=904686796]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

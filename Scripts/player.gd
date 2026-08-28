@@ -13,6 +13,7 @@ class_name Player
 @export var coyoteTime: float
 @export var launchTime: float
 @export var launchSpeed: float
+@export var cloneNum: int
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -53,6 +54,8 @@ enum States {
 
 var CurrentState = States.Idle
 
+var carrier: CharacterBody2D
+
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
@@ -84,6 +87,8 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_1[i]):
 					continue
 				if clone_1[i].global_position.x < global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_1[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_1[i].global_position)
 					target = clone_1[i]
 			if target != null and is_instance_valid(target):
@@ -99,6 +104,8 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_1[i]):
 					continue
 				if clone_1[i].global_position.x > global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_1[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_1[i].global_position)
 					target = clone_1[i]
 			if target != null and is_instance_valid(target):
@@ -115,6 +122,8 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_2[i]):
 					continue
 				if clone_2[i].global_position.x < global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_2[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_2[i].global_position)
 					target = clone_2[i]
 			if target != null and is_instance_valid(target):
@@ -130,6 +139,8 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_2[i]):
 					continue
 				if clone_2[i].global_position.x > global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_2[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_2[i].global_position)
 					target = clone_2[i]
 			if target != null and is_instance_valid(target):
@@ -259,6 +270,8 @@ func _physics_process(delta: float) -> void:
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
 	
+	if carrier != null:
+		velocity += carrier.velocity
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -269,6 +282,14 @@ func _process(delta: float) -> void:
 	
 	group_1 = get_tree().get_nodes_in_group("player_1")
 	group_2 = get_tree().get_nodes_in_group("player_2")
+	clone_1 = []
+	clone_2 = []
+	for i in range(1, group_1.size()):
+		if !clone_2.has(group_1[i]):
+			clone_2.append(group_1[i])
+	for i in range(1, group_2.size()):
+		if !clone_1.has(group_2[i]):
+			clone_1.append(group_2[i])
 	
 	jumpBufferTimer -= delta
 	coyoteTimer -= delta
@@ -307,45 +328,7 @@ func _change_state(NewState: States) -> void:
 			launchTimer = launchTime
 		States.Clone:
 			var clone: CharacterBody2D
-			if (playerNum == 1 and group_2.is_empty()) or (playerNum == 2 and group_1.is_empty()):
-				clone = playerScene.instantiate()
-				if playerNum == 1:
-					clone.playerNum = 2
-					clone.add_to_group("player_2")
-				elif playerNum == 2:
-					clone.playerNum = 1
-					clone.add_to_group("player_1")
-				clone.name = "Player" + str(clone.playerNum)
-			elif (playerNum == 1 and group_2.size() > 0) or (playerNum == 2 and group_1.size() > 0):
-				clone = cloneScene.instantiate()
-				if playerNum == 1:
-					clone.playerNum = 1
-					clone.add_to_group("player_2")
-					clone.name = "Clone" + str(playerNum) + "-" + str(group_1.size())
-				elif playerNum == 2:
-					clone.playerNum = 2
-					clone.add_to_group("player_1")
-			
-			clone.global_position = global_position
-			parent.add_child(clone)
-			
-			if (InputDir.y > 0.0 and is_on_floor()):
-				launchDir = Vector2(InputDir.x, -InputDir.y)
-				_change_state(States.Launch)
-			elif (Input.is_action_pressed("jump_1") and playerNum == 1) or (Input.is_action_pressed("jump_2") and playerNum == 2):
-				if InputDir == Vector2.ZERO:
-					launchDir = Vector2.UP
-				else:
-					launchDir = InputDir
-				_change_state(States.Launch)
-			else:
-				if InputDir == Vector2.ZERO:
-					clone.launchDir = Vector2.UP
-				else:
-					clone.launchDir = InputDir
-				clone._change_state(States.Launch)
-				clone.move_and_slide()
-			
+				
 			group_1 = get_tree().get_nodes_in_group("player_1")
 			group_2 = get_tree().get_nodes_in_group("player_2")
 			for i in range(1, group_1.size()):
@@ -354,6 +337,53 @@ func _change_state(NewState: States) -> void:
 			for i in range(1, group_2.size()):
 				if !clone_1.has(group_2[i]):
 					clone_1.append(group_2[i])
+			
+			if playerNum == 1:
+				if group_2.is_empty():
+					clone = playerScene.instantiate()
+					clone.playerNum = 2
+					clone.add_to_group("player_2")
+					clone.name = "Player" + str(clone.playerNum)
+				elif group_2.size() > 0:
+					if clone_1.size() < cloneNum:
+						clone = cloneScene.instantiate()
+						clone.playerNum = 1
+						clone.add_to_group("player_2")
+						clone.name = "Clone" + str(playerNum) + "-" + str(clone_1.size() + 1)
+			elif playerNum == 2:
+				if group_1.is_empty():
+					clone = playerScene.instantiate()
+					clone.playerNum = 1
+					clone.add_to_group("player_1")
+					clone.name = "Player" + str(clone.playerNum)
+				elif group_1.size() > 0:
+					if clone_2.size() < cloneNum:
+						clone = cloneScene.instantiate()
+						clone.playerNum = 2
+						clone.add_to_group("player_1")
+						clone.name = "Clone" + str(playerNum) + "-" + str(clone_2.size() + 1)
+			
+			if clone != null:
+				set_collision_mask_value(1, false)
+				clone.global_position = global_position
+				parent.add_child(clone)
+				
+				if (InputDir.y > 0.0 and is_on_floor()):
+					launchDir = Vector2(InputDir.x, -InputDir.y)
+					_change_state(States.Launch)
+				elif (Input.is_action_pressed("jump_1") and playerNum == 1) or (Input.is_action_pressed("jump_2") and playerNum == 2):
+					if InputDir == Vector2.ZERO:
+						launchDir = Vector2.UP
+					else:
+						launchDir = InputDir
+					_change_state(States.Launch)
+				else:
+					if InputDir == Vector2.ZERO:
+						clone.launchDir = Vector2.UP
+					else:
+						clone.launchDir = InputDir
+					clone._change_state(States.Launch)
+					clone.move_and_slide()
 		States.Disabled:
 			velocity = Vector2.ZERO
 
@@ -361,3 +391,16 @@ func _respawn() -> void:
 	global_position = checkpoint
 	_change_state(States.Idle)
 	respawn.emit()
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player or body is Clone:
+		if body != self:
+			body.carrier = self
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body.carrier:
+		body.carrier = null
+
+func _on_area_2d_2_body_exited(body: Node2D) -> void:
+	if body is Player or body is Clone:
+			body.set_collision_mask_value(1, true)

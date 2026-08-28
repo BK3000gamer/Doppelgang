@@ -8,7 +8,13 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_cvnsp"]
 gradient = SubResource("Gradient_v0iea")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e7par"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iuy3d"]
+size = Vector2(32, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57t6j"]
 size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" unique_id=504046361]
@@ -19,18 +25,34 @@ baseSpeed = 149.9999999999952
 maxSpeed = 299.9999999999904
 acceleration = 1.1999999999999615
 deceleration = 0.9899999999999683
-jumpHeight = 63.999999999997954
+jumpHeight = 47.999999999998465
 jumpTimeToPeak = 0.249999999999992
 jumpTimeToDecent = 0.1999999999999936
 jumpBufferTime = 0.0999999999999968
 coyoteTime = 0.0999999999999968
-launchTime = 0.0749999999999976
+launchTime = 0.0499999999999984
 launchSpeed = 999.999999999968
+cloneNum = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]
 scale = Vector2(0.125, 32)
 texture = SubResource("GradientTexture1D_cvnsp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839479529]
-shape = SubResource("RectangleShape2D_e7par")
-one_way_collision = true
+shape = SubResource("RectangleShape2D_v0iea")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1255301810]
+position = Vector2(0, -18)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1488717505]
+shape = SubResource("RectangleShape2D_iuy3d")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=52948162]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1188278009]
+shape = SubResource("RectangleShape2D_57t6j")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
+[connection signal="body_exited" from="Area2D2" to="." method="_on_area_2d_2_body_exited"]

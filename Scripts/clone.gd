@@ -35,6 +35,8 @@ enum States {
 
 var CurrentState := States.Idle
 
+var carrier: CharacterBody2D
+
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
@@ -67,6 +69,8 @@ func _physics_process(delta: float) -> void:
 				if is_on_floor():
 					_change_state(States.Idle)
 	
+	if carrier != null:
+		velocity += carrier.velocity
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -88,3 +92,12 @@ func _change_state(NewState: States) -> void:
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player or body is Clone:
+		if body != self:
+			body.carrier = self
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body.carrier:
+		body.carrier = null
