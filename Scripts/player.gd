@@ -14,6 +14,9 @@ class_name Player
 @export var launchTime: float
 @export var launchSpeed: float
 @export var cloneNum: int
+@export var wallClimbSpeed: float
+@export var wallSlideSpeed: float
+@export var wallClimbTime: float
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -31,6 +34,7 @@ var jumpBufferTimer: float = 0.0
 var coyoteTimer: float = 0.0
 var launchTimer: float = 0.0
 var launchDir: Vector2
+var wallClimbTimer: float = 0.0
 
 var playerNum: int = 1
 var group_1: Array
@@ -38,9 +42,10 @@ var group_2: Array
 var clone_1: Array
 var clone_2: Array
 
-var checkpoint := Vector2.ZERO
+var cloned: bool = false
+var climbed: bool = false
 
-signal respawn
+var checkpoint := Vector2.ZERO
 
 enum States {
 	Idle,
@@ -49,7 +54,8 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
-	Disabled
+	Disabled,
+	Climb
 }
 
 var CurrentState = States.Idle
@@ -171,6 +177,10 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
+			
+			if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and playerNum == 2):
+				if is_on_wall() and !climbed:
+					_change_state(States.Climb)
 		States.Run:
 			Speed *= acceleration
 			velocity.x = InputDir.x * min(Speed, maxSpeed)
@@ -186,9 +196,18 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
+			
+			if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and playerNum == 2):
+				if is_on_wall() and !climbed:
+					_change_state(States.Climb)
 		States.Jump:
 			Speed *= acceleration
-			velocity.x = InputDir.x * min(Speed, maxSpeed)
+			Momentum *= deceleration
+			
+			if InputDir.x == 0.0:
+				velocity.x = Momentum
+			else:
+				velocity.x = InputDir.x * min(Speed, maxSpeed)
 			velocity.y += _get_gravity() * delta
 			
 			if velocity.y < 0.0:
@@ -202,13 +221,18 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
+			
+			if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and playerNum == 2):
+				if is_on_wall() and !climbed:
+					_change_state(States.Climb)
 		States.Fall:
+			Speed *= acceleration
 			Momentum *= deceleration
 			
 			if InputDir.x == 0.0:
 				velocity.x = Momentum
 			else:
-				velocity.x = InputDir.x * abs(Momentum)
+				velocity.x = InputDir.x * min(Speed, maxSpeed)
 			velocity.y += _get_gravity() * delta
 			
 			if (Input.is_action_just_pressed("jump_1") and playerNum == 1) or (Input.is_action_just_pressed("jump_2") and playerNum == 2):
@@ -230,6 +254,10 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
+			
+			if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and playerNum == 2):
+				if is_on_wall() and !climbed:
+					_change_state(States.Climb)
 		States.Launch:
 			if launchTimer < 0.0:
 				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
@@ -255,6 +283,10 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
+			
+			if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and playerNum == 2):
+				if is_on_wall():
+					_change_state(States.Climb)
 		States.Clone:
 			velocity.y += _get_gravity() * delta
 			await get_tree().create_timer(0.2).timeout
@@ -269,6 +301,27 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Run)
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
+		States.Climb:
+			if InputDir.y == 0:
+				velocity.y = 0.0
+			elif InputDir.y < 0:
+				velocity.y = -wallClimbSpeed
+			elif InputDir.y > 0:
+				velocity.y = wallSlideSpeed
+			
+			if wallClimbTimer < 0.0:
+				_change_state(States.Fall)
+			
+			if is_on_wall():
+				if (Input.is_action_pressed("climb_1") and playerNum == 1) or (Input.is_action_pressed("climb_2") and  playerNum == 2):
+					pass
+				else:
+					_change_state(States.Fall)
+			else:
+				_change_state(States.Fall)
+			
+			if (Input.is_action_just_pressed("jump_1") and playerNum == 1) or (Input.is_action_just_pressed("jump_2") and playerNum == 2):
+				_change_state(States.Jump)
 	
 	if carrier != null:
 		velocity += carrier.velocity
@@ -294,6 +347,7 @@ func _process(delta: float) -> void:
 	jumpBufferTimer -= delta
 	coyoteTimer -= delta
 	launchTimer -= delta
+	wallClimbTimer -= delta
 	if InputDir.x < 0:
 		Sprite.flip_h = true
 	else:
@@ -315,11 +369,17 @@ func _change_state(NewState: States) -> void:
 		States.Idle:
 			jumpHeight = recordJumpHeight
 			velocity = Vector2.ZERO
+			cloned = false
+			climbed = false
 		States.Run:
 			jumpHeight = recordJumpHeight
 			Speed = baseSpeed
+			cloned = false
+			climbed = false
 		States.Jump:
 			velocity.y = jumpVelocity
+			velocity.x += 40 * InputDir.x
+			Momentum = velocity.x
 		States.Fall:
 			coyoteTimer = coyoteTime
 			Momentum = velocity.x
@@ -328,7 +388,7 @@ func _change_state(NewState: States) -> void:
 			launchTimer = launchTime
 		States.Clone:
 			var clone: CharacterBody2D
-				
+			
 			group_1 = get_tree().get_nodes_in_group("player_1")
 			group_2 = get_tree().get_nodes_in_group("player_2")
 			for i in range(1, group_1.size()):
@@ -338,32 +398,34 @@ func _change_state(NewState: States) -> void:
 				if !clone_1.has(group_2[i]):
 					clone_1.append(group_2[i])
 			
-			if playerNum == 1:
-				if group_2.is_empty():
-					clone = playerScene.instantiate()
-					clone.playerNum = 2
-					clone.add_to_group("player_2")
-					clone.name = "Player" + str(clone.playerNum)
-				elif group_2.size() > 0:
-					if clone_1.size() < cloneNum:
-						clone = cloneScene.instantiate()
-						clone.playerNum = 1
-						clone.add_to_group("player_2")
-						clone.name = "Clone" + str(playerNum) + "-" + str(clone_1.size() + 1)
-			elif playerNum == 2:
-				if group_1.is_empty():
-					clone = playerScene.instantiate()
-					clone.playerNum = 1
-					clone.add_to_group("player_1")
-					clone.name = "Player" + str(clone.playerNum)
-				elif group_1.size() > 0:
-					if clone_2.size() < cloneNum:
-						clone = cloneScene.instantiate()
+			if !cloned:
+				if playerNum == 1:
+					if group_2.is_empty():
+						clone = playerScene.instantiate()
 						clone.playerNum = 2
+						clone.add_to_group("player_2")
+						clone.name = "Player" + str(clone.playerNum)
+					elif group_2.size() > 0:
+						if clone_1.size() < cloneNum:
+							clone = cloneScene.instantiate()
+							clone.playerNum = 1
+							clone.add_to_group("player_2")
+							clone.name = "Clone" + str(playerNum) + "-" + str(clone_1.size() + 1)
+				elif playerNum == 2:
+					if group_1.is_empty():
+						clone = playerScene.instantiate()
+						clone.playerNum = 1
 						clone.add_to_group("player_1")
-						clone.name = "Clone" + str(playerNum) + "-" + str(clone_2.size() + 1)
+						clone.name = "Player" + str(clone.playerNum)
+					elif group_1.size() > 0:
+						if clone_2.size() < cloneNum:
+							clone = cloneScene.instantiate()
+							clone.playerNum = 2
+							clone.add_to_group("player_1")
+							clone.name = "Clone" + str(playerNum) + "-" + str(clone_2.size() + 1)
 			
 			if clone != null:
+				cloned = true
 				set_collision_mask_value(1, false)
 				clone.global_position = global_position
 				parent.add_child(clone)
@@ -386,11 +448,13 @@ func _change_state(NewState: States) -> void:
 					clone.move_and_slide()
 		States.Disabled:
 			velocity = Vector2.ZERO
+		States.Climb:
+			wallClimbTimer = wallClimbTime
+			climbed = true
 
 func _respawn() -> void:
 	global_position = checkpoint
 	_change_state(States.Idle)
-	respawn.emit()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player or body is Clone:

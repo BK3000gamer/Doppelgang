@@ -52,7 +52,7 @@ texture = ExtResource("2_lx48v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Trigger" unique_id=1723454800]
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1538671230]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1538671230 groups=["environment"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1172451498]
 

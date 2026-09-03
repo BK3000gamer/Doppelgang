@@ -3,7 +3,6 @@ class_name Clone
 
 @export_category("Stats")
 @export var maxSpeed: float
-@export var deceleration: float
 @export var jumpHeight: float
 @export var jumpTimeToPeak: float
 @export var jumpTimeToDecent: float
@@ -14,7 +13,7 @@ class_name Clone
 @onready var Sprite := $Sprite2D
 @onready var parent := get_parent()
 
-var Momentum: float
+var dir: int
 var jumpVelocity: float
 var jumpGravity: float
 var fallGravity: float
@@ -30,7 +29,8 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
-	Disabled
+	Disabled,
+	Climb
 }
 
 var CurrentState := States.Idle
@@ -54,8 +54,7 @@ func _physics_process(delta: float) -> void:
 			if !is_on_floor():
 				_change_state(States.Fall)
 		States.Fall:
-			Momentum *= deceleration
-			velocity.x = Momentum
+			velocity.x = maxSpeed * dir
 			velocity.y += _get_gravity() * delta
 			
 			if is_on_floor():
@@ -88,7 +87,12 @@ func _change_state(NewState: States) -> void:
 			jumpHeight = recordJumpHeight
 			velocity = Vector2.ZERO
 		States.Fall:
-			Momentum = velocity.x
+			if velocity.x == 0:
+				dir = 0
+			elif velocity.x > 0:
+				dir = 1
+			elif velocity.x <0:
+				dir = -1
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime

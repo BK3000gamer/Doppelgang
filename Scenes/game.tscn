@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Scripts/camera_controller.gd" id="1_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Scenes/level.tscn" id="2_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
 
 [node name="Game" type="Node2D" unique_id=739549817]
 
@@ -75,3 +76,9 @@ render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=1764857025]
 limit_enabled = false
+
+[node name="InGameUI" parent="." unique_id=934436243 instance=ExtResource("3_wrm1d")]
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 320.0
+offset_bottom = 180.0

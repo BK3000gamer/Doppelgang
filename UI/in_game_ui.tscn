@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cu3l6tsmnjtcn"]
+
+[ext_resource type="Script" uid="uid://3kt4h8qts3iv" path="res://UI/pop_up_menu.gd" id="1_r4raw"]
+[ext_resource type="Script" uid="uid://dfuio0pf5nta" path="res://UI/reset_menu.gd" id="2_trw78"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e7par"]
+
+[node name="InGameUI" type="Control" unique_id=934436243]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopUpMenu" type="MarginContainer" parent="." unique_id=1875664918]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4raw")
+
+[node name="ResetMenu" type="MarginContainer" parent="PopUpMenu" unique_id=1880089491]
+visible = false
+custom_minimum_size = Vector2(160, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("2_trw78")
+
+[node name="ColorRect" type="ColorRect" parent="PopUpMenu/ResetMenu" unique_id=1883303559]
+layout_mode = 2
+color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="PopUpMenu/ResetMenu" unique_id=851015672]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopUpMenu/ResetMenu/MarginContainer" unique_id=863955251]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=1535556380]
+layout_mode = 2
+text = "Restart Level?"
+label_settings = SubResource("LabelSettings_e7par")
+horizontal_alignment = 1
+
+[node name="Reset" type="Button" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=949304030]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 12
+text = "Yes"
+
+[node name="ResetMenuClose" type="Button" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=574689596]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 12
+text = "No"
+
+[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu" method="_on_reset_pressed"]
+[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu/ResetMenu" method="_on_reset_pressed"]
+[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/ResetMenuClose" to="PopUpMenu" method="_on_reset_menu_close_pressed"]
