@@ -17,6 +17,12 @@ size = Vector2(32, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57t6j"]
 size = Vector2(32, 32)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v0iea"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_cvnsp"]
+a = Vector2(-16, -16)
+b = Vector2(16, -16)
+
 [node name="Player" type="CharacterBody2D" unique_id=504046361]
 z_index = 1
 collision_mask = 2
@@ -47,10 +53,18 @@ position = Vector2(0, -18)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1488717505]
 shape = SubResource("RectangleShape2D_iuy3d")
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Area2D" unique_id=613943804]
+
 [node name="Area2D2" type="Area2D" parent="." unique_id=52948162]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1188278009]
 shape = SubResource("RectangleShape2D_57t6j")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1087446332]
+physics_material_override = SubResource("PhysicsMaterial_v0iea")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=494976235]
+shape = SubResource("SegmentShape2D_cvnsp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

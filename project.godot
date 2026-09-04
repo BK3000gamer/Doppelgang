@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Dopplegang"
 run/main_scene="uid://dsvdxvvhy2iwj"
-config/features=PackedStringArray("4.7", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
@@ -22,6 +22,10 @@ window/size/viewport_height=360
 window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[dotnet]
+
+project/assembly_name="Dopplegang"
 
 [global_group]
 
