@@ -60,10 +60,10 @@ shape = SubResource("RectangleShape2D_iuy3d")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1188278009]
 shape = SubResource("RectangleShape2D_57t6j")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1087446332]
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=709720441]
 physics_material_override = SubResource("PhysicsMaterial_v0iea")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=494976235]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D" unique_id=494976235]
 shape = SubResource("SegmentShape2D_cvnsp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

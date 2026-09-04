@@ -56,6 +56,9 @@ var CurrentState = States.Idle
 
 var carrier: CharacterBody2D
 
+func _ready() -> void:
+	$remoteTransform2D.remote_path = 
+
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
