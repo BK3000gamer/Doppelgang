@@ -19,6 +19,7 @@ size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="Level" parent="NormalViewport/SubViewport" unique_id=1337777124 instance=ExtResource("2_wrm1d")]
+position = Vector2(-3.2014214e-09, -3.2014214e-09)
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/SubViewport" unique_id=1584254544]
 limit_enabled = false

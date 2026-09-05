@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://t3xvcyby7x7e"]
+
+[ext_resource type="Script" uid="uid://bgkhoq3wbcqac" path="res://UI/control_select_menu.gd" id="1_eljr4"]
+
+[node name="ControlSelectMenu" type="MarginContainer" unique_id=1952445153]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eljr4")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1103709487]
+layout_mode = 2
+color = Color(0.20392157, 0.20392157, 0.20392157, 1)

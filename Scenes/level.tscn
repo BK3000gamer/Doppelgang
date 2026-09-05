@@ -44,7 +44,7 @@ size = Vector2(64, 32)
 shape = SubResource("RectangleShape2D_81xng")
 
 [node name="Checkpoint1-1" parent="Room1" index="1" unique_id=1564129974]
-position = Vector2(-304, 100)
+position = Vector2(-288, 100)
 
 [node name="Checkpoint2-1" parent="Room1" index="2" unique_id=417000062]
 position = Vector2(-240, 100)
@@ -271,7 +271,11 @@ texture = ExtResource("2_6phgx")
 shape = SubResource("RectangleShape2D_pa6b8")
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("3_6phgx")]
+position = Vector2(-288, 100)
+
+[node name="Player2" parent="." unique_id=644745631 groups=["player_2"] instance=ExtResource("3_6phgx")]
 position = Vector2(-240, 100)
+playerNum = 1
 
 [editable path="Room1"]
 [editable path="Room2"]

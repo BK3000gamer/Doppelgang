@@ -73,9 +73,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	if playerNum == 1:
+	if playerNum == -1:
 		Sprite.modulate = Color.SKY_BLUE
-	elif playerNum == 2:
+	elif playerNum == 1:
 		Sprite.modulate = Color.INDIAN_RED
 	
 	launchTimer -= delta

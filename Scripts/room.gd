@@ -18,6 +18,8 @@ var player_1: Player
 var player_2: Player
 var group_1: Array
 var group_2: Array
+var clone_1: Array
+var clone_2: Array
 
 var activated: bool = false
 
@@ -30,6 +32,14 @@ enum roomTypes {
 func _process(_delta: float) -> void:
 	group_1 = get_tree().get_nodes_in_group("player_1")
 	group_2 = get_tree().get_nodes_in_group("player_2")
+	clone_1 = []
+	clone_2 = []
+	for i in range(1, group_1.size()):
+		if !clone_2.has(group_1[i]):
+			clone_2.append(group_1[i])
+	for i in range(1, group_2.size()):
+		if !clone_1.has(group_2[i]):
+			clone_1.append(group_2[i])
 	
 	if !player_1 and !player_2:
 		activated = false
@@ -74,8 +84,12 @@ func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
 		if body.playerNum == 1:
 			player_1 = null
+			for i in range(clone_1.size()):
+				clone_1[i].queue_free()
 		elif body.playerNum == 2:
 			player_2 = null
+			for i in range(clone_2.size()):
+				clone_2[i].queue_free()
 
 func get_closest_checkpoint(player: Player,checkpoint1: Marker2D, checkpoint2: Marker2D) -> Marker2D:
 	return checkpoint1 if player.global_position.distance_to(checkpoint1.global_position) < player.global_position.distance_to(checkpoint2.global_position) else checkpoint2
