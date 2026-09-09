@@ -25,6 +25,7 @@ position = Vector2(-3.2014214e-09, -3.2014214e-09)
 limit_enabled = false
 
 [node name="HorizontalViewport" type="HBoxContainer" parent="." unique_id=1188303144]
+visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
@@ -35,7 +36,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer1" unique_id=1073894326]
 handle_input_locally = false
 size = Vector2i(320, 360)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer1/SubViewport" unique_id=1582717937]
 limit_enabled = false
@@ -46,12 +47,13 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer2" unique_id=913816880]
 handle_input_locally = false
 size = Vector2i(320, 360)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer2/SubViewport" unique_id=337165461]
 limit_enabled = false
 
 [node name="VerticalViewport" type="VBoxContainer" parent="." unique_id=58535937]
+visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
@@ -62,7 +64,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer1" unique_id=1594889065]
 handle_input_locally = false
 size = Vector2i(640, 180)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer1/SubViewport" unique_id=880919578]
 limit_enabled = false
@@ -73,7 +75,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer2" unique_id=287266535]
 handle_input_locally = false
 size = Vector2i(640, 180)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=1764857025]
 limit_enabled = false

@@ -76,15 +76,6 @@ func _physics_process(delta: float) -> void:
 	InputDir = Vector2(sign(InputDir.x), sign(InputDir.y))
 	InputDir = InputDir.normalized()
 	
-	#if playerNum == 1:
-		#InputDir.x = Input.get_action_strength("right_1") - Input.get_action_strength("left_1")
-		#InputDir.y = Input.get_action_strength("down_1") - Input.get_action_strength("up_1")
-		#InputDir = InputDir.normalized()
-	#elif playerNum == 2:
-		#InputDir.x = Input.get_action_strength("right_2") - Input.get_action_strength("left_2")
-		#InputDir.y = Input.get_action_strength("down_2") - Input.get_action_strength("up_2")
-		#InputDir = InputDir.normalized()
-	
 	#Merge
 	if Input.is_action_just_pressed("merge_%d" % deviceNum) and CurrentState != States.Disabled:
 		if !group_1.is_empty() and !group_2.is_empty():
@@ -94,47 +85,47 @@ func _physics_process(delta: float) -> void:
 				group_1[group_1.size() - 1].queue_free()
 	
 	#TP
-	if playerNum == 1:
-		if Input.is_action_just_pressed("tp_left_%d" % deviceNum):
-			var distance = 1000.0
-			var target: CharacterBody2D
-			if playerNum == 1:
-				for i in range(clone_1.size()):
-					if !is_instance_valid(clone_1[i]):
-						continue
-					if clone_1[i].global_position.x < global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
-						set_collision_mask_value(1, false)
-						clone_1[i].set_collision_mask_value(1, false)
-						distance = global_position.distance_to(clone_1[i].global_position)
-						target = clone_1[i]
-			elif playerNum == 2:
-				for i in range(clone_2.size()):
-					if !is_instance_valid(clone_2[i]):
-						continue
-					if clone_2[i].global_position.x < global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
-						set_collision_mask_value(1, false)
-						clone_2[i].set_collision_mask_value(1, false)
-						distance = global_position.distance_to(clone_2[i].global_position)
-						target = clone_2[i]
-			if target != null and is_instance_valid(target):
-				var recordPos = global_position
-				global_position = target.global_position
-				target.global_position = recordPos
-			else:
-				target = null
-		elif Input.is_action_just_pressed("tp_right_%d" % deviceNum):
-			var distance = 1000.0
-			var target: CharacterBody2D
-			if playerNum == 1:
-				for i in range(clone_1.size()):
-					if !is_instance_valid(clone_1[i]):
-						continue
-					if clone_1[i].global_position.x > global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
-						set_collision_mask_value(1, false)
-						clone_1[i].set_collision_mask_value(1, false)
-						distance = global_position.distance_to(clone_1[i].global_position)
-						target = clone_1[i]
-			elif playerNum == 2:for i in range(clone_2.size()):
+	if Input.is_action_just_pressed("tp_left_%d" % deviceNum):
+		var distance = 1000.0
+		var target: CharacterBody2D
+		if playerNum == -1:
+			for i in range(clone_1.size()):
+				if !is_instance_valid(clone_1[i]):
+					continue
+				if clone_1[i].global_position.x < global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_1[i].set_collision_mask_value(1, false)
+					distance = global_position.distance_to(clone_1[i].global_position)
+					target = clone_1[i]
+		elif playerNum == 1:
+			for i in range(clone_2.size()):
+				if !is_instance_valid(clone_2[i]):
+					continue
+				if clone_2[i].global_position.x < global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_2[i].set_collision_mask_value(1, false)
+					distance = global_position.distance_to(clone_2[i].global_position)
+					target = clone_2[i]
+		if target != null and is_instance_valid(target):
+			var recordPos = global_position
+			global_position = target.global_position
+			target.global_position = recordPos
+		else:
+			target = null
+	elif Input.is_action_just_pressed("tp_right_%d" % deviceNum):
+		var distance = 1000.0
+		var target: CharacterBody2D
+		if playerNum == -1:
+			for i in range(clone_1.size()):
+				if !is_instance_valid(clone_1[i]):
+					continue
+				if clone_1[i].global_position.x > global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
+					set_collision_mask_value(1, false)
+					clone_1[i].set_collision_mask_value(1, false)
+					distance = global_position.distance_to(clone_1[i].global_position)
+					target = clone_1[i]
+		elif playerNum == 1:
+			for i in range(clone_2.size()):
 				if !is_instance_valid(clone_2[i]):
 					continue
 				if clone_2[i].global_position.x > global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
@@ -142,12 +133,12 @@ func _physics_process(delta: float) -> void:
 					clone_2[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_2[i].global_position)
 					target = clone_2[i]
-			if target != null and is_instance_valid(target):
-				var recordPos = global_position
-				global_position = target.global_position
-				target.global_position = recordPos
-			else:
-				target = null
+		if target != null and is_instance_valid(target):
+			var recordPos = global_position
+			global_position = target.global_position
+			target.global_position = recordPos
+		else:
+			target = null
 	
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
@@ -312,6 +303,9 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Fall)
 			else:
 				_change_state(States.Fall)
+			
+			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+				_change_state(States.Clone)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_change_state(States.Jump)

@@ -64,13 +64,13 @@ func _activate_room() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		if body.playerNum == 1:
+		if body.playerNum == -1:
 			if body.checkpoint:
 				checkpoint_1 = get_closest_checkpoint(body, checkpoint_1_1, checkpoint_1_2)
 				body._change_state(body.States.Disabled)
 				body.global_position = checkpoint_1.global_position
 			player_1 = body
-		elif body.playerNum == 2:
+		elif body.playerNum == 1:
 			if body.checkpoint:
 				checkpoint_2 = get_closest_checkpoint(body, checkpoint_2_1, checkpoint_2_2)
 				body._change_state(body.States.Disabled)

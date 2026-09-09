@@ -10,6 +10,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_eljr4")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1103709487]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1513658870]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer" unique_id=1103709487]
+custom_minimum_size = Vector2(320, 360)
+layout_mode = 2
+color = Color(0.20392157, 0.20392157, 0.20392157, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer" unique_id=1067531680]
+custom_minimum_size = Vector2(320, 360)
 layout_mode = 2
 color = Color(0.20392157, 0.20392157, 0.20392157, 1)
