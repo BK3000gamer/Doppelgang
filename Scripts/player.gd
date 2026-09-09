@@ -20,6 +20,7 @@ class_name Player
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Scenes/player.tscn")
 @onready var cloneScene := load("res://Scenes/clone.tscn")
+@onready var clone = Clone
 
 var InputDir := Vector2.ZERO
 var Speed: float
@@ -56,8 +57,8 @@ var CurrentState = States.Idle
 
 var carrier: CharacterBody2D
 
-func _ready() -> void:
-	$remoteTransform2D.remote_path = 
+#func _ready() -> void:
+#	$remoteTransform2D.remote_path = clone
 
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
@@ -394,16 +395,3 @@ func _respawn() -> void:
 	global_position = checkpoint
 	_change_state(States.Idle)
 	respawn.emit()
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is Player or body is Clone:
-		if body != self:
-			body.carrier = self
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.carrier:
-		body.carrier = null
-
-func _on_area_2d_2_body_exited(body: Node2D) -> void:
-	if body is Player or body is Clone:
-			body.set_collision_mask_value(1, true)

@@ -54,6 +54,7 @@ position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Area2D" unique_id=613943804]
+remote_path = NodePath("../..")
 
 [node name="Area2D2" type="Area2D" parent="." unique_id=52948162]
 
@@ -61,10 +62,12 @@ shape = SubResource("RectangleShape2D_iuy3d")
 shape = SubResource("RectangleShape2D_57t6j")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=709720441]
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_v0iea")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D" unique_id=494976235]
 shape = SubResource("SegmentShape2D_cvnsp")
+one_way_collision = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

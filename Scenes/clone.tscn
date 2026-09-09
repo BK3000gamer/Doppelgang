@@ -14,6 +14,12 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50nb2"]
 size = Vector2(32, 4)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_50nb2"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_eeqi5"]
+a = Vector2(-16, -16)
+b = Vector2(16, -16)
+
 [node name="Clone" type="CharacterBody2D" unique_id=1897861543]
 collision_mask = 2
 script = ExtResource("1_50nb2")
@@ -39,6 +45,15 @@ position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_50nb2")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Area2D" unique_id=1288552237]
+remote_path = NodePath("../..")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=878014040]
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_50nb2")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D" unique_id=1486522339]
+shape = SubResource("SegmentShape2D_eeqi5")
+one_way_collision = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

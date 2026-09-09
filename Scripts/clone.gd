@@ -92,12 +92,3 @@ func _change_state(NewState: States) -> void:
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is Player or body is Clone:
-		if body != self:
-			body.carrier = self
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.carrier:
-		body.carrier = null
