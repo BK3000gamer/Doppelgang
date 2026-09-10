@@ -8,6 +8,7 @@ class_name Clone
 @export var jumpTimeToDecent: float
 @export var launchTime: float
 @export var launchSpeed: float
+@export var recallSpeed: float
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -20,7 +21,10 @@ var fallGravity: float
 var launchTimer: float = 0.0
 var launchDir: Vector2
 
-var playerNum: int = 1
+var player_1: Player
+var player_2: Player
+
+var playerNum: int = -1
 
 enum States {
 	Idle,
@@ -30,7 +34,9 @@ enum States {
 	Launch,
 	Clone,
 	Disabled,
-	Climb
+	Climb,
+	Merge,
+	Recall
 }
 
 var CurrentState := States.Idle
@@ -67,6 +73,13 @@ func _physics_process(delta: float) -> void:
 				
 				if is_on_floor():
 					_change_state(States.Idle)
+		States.Recall:
+			if playerNum == -1:
+				position = position.move_toward(player_1.position, recallSpeed * delta)
+			elif playerNum == 1:
+				position = position.move_toward(player_2.position, recallSpeed * delta)
+			await get_tree().create_timer(0.1).timeout
+			queue_free()
 	
 	if carrier != null:
 		velocity += carrier.velocity
@@ -77,6 +90,9 @@ func _process(delta: float) -> void:
 		Sprite.modulate = Color.SKY_BLUE
 	elif playerNum == 1:
 		Sprite.modulate = Color.INDIAN_RED
+	
+	player_1 = get_tree().get_first_node_in_group("player_1")
+	player_2 = get_tree().get_first_node_in_group("player_2")
 	
 	launchTimer -= delta
 

@@ -23,6 +23,7 @@ jumpTimeToPeak = 0.249999999999992
 jumpTimeToDecent = 0.1999999999999936
 launchTime = 0.0749999999999976
 launchSpeed = 999.999999999968
+recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=561660019]
 scale = Vector2(0.125, 32)

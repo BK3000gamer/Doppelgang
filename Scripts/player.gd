@@ -19,6 +19,7 @@ class_name Player
 @export var wallClimbSpeed: float
 @export var wallSlideSpeed: float
 @export var wallClimbTime: float
+@export var recallSpeed: float
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -38,6 +39,8 @@ var launchTimer: float = 0.0
 var launchDir: Vector2
 var wallClimbTimer: float = 0.0
 
+var player_1: Player
+var player_2: Player
 var group_1: Array
 var group_2: Array
 var clone_1: Array
@@ -59,7 +62,9 @@ enum States {
 	Launch,
 	Clone,
 	Disabled,
-	Climb
+	Climb,
+	Merge,
+	Recall
 }
 
 var CurrentState = States.Idle
@@ -77,12 +82,12 @@ func _physics_process(delta: float) -> void:
 	InputDir = InputDir.normalized()
 	
 	#Merge
-	if Input.is_action_just_pressed("merge_%d" % deviceNum) and CurrentState != States.Disabled:
-		if !group_1.is_empty() and !group_2.is_empty():
-			if playerNum == -1:
-				group_2[group_2.size() - 1].queue_free()
-			elif playerNum == 1:
-				group_1[group_1.size() - 1].queue_free()
+	#if Input.is_action_just_pressed("merge_%d" % deviceNum) and CurrentState != States.Disabled:
+		#if !group_1.is_empty() and !group_2.is_empty():
+			#if playerNum == -1:
+				#group_2[group_2.size() - 1].queue_free()
+			#elif playerNum == 1:
+				#group_1[group_1.size() - 1].queue_free()
 	
 	#TP
 	if Input.is_action_just_pressed("tp_left_%d" % deviceNum):
@@ -165,6 +170,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
+			
+			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+				_change_state(States.Merge)
 		States.Run:
 			Speed *= acceleration
 			velocity.x = InputDir.x * min(Speed, maxSpeed)
@@ -184,6 +192,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
+			
+			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+				_change_state(States.Merge)
 		States.Jump:
 			Speed *= acceleration
 			Momentum *= deceleration
@@ -209,6 +220,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
+			
+			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+				_change_state(States.Merge)
 		States.Fall:
 			Speed *= acceleration
 			Momentum *= deceleration
@@ -242,6 +256,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
+			
+			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+				_change_state(States.Merge)
 		States.Launch:
 			if launchTimer < 0.0:
 				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
@@ -273,7 +290,7 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Climb)
 		States.Clone:
 			velocity.y += _get_gravity() * delta
-			await get_tree().create_timer(0.2).timeout
+			await get_tree().create_timer(0.1).timeout
 			
 			if velocity.y < 0.0:
 				_change_state(States.Fall)
@@ -309,6 +326,28 @@ func _physics_process(delta: float) -> void:
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_change_state(States.Jump)
+			
+			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+				_change_state(States.Merge)
+		States.Merge:
+			velocity.y += _get_gravity() * delta
+			await get_tree().create_timer(0.1).timeout
+			
+			if velocity.y < 0.0:
+				_change_state(States.Fall)
+			
+			if is_on_floor():
+				if InputDir.x == 0.0:
+					_change_state(States.Idle)
+				else:
+					_change_state(States.Run)
+		States.Recall:
+			if playerNum == -1:
+				position = position.move_toward(player_2.position, recallSpeed * delta)
+			elif playerNum == 1:
+				position = position.move_toward(player_1.position, recallSpeed * delta)
+			await get_tree().create_timer(0.1).timeout
+			queue_free()
 	
 	if carrier != null:
 		velocity += carrier.velocity
@@ -327,6 +366,8 @@ func _process(delta: float) -> void:
 	
 	group_1 = get_tree().get_nodes_in_group("player_1")
 	group_2 = get_tree().get_nodes_in_group("player_2")
+	player_1 = get_tree().get_first_node_in_group("player_1")
+	player_2 = get_tree().get_first_node_in_group("player_2")
 	clone_1 = []
 	clone_2 = []
 	for i in range(1, group_1.size()):
@@ -443,6 +484,13 @@ func _change_state(NewState: States) -> void:
 		States.Climb:
 			wallClimbTimer = wallClimbTime
 			climbed = true
+		States.Merge:
+			if !group_1.is_empty() and !group_2.is_empty():
+				if playerNum == -1:
+					group_2[group_2.size() - 1]._change_state(States.Recall)
+				elif playerNum == 1:
+					group_1[group_1.size() - 1]._change_state(States.Recall)
+			
 
 func _respawn() -> void:
 	global_position = checkpoint

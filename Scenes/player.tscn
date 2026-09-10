@@ -36,6 +36,7 @@ cloneNum = 1
 wallClimbSpeed = 49.9999999999984
 wallSlideSpeed = 99.9999999999968
 wallClimbTime = 9.99999999999968
+recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]
 scale = Vector2(0.125, 32)
