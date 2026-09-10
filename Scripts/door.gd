@@ -25,3 +25,15 @@ func set_active(is_active: bool) -> void:
 		activate()
 	else:
 		deactivate()
+
+
+func _on_pressure_plate_activated() -> void:
+	activate()
+
+
+func _on_pressure_plate_deactivated() -> void:
+	deactivate()
+
+
+func _on_motion_sensor_triggered(body: Node2D) -> void:
+	activate()
