@@ -13,3 +13,36 @@ script = ExtResource("1_eljr4")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1103709487]
 layout_mode = 2
 color = Color(0.20392157, 0.20392157, 0.20392157, 1)
+
+[node name="Content" type="MarginContainer" parent="." unique_id=765924689]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Content" unique_id=1057599982]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Content/VBoxContainer" unique_id=1268484111]
+layout_mode = 2
+text = "Select Controls"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="Content/VBoxContainer" unique_id=875213626]
+layout_mode = 2
+text = "Move a device left for Player 1 or right for Player 2."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StatusLabel" type="Label" parent="Content/VBoxContainer" unique_id=856243873]
+layout_mode = 2
+text = "Keyboard: Unassigned"
+horizontal_alignment = 1
+
+[node name="TestGame" type="Button" parent="Content/VBoxContainer" unique_id=1816110565]
+layout_mode = 2
+text = "Test Game With Keyboard"
+
+[connection signal="pressed" from="Content/VBoxContainer/TestGame" to="." method="_on_test_game_pressed"]
