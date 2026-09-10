@@ -35,7 +35,8 @@ launchSpeed = 999.999999999968
 cloneNum = 1
 wallClimbSpeed = 49.9999999999984
 wallSlideSpeed = 99.9999999999968
-wallClimbTime = 9.99999999999968
+wallClimbTime = 19.99999999999936
+wallClimbMultiplier = 14.99999999999952
 recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]

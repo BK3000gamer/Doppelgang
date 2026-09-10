@@ -19,6 +19,7 @@ class_name Player
 @export var wallClimbSpeed: float
 @export var wallSlideSpeed: float
 @export var wallClimbTime: float
+@export var wallClimbMultiplier: float
 @export var recallSpeed: float
 
 @onready var recordJumpHeight := jumpHeight
@@ -305,10 +306,13 @@ func _physics_process(delta: float) -> void:
 		States.Climb:
 			if InputDir.y == 0:
 				velocity.y = 0.0
+				wallClimbTimer -= delta
 			elif InputDir.y < 0:
 				velocity.y = -wallClimbSpeed
+				wallClimbTimer -= delta * wallClimbMultiplier
 			elif InputDir.y > 0:
 				velocity.y = wallSlideSpeed
+				wallClimbTimer -= delta * wallClimbMultiplier
 			
 			if wallClimbTimer < 0.0:
 				_change_state(States.Fall)
@@ -380,7 +384,6 @@ func _process(delta: float) -> void:
 	jumpBufferTimer -= delta
 	coyoteTimer -= delta
 	launchTimer -= delta
-	wallClimbTimer -= delta
 	if InputDir.x < 0:
 		Sprite.flip_h = true
 	else:
