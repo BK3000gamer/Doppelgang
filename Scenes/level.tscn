@@ -281,16 +281,26 @@ position = Vector2(-240, 100)
 playerNum = 1
 
 [node name="PressurePlate" parent="." unique_id=778411472 instance=ExtResource("6_8c0lf")]
-position = Vector2(677, 125)
+position = Vector2(740, 128)
 
-[node name="Door" parent="." unique_id=645753636 instance=ExtResource("7_754fn")]
-position = Vector2(781, 83)
+[node name="Door" parent="." unique_id=645753636 node_paths=PackedStringArray("inputs") instance=ExtResource("7_754fn")]
+position = Vector2(855, 83)
+inputs = [NodePath("../PressurePlate"), NodePath("../PressurePlate2")]
 
-[node name="MotionSensor" parent="." unique_id=1035500908 instance=ExtResource("8_754fn")]
-position = Vector2(937, 80)
+[node name="MotionSensor" parent="." unique_id=1035500908 node_paths=PackedStringArray("detect_sensor") instance=ExtResource("8_754fn")]
+position = Vector2(945, 83)
+detect_sensor = NodePath("../MotionSensor2")
 
-[node name="Door2" parent="." unique_id=851023023 instance=ExtResource("7_754fn")]
-position = Vector2(1025, 81)
+[node name="Door2" parent="." unique_id=851023023 node_paths=PackedStringArray("inputs") instance=ExtResource("7_754fn")]
+position = Vector2(1105, 83)
+inputs = [NodePath("../MotionSensor"), NodePath("../MotionSensor2")]
+
+[node name="PressurePlate2" parent="." unique_id=582135867 instance=ExtResource("6_8c0lf")]
+position = Vector2(636, 128)
+
+[node name="MotionSensor2" parent="." unique_id=735864155 node_paths=PackedStringArray("detect_sensor") instance=ExtResource("8_754fn")]
+position = Vector2(1017, 84)
+detect_sensor = NodePath("../MotionSensor")
 
 [connection signal="activated" from="PressurePlate" to="Door" method="_on_pressure_plate_activated"]
 [connection signal="deactivated" from="PressurePlate" to="Door" method="_on_pressure_plate_deactivated"]

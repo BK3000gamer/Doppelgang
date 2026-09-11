@@ -9,14 +9,19 @@ signal active_changed(is_active: bool)
 @export var detects_players := true
 @export var detects_clones := true
 @export var trigger_once := false
+@export var detect_sensor :MotionSensor
+@export var player_specific : = false
 
 @onready var sprite := $Sprite2D
 
 var detected_bodies: Array[Node2D] = []
 var is_active := false
 var has_triggered := false
+var player_number : int = 0
+
 
 func _on_body_entered(body: Node2D) -> void:
+	player_number = body.playerNum
 	if !_is_valid_body(body):
 		return
 	
@@ -27,8 +32,12 @@ func _on_body_entered(body: Node2D) -> void:
 	if !trigger_once or !has_triggered:
 		has_triggered = true
 		triggered.emit(body)
-	
-	_activate_sensor()
+		
+	if player_specific : 
+		if detect_sensor.player_number !=0:
+			if detect_sensor.player_number !=player_number :
+				_activate_sensor()
+	else : _activate_sensor()
 
 func _on_body_exited(body: Node2D) -> void:
 	if !detected_bodies.has(body):
