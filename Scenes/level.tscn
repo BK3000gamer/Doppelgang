@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://d4a5245braww4" path="res://icon.svg" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Scenes/player.tscn" id="3_6phgx"]
 [ext_resource type="Texture2D" uid="uid://vibs4vpu04kn" path="res://Sprites/Environment/Foreground_Test.png" id="4_8c0lf"]
+[ext_resource type="PackedScene" path="res://Scenes/pressure_plate.tscn" id="6_8c0lf"]
+[ext_resource type="PackedScene" path="res://Scenes/door.tscn" id="7_754fn"]
+[ext_resource type="PackedScene" path="res://Scenes/motion_sensor.tscn" id="8_754fn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81xng"]
 size = Vector2(640, 360)
@@ -276,6 +279,32 @@ position = Vector2(-288, 100)
 [node name="Player2" parent="." unique_id=644745631 groups=["player_2"] instance=ExtResource("3_6phgx")]
 position = Vector2(-240, 100)
 playerNum = 1
+
+[node name="PressurePlate" parent="." unique_id=778411472 instance=ExtResource("6_8c0lf")]
+position = Vector2(740, 128)
+
+[node name="Door" parent="." unique_id=645753636 node_paths=PackedStringArray("inputs") instance=ExtResource("7_754fn")]
+position = Vector2(855, 83)
+inputs = [NodePath("../PressurePlate"), NodePath("../PressurePlate2")]
+
+[node name="MotionSensor" parent="." unique_id=1035500908 node_paths=PackedStringArray("detect_sensor") instance=ExtResource("8_754fn")]
+position = Vector2(945, 83)
+detect_sensor = NodePath("../MotionSensor2")
+
+[node name="Door2" parent="." unique_id=851023023 node_paths=PackedStringArray("inputs") instance=ExtResource("7_754fn")]
+position = Vector2(1105, 83)
+inputs = [NodePath("../MotionSensor"), NodePath("../MotionSensor2")]
+
+[node name="PressurePlate2" parent="." unique_id=582135867 instance=ExtResource("6_8c0lf")]
+position = Vector2(636, 128)
+
+[node name="MotionSensor2" parent="." unique_id=735864155 node_paths=PackedStringArray("detect_sensor") instance=ExtResource("8_754fn")]
+position = Vector2(1017, 84)
+detect_sensor = NodePath("../MotionSensor")
+
+[connection signal="activated" from="PressurePlate" to="Door" method="_on_pressure_plate_activated"]
+[connection signal="deactivated" from="PressurePlate" to="Door" method="_on_pressure_plate_deactivated"]
+[connection signal="triggered" from="MotionSensor" to="Door2" method="_on_motion_sensor_triggered"]
 
 [editable path="Room1"]
 [editable path="Room2"]

@@ -82,11 +82,11 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
-		if body.playerNum == 1:
+		if body.playerNum == -1:
 			player_1 = null
 			for i in range(clone_1.size()):
 				clone_1[i].queue_free()
-		elif body.playerNum == 2:
+		elif body.playerNum == 1:
 			player_2 = null
 			for i in range(clone_2.size()):
 				clone_2[i].queue_free()
