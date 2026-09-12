@@ -21,12 +21,13 @@ class_name Player
 @export var wallClimbTime: float
 @export var wallClimbMultiplier: float
 @export var recallSpeed: float
+@export var recallDistance: float
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
 @onready var parent := get_parent()
-@onready var playerScene := load("res://Scenes/player.tscn")
-@onready var cloneScene := load("res://Scenes/clone.tscn")
+@onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
+@onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
 
 var InputDir := Vector2.ZERO
 var Speed: float
@@ -82,13 +83,12 @@ func _physics_process(delta: float) -> void:
 	InputDir = Vector2(sign(InputDir.x), sign(InputDir.y))
 	InputDir = InputDir.normalized()
 	
-	#Merge
-	#if Input.is_action_just_pressed("merge_%d" % deviceNum) and CurrentState != States.Disabled:
-		#if !group_1.is_empty() and !group_2.is_empty():
-			#if playerNum == -1:
-				#group_2[group_2.size() - 1].queue_free()
-			#elif playerNum == 1:
-				#group_1[group_1.size() - 1].queue_free()
+	if playerNum == -1:
+		set_collision_mask_value(3, true)
+		set_collision_mask_value(4, false)
+	elif playerNum == 1:
+		set_collision_mask_value(4, true)
+		set_collision_mask_value(3, false)
 	
 	#TP
 	if Input.is_action_just_pressed("tp_left_%d" % deviceNum):
@@ -150,6 +150,8 @@ func _physics_process(delta: float) -> void:
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
 	jumpGravity = (-2.0 * jumpHeight) / pow(jumpTimeToPeak, 2.0) * -1.0
 	fallGravity = (-2.0 * jumpHeight) / pow(jumpTimeToDecent, 2.0) * -1.0
+	
+	var platformDelta := Vector2.ZERO
 	
 	#State Machine
 	match CurrentState:
@@ -314,6 +316,14 @@ func _physics_process(delta: float) -> void:
 				velocity.y = wallSlideSpeed
 				wallClimbTimer -= delta * wallClimbMultiplier
 			
+			for i in get_slide_collision_count():
+				var collision = get_slide_collision(i)
+				var collider = collision.get_collider()
+				if collider is MovingPlatform and "velocity" in collider:
+					platformDelta = collider.deltaPos
+					print(Engine.get_physics_frames(), " pos: ", global_position, " platformDelta: ", platformDelta)
+					break
+			
 			if wallClimbTimer < 0.0:
 				_change_state(States.Fall)
 			
@@ -352,6 +362,9 @@ func _physics_process(delta: float) -> void:
 				position = position.move_toward(player_1.position, recallSpeed * delta)
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
+	
+	if CurrentState == States.Climb:
+		global_position += platformDelta
 	
 	if carrier != null:
 		velocity += carrier.velocity
@@ -490,9 +503,11 @@ func _change_state(NewState: States) -> void:
 		States.Merge:
 			if !group_1.is_empty() and !group_2.is_empty():
 				if playerNum == -1:
-					group_2[group_2.size() - 1]._change_state(States.Recall)
+					if group_2[group_2.size() - 1].global_position.distance_to(global_position) < recallDistance:
+						group_2[group_2.size() - 1]._change_state(States.Recall)
 				elif playerNum == 1:
-					group_1[group_1.size() - 1]._change_state(States.Recall)
+					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
+						group_1[group_1.size() - 1]._change_state(States.Recall)
 			
 
 func _respawn() -> void:
@@ -505,8 +520,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			body.carrier = self
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.carrier:
-		body.carrier = null
+	if body is Player or body is Clone:
+		if body.carrier:
+			body.carrier = null
 
 func _on_area_2d_2_body_exited(body: Node2D) -> void:
 	if body is Player or body is Clone:

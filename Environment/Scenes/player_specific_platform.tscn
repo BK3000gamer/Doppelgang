@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bjwd3tbub2nxv"]
+
+[ext_resource type="Script" uid="uid://b1xmca1kv1jhi" path="res://Environment/Scripts/player_specific_platform.gd" id="1_jv41l"]
+
+[sub_resource type="Gradient" id="Gradient_jv41l"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jv41l"]
+gradient = SubResource("Gradient_jv41l")
+
+[node name="PlayerSpecificPlatform" type="StaticBody2D" unique_id=709140780]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_jv41l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1377948292]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1457434418]
+position = Vector2(0, 9.536743e-07)
+scale = Vector2(0.24999999, 24.000002)
+texture = SubResource("GradientTexture1D_jv41l")

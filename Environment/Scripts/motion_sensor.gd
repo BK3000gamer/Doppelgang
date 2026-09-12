@@ -34,10 +34,11 @@ func _on_body_entered(body: Node2D) -> void:
 		triggered.emit(body)
 		
 	if player_specific : 
-		if detect_sensor.player_number !=0:
+		if detect_sensor.player_number != 0:
 			if detect_sensor.player_number !=player_number :
 				_activate_sensor()
-	else : _activate_sensor()
+	else:
+		_activate_sensor()
 
 func _on_body_exited(body: Node2D) -> void:
 	if !detected_bodies.has(body):

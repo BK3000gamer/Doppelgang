@@ -50,7 +50,7 @@ func _both_players_selected() -> bool:
 
 func _start_game() -> void:
 	ControllerMap.controllerMap = controllerMap
-	get_tree().change_scene_to_file("res://Scenes/game.tscn")
+	get_tree().change_scene_to_file("res://Levels/game.tscn")
 
 func _update_status() -> void:
 	if !status_label:

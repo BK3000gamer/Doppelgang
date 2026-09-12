@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dsvdxvvhy2iwj"]
 
-[ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Scripts/camera_controller.gd" id="1_qxrlw"]
-[ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Scenes/level.tscn" id="2_wrm1d"]
+[ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Entity/Player/Scripts/camera_controller.gd" id="1_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Levels/level.tscn" id="2_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
 
 [node name="Game" type="Node2D" unique_id=739549817]

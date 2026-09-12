@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://Scripts/pressure_plate.gd" id="1_6sus4"]
+[ext_resource type="Script" uid="uid://fr3r24r72136" path="res://Environment/Scripts/pressure_plate.gd" id="1_6sus4"]
 
 [sub_resource type="Gradient" id="Gradient_h2dsi"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)

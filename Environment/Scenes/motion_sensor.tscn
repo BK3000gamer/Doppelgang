@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://Scripts/motion_sensor.gd" id="1_sx1r3"]
+[ext_resource type="Script" uid="uid://bh6exe1thi316" path="res://Environment/Scripts/motion_sensor.gd" id="1_sx1r3"]
 
 [sub_resource type="Gradient" id="Gradient_2epld"]
 colors = PackedColorArray(1, 1, 1, 0.35, 1, 1, 1, 0.35)

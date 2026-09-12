@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://br58bq2w5rfyp"]
 
-[ext_resource type="Script" uid="uid://cl3oi3e6aqpaj" path="res://Scripts/spike.gd" id="1_cdj5a"]
+[ext_resource type="Script" uid="uid://cl3oi3e6aqpaj" path="res://Environment/Scripts/spike.gd" id="1_kklq8"]
 
 [sub_resource type="Gradient" id="Gradient_v0iea"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -9,7 +9,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_v0iea")
 
 [node name="Spike" type="Area2D" unique_id=851912490]
-script = ExtResource("1_cdj5a")
+script = ExtResource("1_kklq8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=742742285]
 visible = false

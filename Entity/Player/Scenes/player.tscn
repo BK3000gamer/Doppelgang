@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://df6coxdlbcshd"]
 
-[ext_resource type="Script" uid="uid://6inoyxn7s4ck" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://6inoyxn7s4ck" path="res://Entity/Player/Scripts/player.gd" id="1_fre4f"]
 
 [sub_resource type="Gradient" id="Gradient_v0iea"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -20,7 +20,7 @@ size = Vector2(32, 32)
 [node name="Player" type="CharacterBody2D" unique_id=504046361]
 z_index = 1
 collision_mask = 2
-script = ExtResource("1_cvnsp")
+script = ExtResource("1_fre4f")
 baseSpeed = 99.9999999999968
 maxSpeed = 199.9999999999936
 acceleration = 1.1999999999999615
@@ -38,6 +38,7 @@ wallSlideSpeed = 99.9999999999968
 wallClimbTime = 19.99999999999936
 wallClimbMultiplier = 14.99999999999952
 recallSpeed = 999.999999999968
+recallDistance = 127.99999999999592
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]
 scale = Vector2(0.125, 32)

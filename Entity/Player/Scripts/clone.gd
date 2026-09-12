@@ -119,5 +119,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			body.carrier = self
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.carrier:
-		body.carrier = null
+	if body is Player or body is Clone:
+		if body.carrier:
+			body.carrier = null

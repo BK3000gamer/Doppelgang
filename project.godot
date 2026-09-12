@@ -27,6 +27,15 @@ window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[file_customization]
+
+folder_colors={
+"res://Entity/": "red",
+"res://Environment/": "blue",
+"res://Levels/": "orange",
+"res://UI/": "green"
+}
+
 [global_group]
 
 player_1=""
@@ -205,7 +214,7 @@ clone_1={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":1,"axis":5,"axis_value":1.0,"script":null)
 ]
 }
-merge_2={
+merge_1={
 "deadzone": 0.2,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":10,"pressure":0.0,"pressed":true,"script":null)
 ]
@@ -247,7 +256,8 @@ right={
 
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Environment"
-2d_physics/layer_3="Clone"
+2d_physics/layer_3="Player1"
+2d_physics/layer_4="Player2"
 
 [physics]
 

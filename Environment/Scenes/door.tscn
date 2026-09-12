@@ -1,6 +1,6 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://Scripts/door.gd" id="1_0f4f3"]
+[ext_resource type="Script" uid="uid://cowcmfjnjmg3y" path="res://Environment/Scripts/door.gd" id="1_0f4f3"]
 
 [sub_resource type="Gradient" id="Gradient_v3qc2"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)

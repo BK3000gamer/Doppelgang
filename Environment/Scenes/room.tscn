@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://vjft40w36esj"]
 
-[ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Scripts/room.gd" id="1_mbine"]
-[ext_resource type="Texture2D" uid="uid://mfkorfygjtw6" path="res://Sprites/Environment/TileSet.png" id="2_lsht4"]
+[ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Environment/Scripts/room.gd" id="1_uibqc"]
+[ext_resource type="Texture2D" uid="uid://mfkorfygjtw6" path="res://Environment/Sprites/TileSet.png" id="2_ghfdt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fr46g"]
-texture = ExtResource("2_lsht4")
+texture = ExtResource("2_ghfdt")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -2365,7 +2365,7 @@ terrain_set_0/terrain_2/color = Color(0.86, 0.6857067, 0.2064, 1)
 sources/0 = SubResource("TileSetAtlasSource_fr46g")
 
 [node name="Room" type="Area2D" unique_id=1542920506]
-script = ExtResource("1_mbine")
+script = ExtResource("1_uibqc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299480520]
 
