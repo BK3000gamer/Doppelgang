@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 ControllerMap="*uid://boytd2t4k8oy6"
+GameProgress="*uid://bwjcn4kb6a4o3"
 
 [display]
 
@@ -41,6 +42,7 @@ folder_colors={
 player_1=""
 player_2=""
 environment=""
+camera=""
 
 [input]
 
@@ -250,6 +252,18 @@ right={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":14,"pressure":0.0,"pressed":true,"script":null)
 ]
+}
+disabled_-1={
+"deadzone": 0.2,
+"events": []
+}
+disabled_0={
+"deadzone": 0.2,
+"events": []
+}
+disabled_1={
+"deadzone": 0.2,
+"events": []
 }
 
 [layer_names]

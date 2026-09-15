@@ -1,25 +1,20 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dsvl0vgej8xue"]
 
 [ext_resource type="Script" uid="uid://bh6exe1thi316" path="res://Environment/Scripts/motion_sensor.gd" id="1_sx1r3"]
-
-[sub_resource type="Gradient" id="Gradient_2epld"]
-colors = PackedColorArray(1, 1, 1, 0.35, 1, 1, 1, 0.35)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_dko85"]
-gradient = SubResource("Gradient_2epld")
+[ext_resource type="Texture2D" uid="uid://bwgnf6fqegnvj" path="res://Environment/Sprites/MotionSensor.png" id="2_aru6a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wg5dn"]
-size = Vector2(16, 96)
+size = Vector2(32, 32)
 
-[node name="MotionSensor" type="Area2D"]
+[node name="MotionSensor" type="Area2D" unique_id=233647211]
 collision_layer = 0
 script = ExtResource("1_sx1r3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.125, 96)
-texture = SubResource("GradientTexture1D_dko85")
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1039472192]
+texture = ExtResource("2_aru6a")
+hframes = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1408587055]
 shape = SubResource("RectangleShape2D_wg5dn")
 debug_color = Color(1, 0.251, 0.1961, 0.4196)
 

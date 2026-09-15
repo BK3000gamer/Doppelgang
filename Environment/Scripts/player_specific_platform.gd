@@ -5,7 +5,7 @@ extends StaticBody2D
 @export var switchType: switchTypes
 @export var switchTime: float
 
-@onready var sprite := $Sprite2D
+@onready var animationPlayer := $AnimationPlayer
 
 enum switchTypes {
 	None,
@@ -57,11 +57,11 @@ func _physics_process(delta: float) -> void:
 				switchTimer = switchTime
 		switchTypes.Jump:
 			if player_1:
-				if player_1.CurrentState == player_1.States.Jump or player_1.CurrentState == player_1.States.Clone:
+				if player_1.CurrentState == player_1.States.Jump:
 					_switch()
 					_update_visual_state()
 			if player_2:
-				if player_2.CurrentState == player_2.States.Jump or player_2.CurrentState == player_2.States.Clone:
+				if player_2.CurrentState == player_2.States.Jump:
 					_switch()
 					_update_visual_state()
 
@@ -69,7 +69,7 @@ func _switch() -> void:
 	playerNum = -playerNum
 
 func _update_visual_state() -> void:
-	if !sprite:
-		return
-	
-	sprite.modulate = Color.RED if playerNum == 1 else Color.BLUE
+	if playerNum == -1:
+		animationPlayer.play("Player1")
+	elif playerNum == 1:
+		animationPlayer.play("Player2")

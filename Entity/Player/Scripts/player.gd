@@ -91,7 +91,7 @@ func _physics_process(delta: float) -> void:
 		set_collision_mask_value(3, false)
 	
 	#TP
-	if Input.is_action_just_pressed("tp_left_%d" % deviceNum):
+	if Input.is_action_just_pressed(GameProgress.content.tp_left % deviceNum):
 		var distance = 1000.0
 		var target: CharacterBody2D
 		if playerNum == -1:
@@ -118,7 +118,7 @@ func _physics_process(delta: float) -> void:
 			target.global_position = recordPos
 		else:
 			target = null
-	elif Input.is_action_just_pressed("tp_right_%d" % deviceNum):
+	elif Input.is_action_just_pressed(GameProgress.content.tp_right % deviceNum):
 		var distance = 1000.0
 		var target: CharacterBody2D
 		if playerNum == -1:
@@ -167,14 +167,14 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Run:
 			Speed *= acceleration
@@ -189,14 +189,14 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Jump:
 			Speed *= acceleration
@@ -217,14 +217,14 @@ func _physics_process(delta: float) -> void:
 				else:
 					_change_state(States.Run)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Fall:
 			Speed *= acceleration
@@ -253,14 +253,14 @@ func _physics_process(delta: float) -> void:
 					else:
 						_change_state(States.Run)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if is_on_wall() and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Launch:
 			if launchTimer < 0.0:
@@ -285,7 +285,7 @@ func _physics_process(delta: float) -> void:
 					jumpBufferTimer = 0.0
 					_change_state(States.Jump)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
@@ -321,7 +321,6 @@ func _physics_process(delta: float) -> void:
 				var collider = collision.get_collider()
 				if collider is MovingPlatform and "velocity" in collider:
 					platformDelta = collider.deltaPos
-					print(Engine.get_physics_frames(), " pos: ", global_position, " platformDelta: ", platformDelta)
 					break
 			
 			if wallClimbTimer < 0.0:
@@ -335,13 +334,13 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed("clone_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_change_state(States.Jump)
 			
-			if (Input.is_action_just_pressed("merge_%d" % deviceNum)):
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Merge:
 			velocity.y += _get_gravity() * delta
@@ -360,6 +359,12 @@ func _physics_process(delta: float) -> void:
 				position = position.move_toward(player_2.position, recallSpeed * delta)
 			elif playerNum == 1:
 				position = position.move_toward(player_1.position, recallSpeed * delta)
+			
+			set_collision_layer_value(1, false)
+			set_collision_mask_value(1, false)
+			set_collision_mask_value(2, false)
+			set_collision_mask_value(3, false)
+			set_collision_mask_value(4, false)
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
 	

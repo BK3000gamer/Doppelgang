@@ -6,7 +6,7 @@
 
 [node name="Game" type="Node2D" unique_id=739549817]
 
-[node name="CameraController" type="Node2D" parent="." unique_id=388081032]
+[node name="CameraController" type="Node2D" parent="." unique_id=388081032 groups=["camera"]]
 script = ExtResource("1_qxrlw")
 
 [node name="NormalViewport" type="SubViewportContainer" parent="." unique_id=70257945]

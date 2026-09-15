@@ -8,34 +8,14 @@ signal active_changed(is_active: bool)
 @export var detects_players := true
 @export var detects_clones := true
 
-@onready var sprite := $Sprite2D
+@onready var animationPlayer := $AnimationPlayer
 
 var bodies_on_plate: Array[Node2D] = []
 var is_active := false
 
 func _physics_process(_delta: float) -> void:
-	var removed_invalid_body := false
-	for body in bodies_on_plate.duplicate():
-		if !is_instance_valid(body):
-			bodies_on_plate.erase(body)
-			removed_invalid_body = true
-	
-	if removed_invalid_body:
-		_update_active_state()
-
-func _on_body_entered(body: Node2D) -> void:
-	if !_is_valid_body(body):
-		return
-	
-	if !bodies_on_plate.has(body):
-		bodies_on_plate.append(body)
-	
-	_update_active_state()
-
-func _on_body_exited(body: Node2D) -> void:
-	if bodies_on_plate.has(body):
-		bodies_on_plate.erase(body)
-	
+	var current_bodies := get_overlapping_bodies().filter(_is_valid_body)
+	bodies_on_plate = current_bodies
 	_update_active_state()
 
 func _update_active_state() -> void:
@@ -53,11 +33,13 @@ func _update_active_state() -> void:
 		deactivated.emit()
 
 func _update_visual_state() -> void:
-	if !sprite:
-		return
-	
-	sprite.position.y = 3 if is_active else 0
-	sprite.modulate = Color.LIME_GREEN if is_active else Color.WHITE
+	if is_active:
+		if bodies_on_plate[0].playerNum == -1:
+			animationPlayer.play("Player1")
+		elif bodies_on_plate[0].playerNum == 1:
+			animationPlayer.play("Player2")
+	else:
+		animationPlayer.play("Default")
 
 func _is_valid_body(body: Node2D) -> bool:
 	if detects_players and body is Player:

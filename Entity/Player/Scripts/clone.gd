@@ -47,6 +47,13 @@ func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
 func _physics_process(delta: float) -> void:
+	if playerNum == -1:
+		set_collision_mask_value(3, true)
+		set_collision_mask_value(4, false)
+	elif playerNum == 1:
+		set_collision_mask_value(4, true)
+		set_collision_mask_value(3, false)
+	
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
 	jumpGravity = (-2.0 * jumpHeight) / pow(jumpTimeToPeak, 2.0) * -1.0
@@ -78,6 +85,12 @@ func _physics_process(delta: float) -> void:
 				position = position.move_toward(player_1.position, recallSpeed * delta)
 			elif playerNum == 1:
 				position = position.move_toward(player_2.position, recallSpeed * delta)
+			
+			set_collision_layer_value(1, false)
+			set_collision_mask_value(1, false)
+			set_collision_mask_value(2, false)
+			set_collision_mask_value(3, false)
+			set_collision_mask_value(4, false)
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
 	

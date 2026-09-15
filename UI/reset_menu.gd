@@ -28,11 +28,10 @@ func _on_reset_pressed() -> void:
 		player_1._respawn()
 	if player_2:
 		player_2._respawn()
+	var camera = get_tree().get_first_node_in_group("camera")
+	camera.currentRoom._reset_room()
 	
 	for i in range(clone_1.size()):
 		clone_1[i].queue_free()
 	for i in range(clone_2.size()):
 		clone_2[i].queue_free()
-	
-	for i in range(environment.size()):
-		environment[i]._reset()

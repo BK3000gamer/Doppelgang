@@ -2,6 +2,7 @@ extends Area2D
 class_name Room
 
 @export var roomType: roomTypes
+@export var enabledInputs: inputs
 
 @onready var checkpoint_1_1 := $"Checkpoint1-1"
 @onready var checkpoint_2_1 := $"Checkpoint2-1"
@@ -27,6 +28,13 @@ enum roomTypes {
 	Normal,
 	Horizontal,
 	Vertical
+}
+
+enum inputs{
+	None,
+	Clone,
+	Merge,
+	TP
 }
 
 func _process(_delta: float) -> void:
@@ -61,6 +69,25 @@ func _activate_room() -> void:
 	if !activated:
 		cameraController.tween_camera()
 		activated = true
+	
+	#enable inputs
+	match enabledInputs:
+		inputs.None:
+			pass
+		inputs.Clone:
+			GameProgress.content.clone = GameProgress.clone
+		inputs.Merge:
+			GameProgress.content.merge = GameProgress.merge
+		inputs.TP:
+			GameProgress.content.tp_left = GameProgress.tp_left
+			GameProgress.content.tp_right = GameProgress.tp_right
+
+func _reset_room() -> void:
+	var children: Array[Node] = get_children()
+	for i in range(children.size()):
+		if children[i].is_in_group("environment"):
+			if is_instance_valid(children[i]):
+				children[i].get_tree().call_deferred("reload_current_scene")
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:

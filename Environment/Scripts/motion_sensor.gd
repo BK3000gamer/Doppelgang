@@ -19,7 +19,6 @@ var is_active := false
 var has_triggered := false
 var player_number : int = 0
 
-
 func _on_body_entered(body: Node2D) -> void:
 	player_number = body.playerNum
 	if !_is_valid_body(body):
@@ -66,7 +65,13 @@ func _update_visual_state() -> void:
 	if !sprite:
 		return
 	
-	sprite.modulate = Color.ORANGE_RED if is_active else Color.WHITE
+	if is_active:
+		if player_number == -1:
+			sprite.frame = 1
+		elif player_number == 1:
+			sprite.frame = 2
+	else:
+		sprite.frame = 0
 
 func _is_valid_body(body: Node2D) -> bool:
 	if detects_players and body is Player:

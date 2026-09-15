@@ -12,10 +12,6 @@ var timer := 0.0
 
 func _ready() -> void:
 	pos = position
-	if player_1:
-		player_1.respawn.connect(_reset)
-	if player_2:
-		player_2.respawn.connect(_reset)
 
 func _physics_process(delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
@@ -24,14 +20,14 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if falling:
 		velocity += get_gravity() * delta
+	
+		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
 	
 	timer -= delta
 	if timer < 0.0:
 		trigger.monitoring = true
-	
-	move_and_slide()
 
 func _on_trigger_body_entered(body: Node2D) -> void:
 	if (body is Player or body is Clone) and !falling:
@@ -40,21 +36,14 @@ func _on_trigger_body_entered(body: Node2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
-		falling = false
 		if player_1:
 			player_1._respawn()
 		if player_2:
 			player_2._respawn()
 		trigger.monitoring = false
 		timer = time
-		_reset()
+		var camera = get_tree().get_first_node_in_group("camera")
+		camera.currentRoom._reset_room()
 	elif body is Clone:
-		falling = false
 		body.queue_free()
 		trigger.monitoring = false
-		_reset()
-
-func _reset() -> void:
-	position = pos
-	falling = false
-	velocity = Vector2.ZERO
