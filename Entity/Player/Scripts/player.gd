@@ -513,7 +513,6 @@ func _change_state(NewState: States) -> void:
 				elif playerNum == 1:
 					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
-			
 
 func _respawn() -> void:
 	global_position = checkpoint

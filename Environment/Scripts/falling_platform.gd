@@ -37,8 +37,10 @@ func _on_trigger_body_entered(body: Node2D) -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if player_1:
+			GameProgress.content.player1Deaths += 1
 			player_1._respawn()
 		if player_2:
+			GameProgress.content.player2Deaths += 1
 			player_2._respawn()
 		trigger.monitoring = false
 		timer = time

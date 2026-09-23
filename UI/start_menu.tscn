@@ -60,4 +60,5 @@ layout_mode = 2
 text = "Quit Game"
 
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/LoadGame" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/QuitGame" to="." method="_on_quit_game_pressed"]

@@ -54,6 +54,7 @@ func _process(_delta: float) -> void:
 
 func _activate_room() -> void:
 	cameraController.currentRoom = self
+	GameProgress.content.currentRoom = self
 	
 	#set checkpoint
 	if player_1:

@@ -10,8 +10,10 @@ func _process(_delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if player_1:
+			GameProgress.content.player1Deaths += 1
 			player_1._respawn()
 		if player_2:
+			GameProgress.content.player2Deaths += 1
 			player_2._respawn()
 		var camera = get_tree().get_first_node_in_group("camera")
 		camera.currentRoom._reset_room()
