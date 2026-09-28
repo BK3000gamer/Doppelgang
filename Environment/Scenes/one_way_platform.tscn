@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c4oa3grqyccqv"]
+
+[node name="One Way Platform" type="StaticBody2D" unique_id=1563577672]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1116533307]
+one_way_collision = true

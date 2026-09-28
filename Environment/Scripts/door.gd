@@ -14,11 +14,15 @@ func _ready() -> void:
 
 func activate() -> void:
 	collision.set_deferred("disabled", true)
-	sprite.visible = false
+	sprite.frame = 1
+	var tween = create_tween()
+	tween.tween_property(sprite, "position", Vector2(0, -48), 0.1)
 
 func deactivate() -> void:
 	collision.set_deferred("disabled", false)
-	sprite.visible = true
+	sprite.frame = 0
+	var tween = create_tween()
+	tween.tween_property(sprite, "position", Vector2.ZERO, 0.1)
 
 func _update_door() -> void:
 	if startsOpen:
@@ -26,12 +30,22 @@ func _update_door() -> void:
 	else:
 		deactivate()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	currentActivations = 0
 		
 	for i in range(inputs.size()):
 		if inputs[i].is_active:
 			currentActivations += 1
 	if currentActivations == inputs.size():
-		activate()
-	else: deactivate()
+		if startsOpen:
+			deactivate()
+		else:
+			activate()
+	else:
+		if startsOpen:
+			activate()
+		else:
+			deactivate()
+
+func reset():
+	_update_door()

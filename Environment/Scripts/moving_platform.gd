@@ -15,6 +15,8 @@ var cooldownTimer: float
 var player: CharacterBody2D
 var activating: = false
 
+var colour := Color("fff9ae")
+
 enum activateTypes {
 	Inputs,
 	Timed,
@@ -65,6 +67,8 @@ func _physics_process(delta: float) -> void:
 				activate()
 			else:
 				deactivate()
+	
+	queue_redraw()
 
 func activate():
 	if path.progress_ratio < 1.0:
@@ -73,9 +77,11 @@ func activate():
 			if player.playerNum == -1:
 				sprite.frame = 1
 				symbol.frame_coords.x = 1
+				colour = Color("6fe5e9")
 			elif player.playerNum == 1:
 				sprite.frame = 2
 				symbol.frame_coords.x = 2
+				colour = Color("ff6cf5")
 		else:
 			sprite.frame = 1
 			symbol.frame_coords.x = 1
@@ -85,6 +91,17 @@ func deactivate():
 		path.progress -= deactivateSpeed
 		sprite.frame = 0
 		symbol.frame_coords.x = 0
+		colour = Color("fff9ae")
+
+func reset():
+	path.progress = 0
+	sprite.frame = 0
+	symbol.frame_coords.x = 0
+	colour = Color("fff9ae")
+
+func _draw() -> void:
+	draw_line(curve.get_point_position(0), curve.get_point_position(1), Color("4b4b4b"), 4, false)
+	draw_line(curve.get_point_position(0), curve.get_point_position(1), colour, 2, false)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player or body is Clone:

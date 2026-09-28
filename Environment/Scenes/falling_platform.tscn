@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxdhkjfqon0r0" path="res://Environment/Scripts/falling_platform.gd" id="1_0msxf"]
 [ext_resource type="Texture2D" uid="uid://em3rsmh8gaj5" path="res://Environment/Sprites/FallingPlatform.png" id="2_60e2i"]
+[ext_resource type="TileSet" uid="uid://dbr0xjx4w3c4q" path="res://Environment/Tile Sets/tile_set.tres" id="3_jl6pw"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_e7par"]
 viewport_path = NodePath("SubViewport")
@@ -48,6 +49,11 @@ size = Vector2i(48, 48)
 position = Vector2(24, 24)
 texture = ExtResource("2_60e2i")
 hframes = 3
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=43486453]
+z_index = -3
+position = Vector2(0, 8)
+tile_set = ExtResource("3_jl6pw")
 
 [connection signal="body_entered" from="Trigger" to="." method="_on_trigger_body_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

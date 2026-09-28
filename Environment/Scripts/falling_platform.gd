@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var waitTime: float = 0.1
+
 var falling := false
 
 var player_1: Player
@@ -11,7 +13,7 @@ var time := 0.1
 var timer := 0.0
 
 func _ready() -> void:
-	pos = position
+	pos = global_position
 
 func _physics_process(delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
@@ -29,9 +31,12 @@ func _physics_process(delta: float) -> void:
 	if timer < 0.0:
 		trigger.monitoring = true
 
+func reset():
+	global_position = pos
+
 func _on_trigger_body_entered(body: Node2D) -> void:
 	if (body is Player or body is Clone) and !falling:
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(waitTime).timeout
 		falling = true
 
 func _on_hitbox_body_entered(body: Node2D) -> void:

@@ -62,7 +62,7 @@ _data = {
 &"RESET": SubResource("Animation_8o2pn")
 }
 
-[node name="PlayerSpecificPlatform" type="StaticBody2D" unique_id=709140780]
+[node name="PlayerSpecificPlatform" type="StaticBody2D" unique_id=709140780 groups=["environment"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_jv41l")

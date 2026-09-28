@@ -25,6 +25,7 @@ class_name Player
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
+@onready var animationPlayer := $AnimationPlayer
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
@@ -377,9 +378,9 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	if playerNum == -1:
-		Sprite.modulate = Color.NAVY_BLUE
+		animationPlayer.play("Player1/Run")
 	elif playerNum == 1:
-		Sprite.modulate = Color.DARK_RED
+		animationPlayer.play("Player2/Run")
 	
 	controllerMap = ControllerMap.controllerMap
 	for deviceID in controllerMap.keys():

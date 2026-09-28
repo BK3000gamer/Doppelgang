@@ -148,7 +148,7 @@ position = Vector2(80, 92)
 [node name="Spike" parent="Room1" unique_id=851912490 instance=ExtResource("10_vx8ih")]
 position = Vector2(256, 108)
 
-[node name="CollisionShape2D" parent="Room1/Spike" index="1" unique_id=904686796]
+[node name="CollisionShape2D" parent="Room1/Spike" index="0" unique_id=904686796]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_p642h")
 

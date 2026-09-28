@@ -9,7 +9,7 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_orn0k"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Moving Platform" type="Path2D" unique_id=1004918871]
+[node name="Moving Platform" type="Path2D" unique_id=1004918871 groups=["environment"]]
 script = ExtResource("1_435l6")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=345401673]

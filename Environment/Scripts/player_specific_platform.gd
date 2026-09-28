@@ -16,11 +16,13 @@ enum switchTypes {
 
 var currentActivations := 0
 var switchTimer: float
+var playerNumInit: int
 
 var player_1: Player
 var player_2: Player
 
 func _ready() -> void:
+	playerNumInit = playerNum
 	_update_visual_state()
 	switchTimer = switchTime
 
@@ -67,6 +69,11 @@ func _physics_process(delta: float) -> void:
 
 func _switch() -> void:
 	playerNum = -playerNum
+
+func reset():
+	playerNum = playerNumInit
+	_update_visual_state()
+	switchTimer = switchTime
 
 func _update_visual_state() -> void:
 	if playerNum == -1:

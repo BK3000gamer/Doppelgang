@@ -46,7 +46,7 @@ func _on_body_exited(body: Node2D) -> void:
 	detected_bodies.erase(body)
 	body_lost.emit(body)
 
-func reset_sensor() -> void:
+func reset() -> void:
 	has_triggered = false
 	is_active = false
 	detected_bodies.clear()
