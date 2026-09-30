@@ -33,6 +33,7 @@ func _physics_process(delta: float) -> void:
 
 func reset():
 	global_position = pos
+	falling = false
 
 func _on_trigger_body_entered(body: Node2D) -> void:
 	if (body is Player or body is Clone) and !falling:
@@ -43,10 +44,10 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if player_1:
 			GameProgress.content.player1Deaths += 1
-			player_1._respawn()
+			player_1._change_state(player_1.States.Death)
 		if player_2:
 			GameProgress.content.player2Deaths += 1
-			player_2._respawn()
+			player_2._change_state(player_2.States.Death)
 		trigger.monitoring = false
 		timer = time
 		var camera = get_tree().get_first_node_in_group("camera")

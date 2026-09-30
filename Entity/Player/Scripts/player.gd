@@ -26,6 +26,7 @@ class_name Player
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
 @onready var animationPlayer := $AnimationPlayer
+@onready var hitAnimationPlayer := $HitAnimationPlayer
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
@@ -67,7 +68,8 @@ enum States {
 	Disabled,
 	Climb,
 	Merge,
-	Recall
+	Recall,
+	Death
 }
 
 var CurrentState = States.Idle
@@ -368,6 +370,10 @@ func _physics_process(delta: float) -> void:
 			set_collision_mask_value(4, false)
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
+		States.Death:
+			await get_tree().create_timer(0.7).timeout
+			global_position = checkpoint
+			_change_state(States.Idle)
 	
 	if CurrentState == States.Climb:
 		global_position += platformDelta
@@ -377,11 +383,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	if playerNum == -1:
-		animationPlayer.play("Player1/Run")
-	elif playerNum == 1:
-		animationPlayer.play("Player2/Run")
-	
 	controllerMap = ControllerMap.controllerMap
 	for deviceID in controllerMap.keys():
 		if controllerMap[deviceID] == playerNum:
@@ -441,6 +442,7 @@ func _change_state(NewState: States) -> void:
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
+			hitAnimationPlayer.play("Hit Animation")
 		States.Clone:
 			var clone: CharacterBody2D
 			
@@ -454,6 +456,7 @@ func _change_state(NewState: States) -> void:
 					clone_1.append(group_2[i])
 			
 			if !cloned:
+				hitAnimationPlayer.play("Hit Animation")
 				if playerNum == -1:
 					if group_2.is_empty():
 						clone = playerScene.instantiate()
@@ -514,6 +517,9 @@ func _change_state(NewState: States) -> void:
 				elif playerNum == 1:
 					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
+		States.Death:
+			velocity = Vector2.ZERO
+			hitAnimationPlayer.play("Hit Animation")
 
 func _respawn() -> void:
 	global_position = checkpoint

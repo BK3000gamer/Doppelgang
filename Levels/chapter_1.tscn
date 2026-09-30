@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bfykd6qrnxkqb"]
+
+[ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Entity/Player/Scenes/player.tscn" id="1_mh18r"]
+
+[node name="Chapter 1" type="Node2D" unique_id=714554862]
+
+[node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("1_mh18r")]
+position = Vector2(-288, -44)
+collision_mask = 6
+
+[node name="Player2" parent="." unique_id=918836812 groups=["player_2"] instance=ExtResource("1_mh18r")]
+position = Vector2(-288, 132)
+collision_mask = 10
+playerNum = 1

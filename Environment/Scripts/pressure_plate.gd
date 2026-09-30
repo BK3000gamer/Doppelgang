@@ -13,7 +13,19 @@ signal active_changed(is_active: bool)
 var bodies_on_plate: Array[Node2D] = []
 var is_active := false
 
+var player_1: Player
+var player_2: Player
+
 func _physics_process(_delta: float) -> void:
+	#Get players
+	player_1 = get_tree().get_first_node_in_group("player_1")
+	player_2 = get_tree().get_first_node_in_group("player_2")
+	
+	if (player_1 and global_position.distance_to(player_1.global_position) < 96) or (player_2 and global_position.distance_to(player_2.global_position) < 96):
+		$Sprite2D.material.set_shader_parameter("outline_colour", Color(1, 1, 1, 1))
+	else:
+		$Sprite2D.material.set_shader_parameter("outline_colour", Color(1, 1, 1, 0))
+	
 	var current_bodies := get_overlapping_bodies().filter(_is_valid_body)
 	bodies_on_plate = current_bodies
 	_update_active_state()
