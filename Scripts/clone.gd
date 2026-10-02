@@ -68,16 +68,15 @@ func _physics_process(delta: float) -> void:
 				
 				if is_on_floor():
 					_change_state(States.Idle)
-	
 	if carrier != null:
 		velocity += carrier.velocity
 	move_and_slide()
 
-func _process(delta: float) -> void:
-	if playerNum == 1:
-		Sprite.modulate = Color.SKY_BLUE
-	elif playerNum == 2:
-		Sprite.modulate = Color.INDIAN_RED
+#func _process(delta: float) -> void:
+#	if playerNum == 1:
+#		Sprite.modulate = Color.SKY_BLUE
+#	elif playerNum == 2:
+#		Sprite.modulate = Color.INDIAN_RED
 	
 	launchTimer -= delta
 

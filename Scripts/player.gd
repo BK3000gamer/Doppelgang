@@ -75,11 +75,13 @@ var carrier: CharacterBody2D
 
 # //////////////////
 
-#func carry_clone() -> void: 
-#	if body is Clone:
-#		clone.remote_transform.remote_path = Sprite2D.get_path()
-#	else if body is Player:
-#		Player.remote_transform.remote_path = Sprite2D.get_path()
+func carry_clone(body: CharacterBody2D) -> void:
+	var remote_transform := $Area2D/RemoteTransform2D
+	if body is Clone:
+		remote_transform.remote_path = $Sprite2D.get_path()
+	elif body is Player:
+		remote_transform.remote_path = $Sprite2D.get_path()
+
 
 
 func _get_gravity() -> float:
@@ -295,7 +297,6 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Run)
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
-	
 	if carrier != null:
 		velocity += carrier.velocity
 	move_and_slide()
