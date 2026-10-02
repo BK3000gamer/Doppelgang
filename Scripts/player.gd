@@ -57,8 +57,30 @@ var CurrentState = States.Idle
 
 var carrier: CharacterBody2D
 
-#func _ready() -> void:
-#	$remoteTransform2D.remote_path = clone
+# ///// Leftover code /////
+
+#func _on_area_2d_body_entered(body: Node2D) -> void:
+#	if body is Player or body is Clone:
+#		if body != self:
+#			body.carrier = self
+
+#func _on_area_2d_body_exited(body: Node2D) -> void:
+#	if body is Player or body is Clone:
+#		if body.carrier:
+#			body.carrier = null
+
+#func _on_area_2d_2_body_exited(body: Node2D) -> void:
+#	if body is Player or body is Clone:
+#			body.set_collision_mask_value(1, true)
+
+# //////////////////
+
+#func carry_clone() -> void: 
+#	if body is Clone:
+#		clone.remote_transform.remote_path = Sprite2D.get_path()
+#	else if body is Player:
+#		Player.remote_transform.remote_path = Sprite2D.get_path()
+
 
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
