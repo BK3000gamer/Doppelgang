@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://vjft40w36esj" path="res://Scenes/room.tscn" id="1_k5f4k"]
 [ext_resource type="Texture2D" uid="uid://d4a5245braww4" path="res://icon.svg" id="2_6phgx"]
 [ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Scenes/player.tscn" id="3_6phgx"]
-[ext_resource type="PackedScene" uid="uid://do4qtrr6np4n5" path="res://Scenes/clone.tscn" id="4_81xng"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81xng"]
 size = Vector2(640, 360)
@@ -303,12 +302,6 @@ shape = SubResource("RectangleShape2D_pa6b8")
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("3_6phgx")]
 position = Vector2(-240, 116)
-
-[node name="RemoteTransform2D" parent="Player1/Area2D" parent_id_path=PackedInt32Array(504046361, 1255301810) index="1" unique_id=613943804]
-remote_path = NodePath("../../../Clone")
-
-[node name="Clone" parent="." unique_id=1897861543 instance=ExtResource("4_81xng")]
-position = Vector2(-240, 84)
 
 [editable path="Room1"]
 [editable path="Room2"]

@@ -1,6 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
+# Note the following:
+# Layer 1 = World
+# Layer 2 = Players
+# Layer 3 = StackDetector
+
 @export_category("Stats")
 @export var baseSpeed: float
 @export var maxSpeed: float
@@ -28,6 +33,7 @@ var Momentum: float
 var jumpVelocity: float
 var jumpGravity: float
 var fallGravity: float
+var cloneTimer: float = 0.0
 var jumpBufferTimer: float = 0.0
 var coyoteTimer: float = 0.0
 var launchTimer: float = 0.0
@@ -55,7 +61,9 @@ enum States {
 
 var CurrentState = States.Idle
 
-var carrier: CharacterBody2D
+var carrier: Player = null
+var carried_player: Player = null
+var is_carried := false
 
 # ///// Leftover code /////
 
@@ -75,14 +83,24 @@ var carrier: CharacterBody2D
 
 # //////////////////
 
-func carry_clone(body: CharacterBody2D) -> void:
-	var remote_transform := $Area2D/RemoteTransform2D
-	if body is Clone:
-		remote_transform.remote_path = $Sprite2D.get_path()
-	elif body is Player:
-		remote_transform.remote_path = $Sprite2D.get_path()
+func _on_clone_enter(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var top_player := body as Player
+	if top_player == self:
+		return
+	if carried_player != null:
+		return
+	if top_player.is_carried:
+		return
+	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
+		return
+	if top_player.velocity.y <= 0.0:
+		return
+	_attach_player(top_player)
 
-
+func _on_clone_exit(body: Node2D) -> void:
+	pass
 
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
@@ -105,6 +123,17 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_pressed("merge_2") and playerNum == 2 and CurrentState != States.Disabled:
 		if !group_1.is_empty() and !group_2.is_empty():
 			group_1[group_1.size() - 1].queue_free()
+	
+	#Stacking
+	if is_carried:
+		#Handles when the carried player wants to move.
+		if _detach_input(): 
+			_detach_player()
+			return
+		
+		global_position = carrier.get_node("StackMarker").global_position
+		velocity = carrier.velocity
+		return
 	
 	#TP
 	if playerNum == 1:
@@ -284,8 +313,8 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_just_pressed("clone_1") and playerNum == 1) or (Input.is_action_just_pressed("clone_2") and playerNum == 2):
 				_change_state(States.Clone)
 		States.Clone:
+			cloneTimer -= delta
 			velocity.y += _get_gravity() * delta
-			await get_tree().create_timer(0.2).timeout
 			
 			if velocity.y < 0.0:
 				_change_state(States.Fall)
@@ -413,6 +442,44 @@ func _change_state(NewState: States) -> void:
 					clone.move_and_slide()
 		States.Disabled:
 			velocity = Vector2.ZERO
+
+func _detach_input() -> bool: 
+	if playerNum == 1:
+		return (
+			Input.is_action_pressed("left_1")
+			or Input.is_action_pressed("right_1")
+			or Input.is_action_just_pressed("jump_1")
+		)
+		
+	return (
+		Input.is_action_pressed("left_2")
+		or Input.is_action_pressed("right_2")
+		or Input.is_action_just_pressed("jump_2")
+	)
+	
+func _attach_player(top_player: Player) -> void:
+	carried_player = top_player
+	
+	top_player.carrier = self
+	top_player.is_carried = true
+	top_player.CurrentState = States.Disabled
+	
+	top_player.global_position = $StackMarker.global_position
+	
+	top_player.set_collision_layer_value(1, false)
+	top_player.set_collision_mask_value(1, false)
+
+func _detach_player() -> void:
+	if carrier == null:
+		return
+	
+	var old_carrier := carrier
+	carrier = null
+	is_carried = false
+	old_carrier.carried_player = null
+	set_collision_layer_value(1, true)
+	set_collision_mask_value(1, true)
+	CurrentState = States.Fall
 
 func _respawn() -> void:
 	global_position = checkpoint
