@@ -53,6 +53,7 @@ position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Area2D" unique_id=613943804]
+position = Vector2(0, -14)
 remote_path = NodePath("cloneScene")
 update_rotation = false
 update_scale = false
