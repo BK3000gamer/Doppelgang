@@ -20,9 +20,6 @@ size = Vector2(18, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iuy3d"]
 size = Vector2(18, 4)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_57t6j"]
-size = Vector2(18, 32)
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cj8ce"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xjje2"]
@@ -240,7 +237,7 @@ material = SubResource("ShaderMaterial_oy53q")
 position = Vector2(0, -8)
 texture = SubResource("PortableCompressedTexture2D_8kq2p")
 region_enabled = true
-region_rect = Rect2(0, 0, 48, 48)
+region_rect = Rect2(192, 0, 48, 48)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
 "layer_section": false,
@@ -281,6 +278,19 @@ shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="StackMarker" type="Marker2D" parent="." unique_id=410288628]
 position = Vector2(0, -32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=367560989]
+libraries/ = SubResource("AnimationLibrary_cj8ce")
+libraries/Player1 = ExtResource("2_oy53q")
+libraries/Player2 = ExtResource("3_qjj5u")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1699274342]
+tree_root = SubResource("AnimationNodeStateMachine_oy53q")
+advance_expression_base_node = NodePath("..")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="HitAnimationPlayer" type="AnimationPlayer" parent="." unique_id=789967177]
+libraries/ = SubResource("AnimationLibrary_bgyt3")
 
 [connection signal="body_entered" from="StackDetectorArea" to="." method="_on_clone_enter"]
 [connection signal="body_exited" from="StackDetectorArea" to="." method="_on_clone_exit"]

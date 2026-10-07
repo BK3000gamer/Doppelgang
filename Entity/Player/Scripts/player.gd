@@ -4,7 +4,7 @@ class_name Player
 # Note the following:
 # Layer 1 = World
 # Layer 2 = Players
-# Layer 3 = StackDetector
+# Layer 5 = StackDetector
 @export var playerNum: int = -1
 
 @export_category("Stats")
@@ -73,7 +73,7 @@ enum States {
 	Climb,
 	Merge,
 	Recall,
-	Death
+	Death,
 	Carried
 }
 
@@ -614,17 +614,3 @@ func _detach_player() -> void:
 func _respawn() -> void:
 	global_position = checkpoint
 	_change_state(States.Idle)
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is Player or body is Clone:
-		if body != self:
-			body.carrier = self
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body is Player or body is Clone:
-		if body.carrier:
-			body.carrier = null
-
-func _on_area_2d_2_body_exited(body: Node2D) -> void:
-	if body is Player or body is Clone:
-			body.set_collision_mask_value(1, true)
