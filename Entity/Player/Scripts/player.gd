@@ -73,6 +73,7 @@ enum States {
 }
 
 var CurrentState = States.Idle
+var PreviousState: States
 
 var carrier: CharacterBody2D
 
@@ -240,7 +241,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y += _get_gravity() * delta
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
-				if coyoteTimer > 0:
+				if coyoteTimer > 0 and PreviousState != States.Jump:
 					coyoteTimer = 0.0
 					_change_state(States.Jump)
 				else:
@@ -277,7 +278,7 @@ func _physics_process(delta: float) -> void:
 						_change_state(States.Run)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
-				if coyoteTimer > 0:
+				if coyoteTimer > 0 and PreviousState != States.Jump:
 					coyoteTimer = 0.0
 					_change_state(States.Jump)
 				else:
@@ -420,6 +421,7 @@ func _process(delta: float) -> void:
 			#Sprite.play("Jump")
 
 func _change_state(NewState: States) -> void:
+	PreviousState = CurrentState
 	CurrentState = NewState
 	match CurrentState:
 		States.Idle:

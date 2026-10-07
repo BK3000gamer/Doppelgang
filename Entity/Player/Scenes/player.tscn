@@ -221,8 +221,8 @@ deceleration = 0.499999999999984
 jumpHeight = 47.999999999998465
 jumpTimeToPeak = 0.249999999999992
 jumpTimeToDecent = 0.1999999999999936
-jumpBufferTime = 0.0999999999999968
-coyoteTime = 0.0999999999999968
+jumpBufferTime = 0.25
+coyoteTime = 0.25
 launchTime = 0.0499999999999984
 launchSpeed = 999.999999999968
 cloneNum = 1
@@ -240,7 +240,7 @@ material = SubResource("ShaderMaterial_oy53q")
 position = Vector2(0, -8)
 texture = SubResource("PortableCompressedTexture2D_8kq2p")
 region_enabled = true
-region_rect = Rect2(288, 0, 48, 48)
+region_rect = Rect2(0, 0, 48, 48)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
 "layer_section": false,

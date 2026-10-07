@@ -28,7 +28,7 @@ size = Vector2(64, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_enwdo"]
 size = Vector2(96, 8)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_b3u4y"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_hew7g"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6vii"]
@@ -61,7 +61,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hew7g"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_73pmg"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_blxuw"]
@@ -185,7 +185,7 @@ waitTime = 0.5999999999999808
 [node name="NinePatchRect" parent="Room1/Falling Platform" index="0" unique_id=1534618689]
 offset_left = -48.0
 offset_right = 48.0
-texture = SubResource("ViewportTexture_b3u4y")
+texture = SubResource("ViewportTexture_hew7g")
 
 [node name="CollisionShape2D" parent="Room1/Falling Platform" index="1" unique_id=37473589]
 shape = SubResource("RectangleShape2D_b6vii")
@@ -278,7 +278,7 @@ inputs = [NodePath("../MotionSensor")]
 [node name="NinePatchRect" parent="Room2/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="0" unique_id=780333250]
 offset_top = -16.0
 offset_bottom = 16.0
-texture = SubResource("ViewportTexture_hew7g")
+texture = SubResource("ViewportTexture_73pmg")
 
 [node name="CollisionShape2D" parent="Room2/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="2" unique_id=270251958]
 shape = SubResource("RectangleShape2D_blxuw")
@@ -468,11 +468,11 @@ shape = SubResource("RectangleShape2D_6isyr")
 one_way_collision_direction = Vector2(-1, 0)
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("11_aowvf")]
-position = Vector2(352, -44)
+position = Vector2(-288, -44)
 collision_mask = 6
 
 [node name="Player2" parent="." unique_id=1236976389 groups=["player_2"] instance=ExtResource("11_aowvf")]
-position = Vector2(352, 132)
+position = Vector2(-288, 132)
 collision_mask = 10
 playerNum = 1
 
