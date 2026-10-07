@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bnupcupo4t06u"]
 
-[ext_resource type="Script" uid="uid://biais2wr2b33" path="res://Scripts/breaking_platform.gd" id="1_wcv48"]
+[ext_resource type="Script" uid="uid://biais2wr2b33" path="res://Environment/Scripts/breaking_platform.gd" id="1_wcv48"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1s1js"]
 size = Vector2(32, 16)

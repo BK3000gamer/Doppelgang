@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://brmmgi5qnoluf"]
 
-[ext_resource type="Script" uid="uid://bxdhkjfqon0r0" path="res://Scripts/falling_platform.gd" id="1_0msxf"]
+[ext_resource type="Script" uid="uid://bxdhkjfqon0r0" path="res://Environment/Scripts/falling_platform.gd" id="1_0msxf"]
 [ext_resource type="Texture2D" uid="uid://d4a5245braww4" path="res://icon.svg" id="2_lx48v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0tybl"]

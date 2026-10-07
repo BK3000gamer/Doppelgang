@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vjft40w36esj"]
 
-[ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Scripts/room.gd" id="1_mbine"]
+[ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Environment/Scripts/room.gd" id="1_mbine"]
 
 [node name="Room" type="Area2D" unique_id=1542920506]
 collision_layer = 2
