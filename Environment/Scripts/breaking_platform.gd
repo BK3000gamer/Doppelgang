@@ -5,14 +5,18 @@ extends StaticBody2D
 var timer := 0.0
 var cooldownTimer := 0.0
 var entered := false
+var played := false
 @onready var collision := $CollisionShape2D
-@onready var sprite := $Sprite2D
+@onready var animationPlayer := $AnimationPlayer
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player or body is Clone:
 		entered = true
 		timer = time
 		cooldownTimer = cooldown
+		if !played:
+			animationPlayer.play("Break")
+			played = true
 
 func _process(delta: float) -> void:
 	if entered:
@@ -20,7 +24,7 @@ func _process(delta: float) -> void:
 		cooldownTimer -= delta
 	if timer < 0.0:
 		collision.set_deferred("disabled", true)
-		sprite.set_deferred("visible", false)
 	if cooldownTimer < 0.0:
 		collision.set_deferred("disabled", false)
-		sprite.set_deferred("visible", true)
+		animationPlayer.play("Default")
+		played = false

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var waitTime: float = 0.1
+
 var falling := false
 
 var player_1: Player
@@ -11,11 +13,7 @@ var time := 0.1
 var timer := 0.0
 
 func _ready() -> void:
-	pos = position
-	if player_1:
-		player_1.respawn.connect(_reset)
-	if player_2:
-		player_2.respawn.connect(_reset)
+	pos = global_position
 
 func _physics_process(delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
@@ -24,37 +22,36 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if falling:
 		velocity += get_gravity() * delta
+	
+		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
 	
 	timer -= delta
 	if timer < 0.0:
 		trigger.monitoring = true
-	
-	move_and_slide()
+
+func reset():
+	global_position = pos
+	falling = false
 
 func _on_trigger_body_entered(body: Node2D) -> void:
 	if (body is Player or body is Clone) and !falling:
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(waitTime).timeout
 		falling = true
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if body is Player:
-		falling = false
 		if player_1:
-			player_1._respawn()
+			GameProgress.content.player1Deaths += 1
+			player_1._change_state(player_1.States.Death)
 		if player_2:
-			player_2._respawn()
+			GameProgress.content.player2Deaths += 1
+			player_2._change_state(player_2.States.Death)
 		trigger.monitoring = false
 		timer = time
-		_reset()
+		var camera = get_tree().get_first_node_in_group("camera")
+		camera.currentRoom._reset_room()
 	elif body is Clone:
-		falling = false
 		body.queue_free()
 		trigger.monitoring = false
-		_reset()
-
-func _reset() -> void:
-	position = pos
-	falling = false
-	velocity = Vector2.ZERO

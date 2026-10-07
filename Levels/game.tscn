@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://dsvdxvvhy2iwj"]
 
 [ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Entity/Player/Scripts/camera_controller.gd" id="1_qxrlw"]
-[ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Levels/level.tscn" id="2_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://cw67ga6bs1bdq" path="res://Levels/tutorial_level.tscn" id="2_6isyr"]
+[ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
 
 [node name="Game" type="Node2D" unique_id=739549817]
 
-[node name="CameraController" type="Node2D" parent="." unique_id=388081032]
+[node name="CameraController" type="Node2D" parent="." unique_id=388081032 groups=["camera"]]
 script = ExtResource("1_qxrlw")
 
 [node name="NormalViewport" type="SubViewportContainer" parent="." unique_id=70257945]
@@ -17,12 +18,13 @@ handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Level" parent="NormalViewport/SubViewport" unique_id=1337777124 instance=ExtResource("2_wrm1d")]
+[node name="Tutorial Level" parent="NormalViewport/SubViewport" unique_id=1741904549 instance=ExtResource("2_6isyr")]
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/SubViewport" unique_id=1584254544]
 limit_enabled = false
 
 [node name="HorizontalViewport" type="HBoxContainer" parent="." unique_id=1188303144]
+visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
@@ -33,7 +35,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer1" unique_id=1073894326]
 handle_input_locally = false
 size = Vector2i(320, 360)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer1/SubViewport" unique_id=1582717937]
 limit_enabled = false
@@ -44,12 +46,13 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer2" unique_id=913816880]
 handle_input_locally = false
 size = Vector2i(320, 360)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer2/SubViewport" unique_id=337165461]
 limit_enabled = false
 
 [node name="VerticalViewport" type="VBoxContainer" parent="." unique_id=58535937]
+visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
@@ -60,7 +63,7 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer1" unique_id=1594889065]
 handle_input_locally = false
 size = Vector2i(640, 180)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer1/SubViewport" unique_id=880919578]
 limit_enabled = false
@@ -71,7 +74,13 @@ layout_mode = 2
 [node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer2" unique_id=287266535]
 handle_input_locally = false
 size = Vector2i(640, 180)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=1764857025]
 limit_enabled = false
+
+[node name="InGameUI" parent="." unique_id=934436243 instance=ExtResource("3_wrm1d")]
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 320.0
+offset_bottom = 180.0

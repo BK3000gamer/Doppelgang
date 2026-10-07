@@ -22,7 +22,7 @@ class_name Camera
 		camera_2 = $"/root/Game/VerticalViewport/SubViewportContainer2/SubViewport/Camera2D"
 	}
 }
-var currentRoom
+var currentRoom: Room
 
 var player_1: Player
 var player_2: Player

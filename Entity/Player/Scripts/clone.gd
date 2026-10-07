@@ -3,25 +3,28 @@ class_name Clone
 
 @export_category("Stats")
 @export var maxSpeed: float
-@export var deceleration: float
 @export var jumpHeight: float
 @export var jumpTimeToPeak: float
 @export var jumpTimeToDecent: float
 @export var launchTime: float
 @export var launchSpeed: float
+@export var recallSpeed: float
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
 @onready var parent := get_parent()
 
-var Momentum: float
+var dir: int
 var jumpVelocity: float
 var jumpGravity: float
 var fallGravity: float
 var launchTimer: float = 0.0
 var launchDir: Vector2
 
-var playerNum: int = 1
+var player_1: Player
+var player_2: Player
+
+var playerNum: int = -1
 
 enum States {
 	Idle,
@@ -30,7 +33,10 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
-	Disabled
+	Disabled,
+	Climb,
+	Merge,
+	Recall
 }
 
 var CurrentState := States.Idle
@@ -41,6 +47,13 @@ func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
 func _physics_process(delta: float) -> void:
+	if playerNum == -1:
+		set_collision_mask_value(3, true)
+		set_collision_mask_value(4, false)
+	elif playerNum == 1:
+		set_collision_mask_value(4, true)
+		set_collision_mask_value(3, false)
+	
 	#Gravity
 	jumpVelocity = (2.0 * jumpHeight) / jumpTimeToPeak * -1.0
 	jumpGravity = (-2.0 * jumpHeight) / pow(jumpTimeToPeak, 2.0) * -1.0
@@ -54,8 +67,7 @@ func _physics_process(delta: float) -> void:
 			if !is_on_floor():
 				_change_state(States.Fall)
 		States.Fall:
-			Momentum *= deceleration
-			velocity.x = Momentum
+			velocity.x = maxSpeed * dir
 			velocity.y += _get_gravity() * delta
 			
 			if is_on_floor():
@@ -68,15 +80,32 @@ func _physics_process(delta: float) -> void:
 				
 				if is_on_floor():
 					_change_state(States.Idle)
+		States.Recall:
+			if playerNum == -1:
+				position = position.move_toward(player_1.position, recallSpeed * delta)
+			elif playerNum == 1:
+				position = position.move_toward(player_2.position, recallSpeed * delta)
+			
+			set_collision_layer_value(1, false)
+			set_collision_mask_value(1, false)
+			set_collision_mask_value(2, false)
+			set_collision_mask_value(3, false)
+			set_collision_mask_value(4, false)
+			await get_tree().create_timer(0.1).timeout
+			queue_free()
+	
 	if carrier != null:
 		velocity += carrier.velocity
 	move_and_slide()
 
-#func _process(delta: float) -> void:
-#	if playerNum == 1:
-#		Sprite.modulate = Color.SKY_BLUE
-#	elif playerNum == 2:
-#		Sprite.modulate = Color.INDIAN_RED
+func _process(delta: float) -> void:
+	if playerNum == -1:
+		Sprite.modulate = Color.SKY_BLUE
+	elif playerNum == 1:
+		Sprite.modulate = Color.INDIAN_RED
+	
+	player_1 = get_tree().get_first_node_in_group("player_1")
+	player_2 = get_tree().get_first_node_in_group("player_2")
 	
 	launchTimer -= delta
 
@@ -87,7 +116,22 @@ func _change_state(NewState: States) -> void:
 			jumpHeight = recordJumpHeight
 			velocity = Vector2.ZERO
 		States.Fall:
-			Momentum = velocity.x
+			if velocity.x == 0:
+				dir = 0
+			elif velocity.x > 0:
+				dir = 1
+			elif velocity.x <0:
+				dir = -1
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player or body is Clone:
+		if body != self:
+			body.carrier = self
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body is Player or body is Clone:
+		if body.carrier:
+			body.carrier = null

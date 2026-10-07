@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bkc8no1nw3nd4"
+path="res://.godot/imported/CharacterAnimation.aseprite-6a48f6801e4c78374657eb62ad7a61c7.res"
+
+[deps]
+
+source_file="res://Entity/Player/Sprites/CharacterAnimation.aseprite"
+dest_files=["res://.godot/imported/CharacterAnimation.aseprite-6a48f6801e4c78374657eb62ad7a61c7.res"]
+
+[params]
+
