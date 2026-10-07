@@ -56,14 +56,14 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
-	Disabled
+	Disabled,
+	Carried
 }
 
 var CurrentState = States.Idle
 
 var carrier: Player = null
 var carried_player: Player = null
-var is_carried := false
 
 # ///// Leftover code /////
 
@@ -90,8 +90,6 @@ func _on_clone_enter(body: Node2D) -> void:
 	if top_player == self:
 		return
 	if carried_player != null:
-		return
-	if top_player.is_carried:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
@@ -123,17 +121,6 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_just_pressed("merge_2") and playerNum == 2 and CurrentState != States.Disabled:
 		if !group_1.is_empty() and !group_2.is_empty():
 			group_1[group_1.size() - 1].queue_free()
-	
-	#Stacking
-	if is_carried:
-		#Handles when the carried player wants to move.
-		if _detach_input(): 
-			_detach_player()
-			return
-		
-		global_position = carrier.get_node("StackMarker").global_position
-		velocity = carrier.velocity
-		return
 	
 	#TP
 	if playerNum == 1:
@@ -232,6 +219,9 @@ func _physics_process(delta: float) -> void:
 			Speed *= acceleration
 			velocity.x = InputDir.x * min(Speed, maxSpeed)
 			
+			if carrier:
+				velocity += carrier.velocity
+			
 			if InputDir.x == 0.0:
 				_change_state(States.Idle)
 			
@@ -326,8 +316,15 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Run)
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
-	if carrier != null:
-		velocity += carrier.velocity
+		States.Carried:
+			#Handles when the carried player wants to move.
+			if _detach_input(): 
+				_detach_player()
+				return
+			
+			if carrier:
+				global_position.y = carrier.get_node("StackMarker").global_position.y
+				velocity = carrier.velocity
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -442,6 +439,8 @@ func _change_state(NewState: States) -> void:
 					clone.move_and_slide()
 		States.Disabled:
 			velocity = Vector2.ZERO
+		States.Carried:
+			velocity = Vector2.ZERO
 
 func _detach_input() -> bool: 
 	if playerNum == 1:
@@ -461,12 +460,11 @@ func _attach_player(top_player: Player) -> void:
 	carried_player = top_player
 	
 	top_player.carrier = self
-	top_player.is_carried = true
-	top_player.CurrentState = States.Disabled
+	top_player._change_state(States.Carried)
 	
-	top_player.global_position = $StackMarker.global_position
+	top_player.global_position.y = $StackMarker.global_position.y
 	
-	top_player.set_collision_layer_value(1, false)
+	#top_player.set_collision_layer_value(1, false)
 	top_player.set_collision_mask_value(1, false)
 
 func _detach_player() -> void:
@@ -475,11 +473,10 @@ func _detach_player() -> void:
 	
 	var old_carrier := carrier
 	carrier = null
-	is_carried = false
 	old_carrier.carried_player = null
-	set_collision_layer_value(1, true)
+	#set_collision_layer_value(1, true)
 	set_collision_mask_value(1, true)
-	CurrentState = States.Fall
+	_change_state(States.Fall)
 
 func _respawn() -> void:
 	global_position = checkpoint

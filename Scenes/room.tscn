@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Scripts/room.gd" id="1_mbine"]
 
 [node name="Room" type="Area2D" unique_id=1542920506]
+collision_layer = 2
 script = ExtResource("1_mbine")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299480520]
