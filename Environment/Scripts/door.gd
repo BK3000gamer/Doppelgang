@@ -16,7 +16,7 @@ func activate() -> void:
 	collision.set_deferred("disabled", true)
 	sprite.frame = 1
 	var tween = create_tween()
-	tween.tween_property(sprite, "position", Vector2(0, -48), 0.1)
+	tween.tween_property(sprite, "position", Vector2(0, -64), 0.1)
 
 func deactivate() -> void:
 	collision.set_deferred("disabled", false)

@@ -83,24 +83,6 @@ var PreviousState: States
 var carrier: Player = null
 var carried_player: Player = null
 
-# ///// Leftover code /////
-
-#func _on_area_2d_body_entered(body: Node2D) -> void:
-#	if body is Player or body is Clone:
-#		if body != self:
-#			body.carrier = self
-
-#func _on_area_2d_body_exited(body: Node2D) -> void:
-#	if body is Player or body is Clone:
-#		if body.carrier:
-#			body.carrier = null
-
-#func _on_area_2d_2_body_exited(body: Node2D) -> void:
-#	if body is Player or body is Clone:
-#			body.set_collision_mask_value(1, true)
-
-# //////////////////
-
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is Player:
 		return
@@ -111,12 +93,15 @@ func _on_clone_enter(body: Node2D) -> void:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
-	if top_player.velocity.y <= 0.0:
-		return
 	_attach_player(top_player)
 
-func _on_clone_exit(body: Node2D) -> void:
-	pass
+func _on_clone_exited(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var top_player := body as Player
+	if top_player == self:
+		return
+	body._detach_player(States.Fall)
 
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
@@ -354,14 +339,15 @@ func _physics_process(delta: float) -> void:
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
 		States.Carried:
-			#Handles when the carried player wants to move.
-			if _detach_input(): 
-				_detach_player()
-				return
+			Speed *= acceleration
+			velocity.x = InputDir.x * min(Speed, maxSpeed)
+			
+			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
+				_detach_player(States.Jump)
 			
 			if carrier:
 				global_position.y = carrier.get_node("StackMarker").global_position.y
-				velocity = carrier.velocity
+				velocity += carrier.velocity
 		States.Climb:
 			if InputDir.y == 0:
 				velocity.y = 0.0
@@ -427,9 +413,12 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
 		States.Death:
+			set_collision_layer_value(1, false)
 			await get_tree().create_timer(0.7).timeout
 			global_position = checkpoint
 			_change_state(States.Idle)
+			await get_tree().create_timer(0.1).timeout
+			set_collision_layer_value(1, true)
 	
 	move_and_slide()
 
@@ -574,20 +563,6 @@ func _change_state(NewState: States) -> void:
 		States.Death:
 			velocity = Vector2.ZERO
 			hitAnimationPlayer.play("Hit Animation")
-
-func _detach_input() -> bool: 
-	if playerNum == 1:
-		return (
-			Input.is_action_pressed("left_1")
-			or Input.is_action_pressed("right_1")
-			or Input.is_action_just_pressed("jump_1")
-		)
-		
-	return (
-		Input.is_action_pressed("left_2")
-		or Input.is_action_pressed("right_2")
-		or Input.is_action_just_pressed("jump_2")
-	)
 	
 func _attach_player(top_player: Player) -> void:
 	carried_player = top_player
@@ -597,19 +572,17 @@ func _attach_player(top_player: Player) -> void:
 	
 	top_player.global_position.y = $StackMarker.global_position.y
 	
-	#top_player.set_collision_layer_value(1, false)
 	top_player.set_collision_mask_value(1, false)
 
-func _detach_player() -> void:
+func _detach_player(state: States) -> void:
 	if carrier == null:
 		return
 	
 	var old_carrier := carrier
 	carrier = null
 	old_carrier.carried_player = null
-	#set_collision_layer_value(1, true)
 	set_collision_mask_value(1, true)
-	_change_state(States.Fall)
+	_change_state(state)
 
 func _respawn() -> void:
 	global_position = checkpoint

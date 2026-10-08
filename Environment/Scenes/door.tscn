@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dcapml86hvwxp" path="res://Environment/Sprites/Door.png" id="2_rh2ck"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnxnc"]
-size = Vector2(16, 48)
+size = Vector2(16, 64)
 
 [node name="Door" type="StaticBody2D" unique_id=2072523590 groups=["environment"]]
 collision_layer = 2

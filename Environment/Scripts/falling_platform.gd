@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if falling:
 		velocity += get_gravity() * delta
-	
+		
 		move_and_slide()
 	else:
 		velocity = Vector2.ZERO
@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 func reset():
 	global_position = pos
 	falling = false
+	velocity = Vector2.ZERO
 
 func _on_trigger_body_entered(body: Node2D) -> void:
 	if (body is Player or body is Clone) and !falling:
