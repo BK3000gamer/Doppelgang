@@ -347,7 +347,8 @@ func _physics_process(delta: float) -> void:
 			
 			if carrier:
 				global_position.y = carrier.get_node("StackMarker").global_position.y
-				velocity += carrier.velocity
+				velocity.x += carrier.velocity.x
+				velocity.y = carrier.velocity.y
 		States.Climb:
 			if InputDir.y == 0:
 				velocity.y = 0.0
