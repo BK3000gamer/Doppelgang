@@ -1,0 +1,128 @@
+extends Area2D
+class_name Room
+
+@export var roomType: roomTypes
+@export var enabledInputs: inputs
+
+@onready var checkpoint_1_1 := $"Checkpoint1-1"
+@onready var checkpoint_2_1 := $"Checkpoint2-1"
+@onready var checkpoint_1_2 := $"Checkpoint1-2"
+@onready var checkpoint_2_2 := $"Checkpoint2-2"
+@onready var cameraCheckpoint_1 := $"CameraCheckpoint1"
+@onready var cameraCheckpoint_2 := $"CameraCheckpoint2"
+@onready var cameraController := $"/root/Game/CameraController"
+@onready var camera := $"/root/Game/NormalViewport/SubViewport/Camera2D"
+@onready var checkpoint_1 := checkpoint_1_1
+@onready var checkpoint_2 := checkpoint_2_1
+
+var player_1: Player
+var player_2: Player
+var group_1: Array
+var group_2: Array
+var clone_1: Array
+var clone_2: Array
+
+var activated: bool = false
+
+enum roomTypes {
+	Normal,
+	Horizontal,
+	Vertical
+}
+
+enum inputs{
+	None,
+	Clone,
+	Merge,
+	TP
+}
+
+func _process(_delta: float) -> void:
+	group_1 = get_tree().get_nodes_in_group("player_1")
+	group_2 = get_tree().get_nodes_in_group("player_2")
+	clone_1 = []
+	clone_2 = []
+	for i in range(1, group_1.size()):
+		if !clone_2.has(group_1[i]):
+			clone_2.append(group_1[i])
+	for i in range(1, group_2.size()):
+		if !clone_1.has(group_2[i]):
+			clone_1.append(group_2[i])
+	
+	if !player_1 and !player_2:
+		activated = false
+
+func _activate_room() -> void:
+	cameraController.currentRoom = self
+	GameProgress.content.currentRoom = self
+	
+	#set checkpoint
+	if player_1:
+		if player_1.CurrentState == player_1.States.Disabled:
+			player_1._change_state(player_1.States.Idle)
+		player_1.checkpoint = checkpoint_1.global_position
+	if player_2:
+		if player_2.CurrentState == player_2.States.Disabled:
+			player_2._change_state(player_2.States.Idle)
+		player_2.checkpoint = checkpoint_2.global_position
+	
+	#move camera
+	if !activated:
+		cameraController.tween_camera()
+		activated = true
+	
+	#enable inputs
+	match enabledInputs:
+		inputs.None:
+			pass
+		inputs.Clone:
+			GameProgress.content.clone = GameProgress.clone
+		inputs.Merge:
+			GameProgress.content.merge = GameProgress.merge
+		inputs.TP:
+			GameProgress.content.tp_left = GameProgress.tp_left
+			GameProgress.content.tp_right = GameProgress.tp_right
+
+func _reset_room() -> void:
+	var children: Array[Node] = get_children()
+	for i in range(children.size()):
+		if children[i].is_in_group("environment"):
+			if is_instance_valid(children[i]):
+				children[i].reset()
+	for i in range(clone_1.size()):
+		clone_1[i].queue_free()
+	for i in range(clone_2.size()):
+		if clone_2[i]:
+			clone_2[i].queue_free()
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		if body.playerNum == -1:
+			if body.checkpoint:
+				checkpoint_1 = get_closest_checkpoint(body, checkpoint_1_1, checkpoint_1_2)
+				body._change_state(body.States.Disabled)
+				body.global_position = checkpoint_1.global_position
+			player_1 = body
+		elif body.playerNum == 1:
+			if body.checkpoint:
+				checkpoint_2 = get_closest_checkpoint(body, checkpoint_2_1, checkpoint_2_2)
+				body._change_state(body.States.Disabled)
+				body.global_position = checkpoint_2.global_position
+			player_2 = body
+		
+		if (player_1 and player_2) or (player_1 and group_2 == []) or (player_2 and group_1 == []):
+			_activate_room()
+
+func _on_body_exited(body: Node2D) -> void:
+	if body is Player:
+		if body.playerNum == -1:
+			player_1 = null
+			for i in range(clone_1.size()):
+				clone_1[i]._change_state(clone_1[i].States.Recall)
+		elif body.playerNum == 1:
+			player_2 = null
+			for i in range(clone_2.size()):
+				clone_2[i]._change_state(clone_2[i].States.Recall)
+
+func get_closest_checkpoint(player: Player,checkpoint1: Marker2D, checkpoint2: Marker2D) -> Marker2D:
+	return checkpoint1 if player.global_position.distance_to(checkpoint1.global_position) < player.global_position.distance_to(checkpoint2.global_position) else checkpoint2

@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bpymy3wyey51x"]
+
+[ext_resource type="Script" uid="uid://b4u7qnf0p1x8v" path="res://UI/load_menu.gd" id="1_tlgdu"]
+[ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/button.gd" id="2_hnwv5"]
+
+[node name="LoadMenu" type="Control" unique_id=993023887]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tlgdu")
+
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=816430973]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer2" unique_id=440442415]
+layout_mode = 2
+color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2" unique_id=47904891]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer" unique_id=198778685]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Save 1" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=362906664]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 1"
+script = ExtResource("2_hnwv5")
+
+[node name="Save 2" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1135553366]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 2"
+
+[node name="Save 3" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1501308659]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 3"
+
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 1" to="." method="_on_save_1_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 2" to="." method="_on_save_2_pressed"]
+[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 3" to="." method="_on_save_3_pressed"]

@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dsvl0vgej8xue"]
+
+[ext_resource type="Script" uid="uid://bh6exe1thi316" path="res://Environment/Scripts/motion_sensor.gd" id="1_sx1r3"]
+[ext_resource type="Shader" uid="uid://dbj8sjfm0stnc" path="res://Shaders/outline.gdshader" id="2_2kvff"]
+[ext_resource type="Texture2D" uid="uid://bwgnf6fqegnvj" path="res://Environment/Sprites/MotionSensor.png" id="2_aru6a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_73pmg"]
+shader = ExtResource("2_2kvff")
+shader_parameter/outline_colour = Color(1, 1, 1, 0)
+shader_parameter/corner_pixel = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wg5dn"]
+size = Vector2(32, 32)
+
+[node name="MotionSensor" type="Area2D" unique_id=233647211 groups=["environment"]]
+collision_layer = 0
+script = ExtResource("1_sx1r3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1039472192]
+material = SubResource("ShaderMaterial_73pmg")
+texture = ExtResource("2_aru6a")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1408587055]
+shape = SubResource("RectangleShape2D_wg5dn")
+debug_color = Color(1, 0.251, 0.1961, 0.4196)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

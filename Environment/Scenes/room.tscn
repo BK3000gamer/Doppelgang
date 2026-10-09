@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://vjft40w36esj"]
+
+[ext_resource type="Script" uid="uid://calcpxao6y5ha" path="res://Environment/Scripts/room.gd" id="1_uibqc"]
+[ext_resource type="TileSet" uid="uid://dbr0xjx4w3c4q" path="res://Environment/Tile Sets/tile_set.tres" id="2_uibqc"]
+
+[node name="Room" type="Area2D" unique_id=1542920506]
+collision_layer = 2
+script = ExtResource("1_uibqc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299480520]
+
+[node name="Checkpoint1-1" type="Marker2D" parent="." unique_id=1564129974]
+position = Vector2(80, 328)
+gizmo_extents = 16.0
+
+[node name="Checkpoint2-1" type="Marker2D" parent="." unique_id=417000062]
+position = Vector2(144, 328)
+gizmo_extents = 16.0
+
+[node name="Checkpoint1-2" type="Marker2D" parent="." unique_id=1196488787]
+position = Vector2(80, 328)
+gizmo_extents = 16.0
+
+[node name="Checkpoint2-2" type="Marker2D" parent="." unique_id=1534871572]
+position = Vector2(144, 328)
+gizmo_extents = 16.0
+
+[node name="CameraCheckpoint1" type="Marker2D" parent="." unique_id=771365507]
+
+[node name="CameraCheckpoint2" type="Marker2D" parent="." unique_id=92530121]
+
+[node name="TileMapLayers" type="Node2D" parent="." unique_id=1714325443]
+position = Vector2(-3.2014214e-09, 4)
+
+[node name="Midground" type="TileMapLayer" parent="TileMapLayers" unique_id=1903157022]
+texture_filter = 1
+tile_set = ExtResource("2_uibqc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
