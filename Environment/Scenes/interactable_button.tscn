@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://bh7peoju0f7pl"]
+
+[ext_resource type="Script" uid="uid://d1dfyfidujx5k" path="res://Environment/Scripts/interactable_button.gd" id="1_0gwur"]
+[ext_resource type="Shader" uid="uid://dbj8sjfm0stnc" path="res://Shaders/outline.gdshader" id="2_o1cks"]
+[ext_resource type="Texture2D" uid="uid://bpolajau4s3wt" path="res://Environment/Sprites/Button.png" id="2_pu7ry"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pu7ry"]
+shader = ExtResource("2_o1cks")
+shader_parameter/outline_colour = Color(0, 0, 0, 0)
+shader_parameter/corner_pixel = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_button"]
+size = Vector2(32, 32)
+
+[sub_resource type="Animation" id="Animation_pu7ry"]
+resource_name = "Default"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_o1cks"]
+resource_name = "Player1"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_67g3x"]
+resource_name = "Player2"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_m30qf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g1ola"]
+_data = {
+&"Default": SubResource("Animation_pu7ry"),
+&"Player1": SubResource("Animation_o1cks"),
+&"Player2": SubResource("Animation_67g3x"),
+&"RESET": SubResource("Animation_m30qf")
+}
+
+[node name="InteractableButton" type="Area2D" unique_id=1511731226 groups=["environment"]]
+collision_layer = 0
+script = ExtResource("1_0gwur")
+
+[node name="InteractionPrompt" type="Label" parent="." unique_id=2051527969]
+visible = false
+offset_left = -9.0
+offset_top = -35.0
+offset_right = 9.0
+offset_bottom = -12.0
+text = "X"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1647130250]
+material = SubResource("ShaderMaterial_pu7ry")
+texture = ExtResource("2_pu7ry")
+hframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=884957670]
+shape = SubResource("RectangleShape2D_button")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=269829619]
+libraries/ = SubResource("AnimationLibrary_g1ola")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

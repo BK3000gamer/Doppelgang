@@ -10,22 +10,36 @@ signal interacted(body: Node2D)
 @export var detects_clones := false
 @export var toggle_mode := false
 
-@onready var button_face := $ButtonFace
 @onready var interaction_prompt := $InteractionPrompt
+@onready var animationPlayer := $AnimationPlayer
 
 var bodies_in_range: Array[Node2D] = []
 var is_active := false
 
-func _process(_delta: float) -> void:
-	var current_bodies := get_overlapping_bodies().filter(_is_valid_body)
-	bodies_in_range = current_bodies
-	interaction_prompt.visible = !bodies_in_range.is_empty()
+var bodies : Array[Player] = []
 
-	if bodies_in_range.is_empty():
-		return
+var player_1: Player
+var player_2: Player
 
-	if Input.is_action_just_pressed("interact"):
-		_interact(bodies_in_range[0])
+func _process(_delta: float) -> void:#Get players
+	player_1 = get_tree().get_first_node_in_group("player_1")
+	player_2 = get_tree().get_first_node_in_group("player_2")
+	
+	if (player_1 and global_position.distance_to(player_1.global_position) < 96) or (player_2 and global_position.distance_to(player_2.global_position) < 96):
+		$Sprite2D.material.set_shader_parameter("outline_colour", Color(1, 1, 1, 1))
+	else:
+		$Sprite2D.material.set_shader_parameter("outline_colour", Color(1, 1, 1, 0))
+	
+	for i in range(bodies.size()):
+		if Input.is_action_just_pressed("interact_%d" % bodies[i].deviceNum):
+			_interact(bodies[i])
+			if bodies[i].playerNum == -1:
+				animationPlayer.play("Player1")
+			elif bodies[i].playerNum == 1:
+				animationPlayer.play("Player2")
+		else:
+			if animationPlayer.is_playing() == false:
+				animationPlayer.play("Default")
 
 func _interact(body: Node2D) -> void:
 	interacted.emit(body)
@@ -52,13 +66,20 @@ func reset() -> void:
 	set_active(false)
 
 func _update_visual_state() -> void:
-	button_face.color = Color("4ed67a") if is_active else Color("d64e4e")
+	pass
 
-func _is_valid_body(body: Node2D) -> bool:
-	if detects_players and body is Player:
-		return true
+#func _is_valid_body(body: Node2D) -> bool:
+#	if detects_players and body is Player:
+#		return true
+#
+#	return false
 
-	if detects_clones and body is Clone:
-		return true
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		bodies.append(body)
 
-	return false
+func _on_body_exited(body: Node2D) -> void:
+	if body is Player:
+		for i in range(bodies.size()):
+			if bodies[i] == body:
+				bodies.remove_at(i)

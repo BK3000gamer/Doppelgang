@@ -33,3 +33,6 @@ func _load(slot: int):
 		content.merge = saveData.merge
 		content.tp_left = saveData.tp_left
 		content.tp_right = saveData.tp_right
+		content.currentRoom = saveData.currentRoom
+		content.player1Deaths = saveData.player1Deaths
+		content.player2Deaths = saveData.player2Deaths
