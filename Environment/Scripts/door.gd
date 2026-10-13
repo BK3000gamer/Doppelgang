@@ -2,15 +2,20 @@ extends StaticBody2D
 class_name Door
 
 @export var startsOpen := false
+@export var useTimer := false
 @export var inputs: Array [Area2D] = []
+@export var inputTime: float = 0.0
 
 @onready var collision := $CollisionShape2D
 @onready var sprite := $Sprite2D
 
 var currentActivations := 0
+var inputTimer: float = 0.0
+var useTimerRec: float
 
 func _ready() -> void:
 	_update_door()
+	useTimerRec = useTimer
 
 func activate() -> void:
 	collision.set_deferred("disabled", true)
@@ -30,22 +35,40 @@ func _update_door() -> void:
 	else:
 		deactivate()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	currentActivations = 0
-		
+	inputTimer -= delta
+	
 	for i in range(inputs.size()):
 		if inputs[i].is_active:
 			currentActivations += 1
-	if currentActivations == inputs.size():
-		if startsOpen:
-			deactivate()
+	if useTimer and currentActivations == 1:
+		inputTimer = inputTime
+		useTimer = false
+	if inputTime == 0.0:
+		if currentActivations == inputs.size():
+			if startsOpen:
+				deactivate()
+			else:
+				activate()
 		else:
-			activate()
+			if startsOpen:
+				activate()
+			else:
+				deactivate()
 	else:
-		if startsOpen:
-			activate()
-		else:
-			deactivate()
+		if inputTimer > 0.0:
+			if currentActivations == inputs.size():
+				if startsOpen:
+					deactivate()
+				else:
+					activate()
+			else:
+				if startsOpen:
+					activate()
+				else:
+					deactivate()
 
 func reset():
 	_update_door()
+	useTimer = useTimerRec

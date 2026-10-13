@@ -34,7 +34,8 @@ enum inputs{
 	None,
 	Clone,
 	Merge,
-	TP
+	TP,
+	All
 }
 
 func _process(_delta: float) -> void:
@@ -80,6 +81,11 @@ func _activate_room() -> void:
 		inputs.Merge:
 			GameProgress.content.merge = GameProgress.merge
 		inputs.TP:
+			GameProgress.content.tp_left = GameProgress.tp_left
+			GameProgress.content.tp_right = GameProgress.tp_right
+		inputs.All:
+			GameProgress.content.clone = GameProgress.clone
+			GameProgress.content.merge = GameProgress.merge
 			GameProgress.content.tp_left = GameProgress.tp_left
 			GameProgress.content.tp_right = GameProgress.tp_right
 

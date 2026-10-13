@@ -6,6 +6,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://c5b0ox1sp5k6x" path="res://Entity/Player/Animations/Player2.res" id="3_qjj5u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oy53q"]
+resource_local_to_scene = true
 shader = ExtResource("2_qjj5u")
 shader_parameter/hit_flash_colour = Color(1, 1, 1, 1)
 shader_parameter/hit_flash_on = false
@@ -15,10 +16,10 @@ _data = PackedByteArray("AAADAAUAAAABAAAAQAIAACABAADkGgAAUklGRtwaAABXRUJQVlA4TNA
 size_override = Vector2(576, 288)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
-size = Vector2(18, 32)
+size = Vector2(15, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iuy3d"]
-size = Vector2(18, 12)
+size = Vector2(15, 12)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cj8ce"]
 
@@ -206,6 +207,10 @@ _data = {
 &"RESET": SubResource("Animation_2aakk")
 }
 
+[sub_resource type="Curve" id="Curve_e7par"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.508829, 0.0, 0, 0]
+point_count = 2
+
 [node name="Player" type="CharacterBody2D" unique_id=504046361]
 z_index = 1
 collision_mask = 2
@@ -228,7 +233,7 @@ wallSlideSpeed = 99.9999999999968
 wallClimbTime = 19.99999999999936
 wallClimbMultiplier = 14.99999999999952
 recallSpeed = 999.999999999968
-recallDistance = 127.99999999999592
+recallDistance = 63.999999999997954
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]
 z_index = -4
@@ -237,7 +242,7 @@ material = SubResource("ShaderMaterial_oy53q")
 position = Vector2(0, -8)
 texture = SubResource("PortableCompressedTexture2D_8kq2p")
 region_enabled = true
-region_rect = Rect2(192, 0, 48, 48)
+region_rect = Rect2(0, 48, 48, 48)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": false,
 "layer_section": false,
@@ -291,6 +296,23 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="HitAnimationPlayer" type="AnimationPlayer" parent="." unique_id=789967177]
 libraries/ = SubResource("AnimationLibrary_bgyt3")
+
+[node name="ParticlesManager" type="Node2D" parent="." unique_id=363614598]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="ParticlesManager" unique_id=77911002]
+position = Vector2(9, -15)
+emitting = false
+amount = 25
+lifetime = 0.5
+explosiveness = 1.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+angular_velocity_max = 499.01
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_e7par")
+color = Color(0.43529412, 0.8980392, 0.9137255, 1)
 
 [connection signal="body_entered" from="StackDetectorArea" to="." method="_on_clone_enter"]
 [connection signal="body_exited" from="StackDetectorArea" to="." method="_on_clone_exited"]

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bpolajau4s3wt" path="res://Environment/Sprites/Button.png" id="2_pu7ry"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pu7ry"]
+resource_local_to_scene = true
 shader = ExtResource("2_o1cks")
 shader_parameter/outline_colour = Color(0, 0, 0, 0)
 shader_parameter/corner_pixel = false

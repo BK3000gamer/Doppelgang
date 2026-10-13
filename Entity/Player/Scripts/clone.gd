@@ -33,10 +33,13 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
+	Duplicate,
 	Disabled,
 	Climb,
 	Merge,
-	Recall
+	Recall,
+	Death,
+	Carried
 }
 
 var CurrentState := States.Idle
@@ -80,6 +83,12 @@ func _physics_process(delta: float) -> void:
 				
 				if is_on_floor():
 					_change_state(States.Idle)
+		States.Duplicate:
+			velocity.y += _get_gravity() * delta
+			await get_tree().create_timer(0.1).timeout
+			
+			if velocity.y < 0.0:
+				_change_state(States.Fall)
 		States.Recall:
 			if playerNum == -1:
 				position = position.move_toward(player_1.position, recallSpeed * delta)

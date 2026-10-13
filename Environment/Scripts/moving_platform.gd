@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 				cooldownTimer = cooldownTime
 				activating = true
 			if path.progress_ratio == 1.0:
+				await get_tree().create_timer(1).timeout
 				activating = false
 			if activating:
 				activate()
@@ -62,6 +63,7 @@ func _physics_process(delta: float) -> void:
 					elif player.global_position.y < global_position.y and (player.CurrentState == player.States.Idle or player.CurrentState == player.States.Run):
 						activating = true
 			if path.progress_ratio == 1.0:
+				await get_tree().create_timer(1).timeout
 				activating = false
 			if activating:
 				activate()
@@ -94,6 +96,7 @@ func deactivate():
 		colour = Color("fff9ae")
 
 func reset():
+	activating = false
 	path.progress = 0
 	sprite.frame = 0
 	symbol.frame_coords.x = 0

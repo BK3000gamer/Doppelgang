@@ -31,6 +31,7 @@ class_name Player
 @onready var Sprite := $Sprite2D
 @onready var animationPlayer := $AnimationPlayer
 @onready var hitAnimationPlayer := $HitAnimationPlayer
+@onready var stackDetectorArea := $StackDetectorArea
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
@@ -69,6 +70,7 @@ enum States {
 	Fall,
 	Launch,
 	Clone,
+	Duplicate,
 	Disabled,
 	Climb,
 	Merge,
@@ -336,6 +338,18 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Idle)
 				else:
 					_change_state(States.Run)
+		States.Duplicate:
+			velocity.y += _get_gravity() * delta
+			await get_tree().create_timer(0.1).timeout
+			
+			if velocity.y < 0.0:
+				_change_state(States.Fall)
+			
+			if is_on_floor():
+				if InputDir.x == 0.0:
+					_change_state(States.Idle)
+				else:
+					_change_state(States.Run)
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
 		States.Carried:
@@ -469,22 +483,27 @@ func _change_state(NewState: States) -> void:
 			velocity = Vector2.ZERO
 			cloned = false
 			climbed = false
+			stackDetectorArea.monitoring = true
 		States.Run:
 			jumpHeight = recordJumpHeight
 			Speed = baseSpeed
 			cloned = false
 			climbed = false
+			stackDetectorArea.monitoring = true
 		States.Jump:
 			velocity.y = jumpVelocity
 			velocity.x += 40 * InputDir.x
 			Momentum = velocity.x
+			stackDetectorArea.monitoring = true
 		States.Fall:
 			coyoteTimer = coyoteTime
 			Momentum = velocity.x
+			stackDetectorArea.monitoring = true
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 			hitAnimationPlayer.play("Hit Animation")
+			stackDetectorArea.monitoring = false
 		States.Clone:
 			var clone: CharacterBody2D
 			
@@ -533,12 +552,14 @@ func _change_state(NewState: States) -> void:
 				if (InputDir.y > 0.0 and is_on_floor()):
 					launchDir = Vector2(InputDir.x, -InputDir.y)
 					_change_state(States.Launch)
+					clone._change_state(States.Duplicate)
 				elif (Input.is_action_pressed("jump_%d" % deviceNum)):
 					if InputDir == Vector2.ZERO:
 						launchDir = Vector2.UP
 					else:
 						launchDir = InputDir
 					_change_state(States.Launch)
+					clone._change_state(States.Duplicate)
 				else:
 					if InputDir == Vector2.ZERO:
 						clone.launchDir = Vector2.UP
@@ -546,14 +567,21 @@ func _change_state(NewState: States) -> void:
 						clone.launchDir = InputDir
 					clone._change_state(States.Launch)
 					clone.move_and_slide()
+			stackDetectorArea.monitoring = false
+		States.Duplicate:
+			stackDetectorArea.monitoring = false
 		States.Disabled:
 			velocity = Vector2.ZERO
+			stackDetectorArea.monitoring = false
 		States.Carried:
 			velocity = Vector2.ZERO
+			stackDetectorArea.monitoring = false
 		States.Climb:
 			wallClimbTimer = wallClimbTime
 			climbed = true
+			stackDetectorArea.monitoring = true
 		States.Merge:
+			stackDetectorArea.monitoring = false
 			if !group_1.is_empty() and !group_2.is_empty():
 				if playerNum == -1:
 					if group_2[group_2.size() - 1].global_position.distance_to(global_position) < recallDistance:
@@ -561,9 +589,12 @@ func _change_state(NewState: States) -> void:
 				elif playerNum == 1:
 					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
+		States.Recall:
+			stackDetectorArea.monitoring = false
 		States.Death:
 			velocity = Vector2.ZERO
 			hitAnimationPlayer.play("Hit Animation")
+			stackDetectorArea.monitoring = false
 	
 func _attach_player(top_player: Player) -> void:
 	carried_player = top_player

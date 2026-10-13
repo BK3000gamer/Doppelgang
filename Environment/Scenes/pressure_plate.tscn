@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bq8rldnyaxo2c" path="res://Environment/Sprites/PressurePlate.png" id="2_mfkjq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7xrft"]
+resource_local_to_scene = true
 shader = ExtResource("2_d7rpo")
 shader_parameter/outline_colour = Color(1, 1, 1, 0)
 shader_parameter/corner_pixel = false

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bwgnf6fqegnvj" path="res://Environment/Sprites/MotionSensor.png" id="2_aru6a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_73pmg"]
+resource_local_to_scene = true
 shader = ExtResource("2_2kvff")
 shader_parameter/outline_colour = Color(1, 1, 1, 0)
 shader_parameter/corner_pixel = false
