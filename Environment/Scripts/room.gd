@@ -24,6 +24,8 @@ var clone_2: Array
 
 var activated: bool = false
 
+var flipCheckpoint: bool = false
+
 enum roomTypes {
 	Normal,
 	Horizontal,
@@ -96,7 +98,8 @@ func _reset_room() -> void:
 			if is_instance_valid(children[i]):
 				children[i].reset()
 	for i in range(clone_1.size()):
-		clone_1[i].queue_free()
+		if clone_1[i]:
+			clone_1[i].queue_free()
 	for i in range(clone_2.size()):
 		if clone_2[i]:
 			clone_2[i].queue_free()
@@ -105,13 +108,19 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if body.playerNum == -1:
 			if body.checkpoint:
-				checkpoint_1 = get_closest_checkpoint(body, checkpoint_1_1, checkpoint_1_2)
+				if flipCheckpoint:
+					checkpoint_1 = get_closest_checkpoint(body, checkpoint_2_1, checkpoint_2_2)
+				else:
+					checkpoint_1 = get_closest_checkpoint(body, checkpoint_1_1, checkpoint_1_2)
 				body._change_state(body.States.Disabled)
 				body.global_position = checkpoint_1.global_position
 			player_1 = body
 		elif body.playerNum == 1:
 			if body.checkpoint:
-				checkpoint_2 = get_closest_checkpoint(body, checkpoint_2_1, checkpoint_2_2)
+				if flipCheckpoint:
+					checkpoint_2 = get_closest_checkpoint(body, checkpoint_1_1, checkpoint_1_2)
+				else:
+					checkpoint_2 = get_closest_checkpoint(body, checkpoint_2_1, checkpoint_2_2)
 				body._change_state(body.States.Disabled)
 				body.global_position = checkpoint_2.global_position
 			player_2 = body
@@ -132,3 +141,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 func get_closest_checkpoint(player: Player,checkpoint1: Marker2D, checkpoint2: Marker2D) -> Marker2D:
 	return checkpoint1 if player.global_position.distance_to(checkpoint1.global_position) < player.global_position.distance_to(checkpoint2.global_position) else checkpoint2
+
+func _on_flip_checkpoint_check_body_entered(body: Node2D) -> void:
+	if body is Player:
+		if body.playerNum == -1:
+			flipCheckpoint = false
+		elif body.playerNum == 1:
+			flipCheckpoint = true

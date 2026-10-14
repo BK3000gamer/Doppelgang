@@ -91,9 +91,11 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Fall)
 		States.Recall:
 			if playerNum == -1:
-				position = position.move_toward(player_1.position, recallSpeed * delta)
+				if player_1:
+					position = position.move_toward(player_1.position, recallSpeed * delta)
 			elif playerNum == 1:
-				position = position.move_toward(player_2.position, recallSpeed * delta)
+				if player_2:
+					position = position.move_toward(player_2.position, recallSpeed * delta)
 			
 			set_collision_layer_value(1, false)
 			set_collision_mask_value(1, false)
