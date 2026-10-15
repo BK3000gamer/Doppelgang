@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dpli1b0kptvsv"]
+
+[ext_resource type="Script" uid="uid://t3atv5df8gqw" path="res://Environment/Scripts/level_transition.gd" id="1_65nw4"]
+
+[node name="LevelTransition" type="Area2D" unique_id=860769215]
+script = ExtResource("1_65nw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=354537846]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
