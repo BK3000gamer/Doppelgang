@@ -62,17 +62,20 @@ func _physics_process(delta: float) -> void:
 	#State Machine
 	match CurrentState:
 		States.Idle:
+			set_collision_mask_value(1, true)
 			velocity = Vector2.ZERO
 			
 			if !is_on_floor():
 				_change_state(States.Fall)
 		States.Fall:
+			set_collision_mask_value(1, true)
 			velocity.x = maxSpeed * dir
 			velocity.y += _get_gravity() * delta
 			
 			if is_on_floor():
 				_change_state(States.Idle)
 		States.Launch:
+			set_collision_mask_value(1, false)
 			if launchTimer < 0.0:
 				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
 				velocity.y = max(velocity.y, -maxSpeed)
@@ -96,6 +99,10 @@ func _physics_process(delta: float) -> void:
 	
 	if carrier != null:
 		velocity += carrier.velocity
+	for index in get_slide_collision_count():
+		var collision: KinematicCollision2D = get_slide_collision(index)
+		if collision.get_collider().name == "Player":
+			velocity = collision.get_normal() * collision.get_collider_velocity().length()
 	move_and_slide()
 
 func _process(delta: float) -> void:
