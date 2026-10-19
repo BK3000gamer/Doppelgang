@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://ho06xd8t2jp3"]
+
+[ext_resource type="Texture2D" uid="uid://bn8exk3wrfq2q" path="res://Environment/Sprites/MetroBackground1.png" id="1_uage5"]
+[ext_resource type="Script" uid="uid://cpvfupf12agfd" path="res://Environment/Scripts/parallax_background.gd" id="1_vshje"]
+[ext_resource type="Texture2D" uid="uid://fdd6ovmtsln8" path="res://Environment/Sprites/MetroBackground2.png" id="2_231ro"]
+
+[node name="ParallaxBackground" type="Node2D" unique_id=1422039757]
+script = ExtResource("1_vshje")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=934465410]
+scroll_scale = Vector2(0.6, 1)
+repeat_size = Vector2(1280, 480)
+repeat_times = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=775158252]
+z_index = -20
+texture = ExtResource("1_uage5")
+
+[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=1907805363]
+scroll_scale = Vector2(0.8, 1)
+repeat_size = Vector2(1280, 480)
+repeat_times = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=64743360]
+z_index = -20
+texture = ExtResource("2_231ro")

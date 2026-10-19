@@ -40,11 +40,19 @@ var viewType := viewTypes.Normal
 var transitioning: bool
 var tween: Tween
 
+const HALF_VIEW_W := 160.0
+
 func _ready() -> void:
 	views["horizontal"].subviewport_1.world_2d = views["normal"].subviewport.world_2d
 	views["horizontal"].subviewport_2.world_2d = views["normal"].subviewport.world_2d
 	views["vertical"].subviewport_1.world_2d = views["normal"].subviewport.world_2d
 	views["vertical"].subviewport_2.world_2d = views["normal"].subviewport.world_2d
+	
+	_assign_background(views["normal"].subviewport,       1 << 1)
+	_assign_background(views["horizontal"].subviewport_1, 1 << 2)
+	_assign_background(views["horizontal"].subviewport_2, 1 << 3)
+	_assign_background(views["vertical"].subviewport_1,   1 << 4)
+	_assign_background(views["vertical"].subviewport_2,   1 << 5)
 
 func _physics_process(_delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
@@ -224,3 +232,24 @@ func tween_camera() -> void:
 	tween.tween_property(views["normal"].camera, "global_position", target, 0.2).from(currentPos)
 	
 	tween.finished.connect(func(): transitioning = false)
+
+func _set_layer_recursive(node: Node, bit: int) -> void:
+	if node is CanvasItem:
+		node.visibility_layer = bit
+	for c in node.get_children():
+		_set_layer_recursive(c, bit)
+
+func _assign_background(subviewport: SubViewport, bit: int) -> void:
+	var bg := subviewport.get_node("ParallaxBackground")
+	_set_layer_recursive(bg, bit)
+	subviewport.canvas_cull_mask = 1 | bit   # level (layer 1) + own background
+	_offset_parallax(views["horizontal"].subviewport_1,  1.0)  # left half
+	_offset_parallax(views["horizontal"].subviewport_2, -1.0)  # right half
+
+func _offset_parallax(subviewport: SubViewport, dir: float) -> void:
+	var bg := subviewport.get_node("ParallaxBackground")
+	if bg == null:
+		return
+	for p in bg.get_children():
+		if p is Parallax2D:
+			p.scroll_offset.x = -(HALF_VIEW_W * (1.0 - p.scroll_scale.x)) + dir * HALF_VIEW_W * (1.0 - p.scroll_scale.x)
