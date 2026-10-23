@@ -36,10 +36,15 @@ position = Vector2(-3.2014214e-09, 4)
 texture_filter = 1
 tile_set = ExtResource("2_uibqc")
 
-[node name="FlipCheckpointCheck" type="Area2D" parent="." unique_id=480955958]
+[node name="FlipCheckpointCheck1" type="Area2D" parent="." unique_id=480955958]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipCheckpointCheck" unique_id=1092270331]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipCheckpointCheck1" unique_id=1092270331]
+
+[node name="FlipCheckpointCheck2" type="Area2D" parent="." unique_id=255176380]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlipCheckpointCheck2" unique_id=602929552]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="body_entered" from="FlipCheckpointCheck" to="." method="_on_flip_checkpoint_check_body_entered"]
+[connection signal="body_entered" from="FlipCheckpointCheck1" to="." method="_on_flip_checkpoint_check_1_body_entered"]
+[connection signal="body_entered" from="FlipCheckpointCheck2" to="." method="_on_flip_checkpoint_check_2_body_entered"]

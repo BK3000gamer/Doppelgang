@@ -142,9 +142,16 @@ func _on_body_exited(body: Node2D) -> void:
 func get_closest_checkpoint(player: Player,checkpoint1: Marker2D, checkpoint2: Marker2D) -> Marker2D:
 	return checkpoint1 if player.global_position.distance_to(checkpoint1.global_position) < player.global_position.distance_to(checkpoint2.global_position) else checkpoint2
 
-func _on_flip_checkpoint_check_body_entered(body: Node2D) -> void:
+func _on_flip_checkpoint_check_1_body_entered(body: Node2D) -> void:
 	if body is Player:
 		if body.playerNum == -1:
 			flipCheckpoint = false
 		elif body.playerNum == 1:
 			flipCheckpoint = true
+
+func _on_flip_checkpoint_check_2_body_entered(body: Node2D) -> void:
+	if body is Player:
+		if body.playerNum == -1:
+			flipCheckpoint = true
+		elif body.playerNum == 1:
+			flipCheckpoint = false
