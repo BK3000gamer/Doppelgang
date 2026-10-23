@@ -11,7 +11,7 @@ class_name Door
 
 var currentActivations := 0
 var inputTimer: float = 0.0
-var useTimerRec: float
+var useTimerRec: bool
 
 func _ready() -> void:
 	_update_door()
