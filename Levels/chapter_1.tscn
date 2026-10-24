@@ -919,11 +919,11 @@ shape = SubResource("RectangleShape2D_042ok")
 shape = SubResource("RectangleShape2D_kc58o")
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("1_mh18r")]
-position = Vector2(2624, -212)
+position = Vector2(-288, 132)
 collision_mask = 6
 
 [node name="Player2" parent="." unique_id=918836812 groups=["player_2"] instance=ExtResource("1_mh18r")]
-position = Vector2(2624, -372)
+position = Vector2(-240, 132)
 collision_mask = 10
 playerNum = 1
 

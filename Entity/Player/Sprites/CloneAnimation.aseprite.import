@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://c4a48v4wjc5t1"
+path="res://.godot/imported/CloneAnimation.aseprite-882575647f8937a9022ba2046c1ec59c.res"
+
+[deps]
+
+source_file="res://Entity/Player/Sprites/CloneAnimation.aseprite"
+dest_files=["res://.godot/imported/CloneAnimation.aseprite-882575647f8937a9022ba2046c1ec59c.res"]
+
+[params]
+

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dsvdxvvhy2iwj"]
 
 [ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Entity/Player/Scripts/camera_controller.gd" id="1_qxrlw"]
-[ext_resource type="PackedScene" uid="uid://bfykd6qrnxkqb" path="res://Levels/chapter_1.tscn" id="2_5ubxa"]
+[ext_resource type="PackedScene" uid="uid://cw67ga6bs1bdq" path="res://Levels/tutorial_level.tscn" id="2_5ubxa"]
 [ext_resource type="PackedScene" uid="uid://ho06xd8t2jp3" path="res://Environment/Scenes/parallax_background.tscn" id="3_5ubxa"]
 [ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
 
@@ -19,7 +19,7 @@ handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Chapter 1" parent="NormalViewport/SubViewport" unique_id=714554862 instance=ExtResource("2_5ubxa")]
+[node name="Tutorial Level" parent="NormalViewport/SubViewport" unique_id=1741904549 instance=ExtResource("2_5ubxa")]
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/SubViewport" unique_id=1584254544]
 limit_enabled = false
