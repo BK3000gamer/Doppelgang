@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://dfuio0pf5nta" path="res://UI/reset_menu.gd" id="2_trw78"]
 [ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/button.gd" id="3_jpmjn"]
 
+[ext_resource type="Script" path="res://UI/pause_menu.gd" id="4_pause"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_e7par"]
 
 [node name="InGameUI" type="Control" unique_id=934436243]
@@ -64,6 +66,10 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 12
 text = "No"
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("4_pause")
 
 [connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu" method="_on_reset_pressed"]
 [connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu/ResetMenu" method="_on_reset_pressed"]
