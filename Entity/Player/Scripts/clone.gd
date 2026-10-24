@@ -57,15 +57,17 @@ func _on_clone_enter(body: Node2D) -> void:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
+	if top_player.velocity.y <= 0.0:
+		return
 	set_collision_mask_value(1, true)
 	set_collision_layer_value(2, true)
 	# Add something for pressing down direction for stepping down from platform clone
-	#if (Input.is_action_pressed("down_%d" % body.deviceNum)):
-		# holdTimer = holdTime
+	if (Input.is_action_pressed("down_%d" % body.deviceNum)):
+		#holdTimer = holdTime
 		#if holdTimer < 0:
-			#
-		# Timer here maybe
-		# Object.set
+		add_collision_exception_with
+		set_collision_mask_value(1, false)
+		set_collision_layer_value(2, false)
 
 func _on_clone_exited(body: Node2D) -> void:
 	if not body is Player:
@@ -167,3 +169,7 @@ func _change_state(NewState: States) -> void:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 			
+
+
+func is_action_presssed(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	pass # Replace with function body.
