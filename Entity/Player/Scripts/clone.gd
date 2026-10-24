@@ -9,6 +9,7 @@ class_name Clone
 @export var launchTime: float
 @export var launchSpeed: float
 @export var recallSpeed: float
+@export var holdTime: float = 0.5
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -45,7 +46,39 @@ enum States {
 var CurrentState := States.Idle
 
 var carrier: CharacterBody2D
+var carried_player: Player = null
 
+var holdTimer: float
+
+func _on_clone_enter(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var top_player := body as Player
+	if top_player == self:
+		return
+	if carried_player != null:
+		return
+	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
+		return
+	set_collision_mask_value(1, true)
+	set_collision_layer_value(2, true)
+	# Add something for pressing down direction for stepping down from platform clone
+	#if (Input.is_action_pressed("down_%d" % body.deviceNum)):
+		# holdTimer = holdTime
+		#if holdTimer < 0:
+			#
+		# Timer here maybe
+		# Object.set
+
+func _on_clone_exited(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var top_player := body as Player
+	if top_player == self:
+		return
+	set_collision_mask_value(1, false)
+	set_collision_layer_value(2, false)
+	
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
 
@@ -65,17 +98,20 @@ func _physics_process(delta: float) -> void:
 	#State Machine
 	match CurrentState:
 		States.Idle:
+#			set_collision_mask_value(1, true)
 			velocity = Vector2.ZERO
 			
 			if !is_on_floor():
 				_change_state(States.Fall)
 		States.Fall:
+#			set_collision_mask_value(1, true)
 			velocity.x = maxSpeed * dir
 			velocity.y += _get_gravity() * delta
 			
 			if is_on_floor():
 				_change_state(States.Idle)
 		States.Launch:
+#			set_collision_mask_value(1, false)
 			if launchTimer < 0.0:
 				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
 				velocity.y = max(velocity.y, -maxSpeed)
@@ -107,6 +143,10 @@ func _physics_process(delta: float) -> void:
 	
 	if carrier != null:
 		velocity += carrier.velocity
+	for index in get_slide_collision_count():
+		var collision: KinematicCollision2D = get_slide_collision(index)
+		if collision.get_collider().name == "Player":
+			velocity = collision.get_normal() * collision.get_collider_velocity().length()
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -119,6 +159,7 @@ func _process(delta: float) -> void:
 	player_2 = get_tree().get_first_node_in_group("player_2")
 	
 	launchTimer -= delta
+	holdTimer -= delta
 
 func _change_state(NewState: States) -> void:
 	CurrentState = NewState
@@ -136,3 +177,4 @@ func _change_state(NewState: States) -> void:
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
+			

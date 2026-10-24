@@ -34,9 +34,11 @@ shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1475856007]
 position = Vector2(0, -18)
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1222306829]
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_50nb2")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_clone_enter"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_clone_exited"]

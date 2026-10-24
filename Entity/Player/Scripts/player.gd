@@ -330,6 +330,9 @@ func _physics_process(delta: float) -> void:
 			velocity.y += _get_gravity() * delta
 			await get_tree().create_timer(0.1).timeout
 			
+			# Maybe put code for when transitioning from carrier or carried state here
+			# Or just instant
+			
 			if velocity.y < 0.0:
 				_change_state(States.Fall)
 			
@@ -355,6 +358,9 @@ func _physics_process(delta: float) -> void:
 		States.Carried:
 			Speed *= acceleration
 			velocity.x = InputDir.x * min(Speed, maxSpeed)
+			
+			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+				_change_state(States.Clone)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_detach_player(States.Jump)

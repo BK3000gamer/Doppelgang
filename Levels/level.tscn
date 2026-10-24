@@ -76,6 +76,7 @@ size = Vector2(64, 32)
 [node name="Level" type="Node2D" unique_id=1337777124]
 
 [node name="Room1" parent="." unique_id=1542920506 instance=ExtResource("1_uhyyw")]
+enabledInputs = 1
 
 [node name="CollisionShape2D" parent="Room1" index="0" unique_id=299480520]
 shape = SubResource("RectangleShape2D_81xng")
