@@ -9,7 +9,6 @@ class_name Clone
 @export var launchTime: float
 @export var launchSpeed: float
 @export var recallSpeed: float
-@export var holdTime: float = 0.5
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -65,16 +64,15 @@ func _on_clone_enter(body: Node2D) -> void:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
+	if top_player.velocity.y <= 0.0:
+		return
 	set_collision_mask_value(1, true)
 	set_collision_layer_value(2, true)
 	# Add something for pressing down direction for stepping down from platform clone
 	#if (Input.is_action_pressed("down_%d" % body.deviceNum)):
-		# holdTimer = holdTime
+		#holdTimer = holdTime
 		#if holdTimer < 0:
-			#
-		# Timer here maybe
-		# Object.set
-
+		
 func _on_clone_exited(body: Node2D) -> void:
 	if not body is Player:
 		return
@@ -158,8 +156,7 @@ func _process(delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
 	player_2 = get_tree().get_first_node_in_group("player_2")
 	
-	launchTimer -= delta
-	holdTimer -= delta
+	launchTimer -= delta	
 
 func _change_state(NewState: States) -> void:
 	CurrentState = NewState
