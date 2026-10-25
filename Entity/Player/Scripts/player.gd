@@ -26,6 +26,7 @@ class_name Player
 @export var wallClimbMultiplier: float
 @export var recallSpeed: float
 @export var recallDistance: float
+@export var holdTime: float = 0.5
 
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
@@ -53,6 +54,10 @@ var group_1: Array
 var group_2: Array
 var clone_1: Array
 var clone_2: Array
+
+var clone_under: Clone = null
+var clone_dropthrough: Clone = null
+var holdTimer: float
 
 var cloned: bool = false
 var climbed: bool = false
@@ -82,6 +87,28 @@ var PreviousState: States
 
 var carrier: Player = null
 var carried_player: Player = null
+
+#Attempt to add playerside clone dropthrough
+func _find_clone() -> Clone:
+	for i in range(get_slide_collision_count()):
+		var collision := get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collision.get_normal().y < -0.7 and collider is Clone:
+			return collider as Clone
+	return null
+	
+func clone_drop() -> void:
+	if not is_on_floor():
+		return
+	if not Input.is_action_pressed("down_%d" % deviceNum):
+		return
+	var platform := _find_clone()
+	if platform == null:
+		return
+	add_collision_exception_with(platform)
+	clone_dropthrough = platform
+	holdTimer = holdTime
+		
 
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is Player:
@@ -427,8 +454,21 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(0.1).timeout
 			set_collision_layer_value(1, true)
 	
+	if clone_dropthrough == null:
+		clone_drop()
+		
+	if clone_dropthrough != null:
+		holdTimer -= delta
+		
+		if holdTimer <= 0.0:
+			if is_instance_valid(clone_dropthrough):
+				remove_collision_exception_with(clone_dropthrough)
+				clone_dropthrough = null
+				
+	
 	move_and_slide()
-
+	clone_under = _find_clone()
+	
 func _process(delta: float) -> void:
 	controllerMap = ControllerMap.controllerMap
 	for deviceID in controllerMap.keys():
