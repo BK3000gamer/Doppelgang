@@ -2,29 +2,92 @@
 
 [ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Entity/Player/Scripts/camera_controller.gd" id="1_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Levels/level.tscn" id="2_5ubxa"]
+[ext_resource type="Shader" uid="uid://bdenufw0wjyuc" path="res://Shaders/pixel_offset.gdshader" id="2_uda3f"]
 [ext_resource type="PackedScene" uid="uid://ho06xd8t2jp3" path="res://Environment/Scenes/parallax_background.tscn" id="3_5ubxa"]
 [ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vshje"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uibqc"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qr1sg"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uda3f"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1edw"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jycte"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i2b3y"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ev4ff"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j27wp"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xfsjo"]
+shader = ExtResource("2_uda3f")
+shader_parameter/cam_offset = Vector2(0, 0)
 
 [node name="Game" type="Node2D" unique_id=739549817]
 
 [node name="CameraController" type="Node2D" parent="." unique_id=388081032 groups=["camera"]]
 script = ExtResource("1_qxrlw")
 
-[node name="NormalViewport" type="SubViewportContainer" parent="." unique_id=70257945]
-offset_right = 640.0
-offset_bottom = 360.0
+[node name="NormalViewport" type="Control" parent="." unique_id=10652201]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="SubViewport" type="SubViewport" parent="NormalViewport" unique_id=1789592896]
+[node name="BackgroundContainer" type="SubViewportContainer" parent="NormalViewport" unique_id=1113177797]
+material = SubResource("ShaderMaterial_vshje")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="NormalViewport/BackgroundContainer" unique_id=264553041]
 handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Level" parent="NormalViewport/SubViewport" unique_id=1337777124 instance=ExtResource("2_5ubxa")]
+[node name="Camera2D" type="Camera2D" parent="NormalViewport/BackgroundContainer/SubViewport" unique_id=1130135499]
 
-[node name="Camera2D" type="Camera2D" parent="NormalViewport/SubViewport" unique_id=1584254544]
+[node name="ParallaxBackground" parent="NormalViewport/BackgroundContainer/SubViewport" unique_id=1422039757 instance=ExtResource("3_5ubxa")]
+
+[node name="LevelContainer" type="SubViewportContainer" parent="NormalViewport" unique_id=70257945]
+material = SubResource("ShaderMaterial_uibqc")
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="SubViewport" type="SubViewport" parent="NormalViewport/LevelContainer" unique_id=1789592896]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="Level" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1337777124 instance=ExtResource("2_5ubxa")]
+
+[node name="Camera2D" type="Camera2D" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1584254544]
 limit_enabled = false
-
-[node name="ParallaxBackground" parent="NormalViewport/SubViewport" unique_id=1422039757 instance=ExtResource("3_5ubxa")]
 
 [node name="HorizontalViewport" type="HBoxContainer" parent="." unique_id=1188303144]
 visible = false
@@ -32,31 +95,73 @@ offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
 
-[node name="SubViewportContainer1" type="SubViewportContainer" parent="HorizontalViewport" unique_id=1532531813]
+[node name="Half1" type="Control" parent="HorizontalViewport" unique_id=1409204613]
+custom_minimum_size = Vector2(320, 360)
 layout_mode = 2
 
-[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer1" unique_id=1073894326]
+[node name="BackgroundContainer" type="SubViewportContainer" parent="HorizontalViewport/Half1" unique_id=452423203]
+material = SubResource("ShaderMaterial_qr1sg")
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/Half1/BackgroundContainer" unique_id=604126529]
 handle_input_locally = false
 size = Vector2i(320, 360)
 render_target_update_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer1/SubViewport" unique_id=1582717937]
-limit_enabled = false
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half1/BackgroundContainer/SubViewport" unique_id=1944077612]
 
-[node name="ParallaxBackground" parent="HorizontalViewport/SubViewportContainer1/SubViewport" unique_id=2031679356 instance=ExtResource("3_5ubxa")]
+[node name="ParallaxBackground" parent="HorizontalViewport/Half1/BackgroundContainer/SubViewport" unique_id=1497339333 instance=ExtResource("3_5ubxa")]
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="HorizontalViewport" unique_id=346335202]
-layout_mode = 2
+[node name="LevelContainer" type="SubViewportContainer" parent="HorizontalViewport/Half1" unique_id=1532531813]
+material = SubResource("ShaderMaterial_uda3f")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 360.0
 
-[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/SubViewportContainer2" unique_id=913816880]
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/Half1/LevelContainer" unique_id=1073894326]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(320, 360)
 render_target_update_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/SubViewportContainer2/SubViewport" unique_id=337165461]
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half1/LevelContainer/SubViewport" unique_id=1582717937]
 limit_enabled = false
 
-[node name="ParallaxBackground" parent="HorizontalViewport/SubViewportContainer2/SubViewport" unique_id=2004146753 instance=ExtResource("3_5ubxa")]
+[node name="Half2" type="Control" parent="HorizontalViewport" unique_id=1461141259]
+custom_minimum_size = Vector2(320, 360)
+layout_mode = 2
+
+[node name="BackgroundContainer" type="SubViewportContainer" parent="HorizontalViewport/Half2" unique_id=976748251]
+material = SubResource("ShaderMaterial_u1edw")
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/Half2/BackgroundContainer" unique_id=83310706]
+handle_input_locally = false
+size = Vector2i(320, 360)
+render_target_update_mode = 0
+
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half2/BackgroundContainer/SubViewport" unique_id=2048570765]
+
+[node name="ParallaxBackground" parent="HorizontalViewport/Half2/BackgroundContainer/SubViewport" unique_id=468903249 instance=ExtResource("3_5ubxa")]
+
+[node name="LevelContainer" type="SubViewportContainer" parent="HorizontalViewport/Half2" unique_id=346335202]
+material = SubResource("ShaderMaterial_jycte")
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 360.0
+
+[node name="SubViewport" type="SubViewport" parent="HorizontalViewport/Half2/LevelContainer" unique_id=913816880]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(320, 360)
+render_target_update_mode = 0
+
+[node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half2/LevelContainer/SubViewport" unique_id=337165461]
+limit_enabled = false
 
 [node name="VerticalViewport" type="VBoxContainer" parent="." unique_id=58535937]
 visible = false
@@ -64,31 +169,73 @@ offset_right = 640.0
 offset_bottom = 360.0
 theme_override_constants/separation = 0
 
-[node name="SubViewportContainer1" type="SubViewportContainer" parent="VerticalViewport" unique_id=1543249038]
+[node name="Half1" type="Control" parent="VerticalViewport" unique_id=1545245292]
+custom_minimum_size = Vector2(640, 180)
 layout_mode = 2
 
-[node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer1" unique_id=1594889065]
+[node name="BackgroundContainer" type="SubViewportContainer" parent="VerticalViewport/Half1" unique_id=1809912692]
+material = SubResource("ShaderMaterial_i2b3y")
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/Half1/BackgroundContainer" unique_id=1691714887]
 handle_input_locally = false
 size = Vector2i(640, 180)
 render_target_update_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer1/SubViewport" unique_id=880919578]
-limit_enabled = false
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half1/BackgroundContainer/SubViewport" unique_id=2052588741]
 
-[node name="ParallaxBackground" parent="VerticalViewport/SubViewportContainer1/SubViewport" unique_id=1435707326 instance=ExtResource("3_5ubxa")]
+[node name="ParallaxBackground" parent="VerticalViewport/Half1/BackgroundContainer/SubViewport" unique_id=817977117 instance=ExtResource("3_5ubxa")]
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="VerticalViewport" unique_id=1351778111]
-layout_mode = 2
+[node name="LevelContainer" type="SubViewportContainer" parent="VerticalViewport/Half1" unique_id=1543249038]
+material = SubResource("ShaderMaterial_ev4ff")
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 180.0
 
-[node name="SubViewport" type="SubViewport" parent="VerticalViewport/SubViewportContainer2" unique_id=287266535]
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/Half1/LevelContainer" unique_id=1594889065]
+transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 180)
 render_target_update_mode = 0
 
-[node name="Camera2D" type="Camera2D" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=1764857025]
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half1/LevelContainer/SubViewport" unique_id=880919578]
 limit_enabled = false
 
-[node name="ParallaxBackground" parent="VerticalViewport/SubViewportContainer2/SubViewport" unique_id=556450376 instance=ExtResource("3_5ubxa")]
+[node name="Half2" type="Control" parent="VerticalViewport" unique_id=1276998583]
+custom_minimum_size = Vector2(640, 180)
+layout_mode = 2
+
+[node name="BackgroundContainer" type="SubViewportContainer" parent="VerticalViewport/Half2" unique_id=1092084837]
+material = SubResource("ShaderMaterial_j27wp")
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/Half2/BackgroundContainer" unique_id=690646114]
+handle_input_locally = false
+size = Vector2i(640, 180)
+render_target_update_mode = 0
+
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half2/BackgroundContainer/SubViewport" unique_id=113288481]
+
+[node name="ParallaxBackground" parent="VerticalViewport/Half2/BackgroundContainer/SubViewport" unique_id=1783040792 instance=ExtResource("3_5ubxa")]
+
+[node name="LevelContainer" type="SubViewportContainer" parent="VerticalViewport/Half2" unique_id=1351778111]
+material = SubResource("ShaderMaterial_xfsjo")
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 180.0
+
+[node name="SubViewport" type="SubViewport" parent="VerticalViewport/Half2/LevelContainer" unique_id=287266535]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 180)
+render_target_update_mode = 0
+
+[node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half2/LevelContainer/SubViewport" unique_id=1764857025]
+limit_enabled = false
 
 [node name="InGameUI" parent="." unique_id=934436243 instance=ExtResource("3_wrm1d")]
 offset_left = 320.0

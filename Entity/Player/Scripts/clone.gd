@@ -179,7 +179,6 @@ func _change_state(NewState: States) -> void:
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
-			_play("Launch")
 		States.Recall:
 			_play("Death")
 

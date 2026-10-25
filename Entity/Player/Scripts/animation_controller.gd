@@ -4,15 +4,20 @@ extends Node2D
 @onready var animation_tree: AnimationTree = $"../AnimationTree"
 @onready var player: Player = get_parent()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player.InputDir.x < 0:
 		Sprite.flip_h = true
 	else:
 		Sprite.flip_h = false
 	
-	if player.PreviousState == player.States.Clone:
-		animation_tree["parameters/Player%d/Launch/blend_position" % player.playerNum] = player.launchDir
-	else:
-		animation_tree["parameters/Player%d/Launch/blend_position" % player.playerNum] = Vector2.ZERO
+	animation_tree["parameters/Player%d/Launch/blend_position" % player.playerNum] = player.launchDir
 	animation_tree["parameters/Player%d/Shoot/blend_position" % player.playerNum] = player.InputDir
 	animation_tree["parameters/Player%d/Jump_Shoot/blend_position" % player.playerNum] = player.InputDir
+	
+	queue_redraw()
+
+func _draw() -> void:
+	if player.TPclone:
+		print(player.TPclone)
+		var color = Color("6fe5e9") if player.playerNum == -1 else Color("ff6cf5")
+		draw_dashed_line(to_local(player.global_position), to_local(player.TPclone.global_position), color, 2, 4, false, false)

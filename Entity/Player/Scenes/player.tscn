@@ -39,147 +39,141 @@ animation = &"Player1/Idle"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bgyt3"]
 animation = &"Player1/Jump"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ooskk"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uibqc"]
 animation = &"Player1/JumpUpShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xswxy"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ghfdt"]
 animation = &"Player1/JumpDownShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_og7tn"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bqpdy"]
 animation = &"Player1/JumpSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_86nqc"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ows20"]
 animation = &"Player1/JumpUpSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_clnmy"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_31jat"]
 animation = &"Player1/JumpDownSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_332ah"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i5ls8"]
 animation = &"Player1/JumpSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jhiwu"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1r4dn"]
 animation = &"Player1/JumpDownSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1wsxb"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_r3805"]
 animation = &"Player1/JumpUpSideShoot"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_bgyt3"]
 blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_ooskk")
+blend_point_0/node = SubResource("AnimationNodeAnimation_uibqc")
 blend_point_0/pos = Vector2(0, -1)
 blend_point_0/name = &"Player1_JumpUpShoot"
-blend_point_1/node = SubResource("AnimationNodeAnimation_xswxy")
+blend_point_1/node = SubResource("AnimationNodeAnimation_ghfdt")
 blend_point_1/pos = Vector2(0, 1)
 blend_point_1/name = &"Player1_JumpDownShoot"
-blend_point_2/node = SubResource("AnimationNodeAnimation_og7tn")
+blend_point_2/node = SubResource("AnimationNodeAnimation_bqpdy")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_2/name = &"Player1_JumpSideShoot"
-blend_point_3/node = SubResource("AnimationNodeAnimation_86nqc")
+blend_point_3/node = SubResource("AnimationNodeAnimation_ows20")
 blend_point_3/pos = Vector2(1, -1)
 blend_point_3/name = &"Player1_JumpUpSideShoot"
-blend_point_4/node = SubResource("AnimationNodeAnimation_clnmy")
+blend_point_4/node = SubResource("AnimationNodeAnimation_31jat")
 blend_point_4/pos = Vector2(1, 1)
 blend_point_4/name = &"Player1_JumpDownSideShoot"
-blend_point_5/node = SubResource("AnimationNodeAnimation_332ah")
+blend_point_5/node = SubResource("AnimationNodeAnimation_i5ls8")
 blend_point_5/pos = Vector2(-1, 0)
 blend_point_5/name = &"Player1_JumpSideShoot 2"
-blend_point_6/node = SubResource("AnimationNodeAnimation_jhiwu")
+blend_point_6/node = SubResource("AnimationNodeAnimation_1r4dn")
 blend_point_6/pos = Vector2(-1, 0.90000004)
 blend_point_6/name = &"Player1_JumpDownSideShoot 2"
-blend_point_7/node = SubResource("AnimationNodeAnimation_1wsxb")
+blend_point_7/node = SubResource("AnimationNodeAnimation_r3805")
 blend_point_7/pos = Vector2(-1, -1)
 blend_point_7/name = &"Player1_JumpUpSideShoot 2"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xf0l3"]
-animation = &"Player1/Launch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1xthp"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k4nns"]
 animation = &"Player1/UpLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_csbx7"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kgmh5"]
 animation = &"Player1/SideLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a5ooj"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rw2xu"]
 animation = &"Player1/DownLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g5yh6"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j0olb"]
 animation = &"Player1/DownSideLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_euevk"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hrjv4"]
 animation = &"Player1/UpSideLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_whk60"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_34kkp"]
 animation = &"Player1/DownSideLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qbab4"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nh7oh"]
 animation = &"Player1/SideLaunch"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c2pjr"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_txrxt"]
 animation = &"Player1/UpSideLaunch"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_u1ye1"]
 blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_xf0l3")
-blend_point_0/pos = Vector2(0, 0)
-blend_point_0/name = &"Player1_Launch"
-blend_point_1/node = SubResource("AnimationNodeAnimation_1xthp")
-blend_point_1/pos = Vector2(0, -1)
-blend_point_1/name = &"Player1_UpLaunch"
-blend_point_2/node = SubResource("AnimationNodeAnimation_csbx7")
-blend_point_2/pos = Vector2(1, 0)
-blend_point_2/name = &"Player1_SideLaunch"
-blend_point_3/node = SubResource("AnimationNodeAnimation_a5ooj")
-blend_point_3/pos = Vector2(0, 1)
-blend_point_3/name = &"Player1_DownLaunch"
-blend_point_4/node = SubResource("AnimationNodeAnimation_g5yh6")
-blend_point_4/pos = Vector2(1, 1)
-blend_point_4/name = &"Player1_DownSideLaunch"
-blend_point_5/node = SubResource("AnimationNodeAnimation_euevk")
-blend_point_5/pos = Vector2(1, -1)
-blend_point_5/name = &"Player1_UpSideLaunch"
-blend_point_6/node = SubResource("AnimationNodeAnimation_whk60")
-blend_point_6/pos = Vector2(-1, 1)
-blend_point_6/name = &"Player1_DownSideLaunch 2"
-blend_point_7/node = SubResource("AnimationNodeAnimation_qbab4")
-blend_point_7/pos = Vector2(-1, 0)
-blend_point_7/name = &"Player1_SideLaunch 2"
-blend_point_8/node = SubResource("AnimationNodeAnimation_c2pjr")
-blend_point_8/pos = Vector2(-1, -1)
-blend_point_8/name = &"Player1_UpSideLaunch 2"
+blend_point_0/node = SubResource("AnimationNodeAnimation_k4nns")
+blend_point_0/pos = Vector2(0, -1)
+blend_point_0/name = &"Player1_UpLaunch"
+blend_point_1/node = SubResource("AnimationNodeAnimation_kgmh5")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_1/name = &"Player1_SideLaunch"
+blend_point_2/node = SubResource("AnimationNodeAnimation_rw2xu")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_2/name = &"Player1_DownLaunch"
+blend_point_3/node = SubResource("AnimationNodeAnimation_j0olb")
+blend_point_3/pos = Vector2(1, 1)
+blend_point_3/name = &"Player1_DownSideLaunch"
+blend_point_4/node = SubResource("AnimationNodeAnimation_hrjv4")
+blend_point_4/pos = Vector2(1, -1)
+blend_point_4/name = &"Player1_UpSideLaunch"
+blend_point_5/node = SubResource("AnimationNodeAnimation_34kkp")
+blend_point_5/pos = Vector2(-1, 1)
+blend_point_5/name = &"Player1_DownSideLaunch 2"
+blend_point_6/node = SubResource("AnimationNodeAnimation_nh7oh")
+blend_point_6/pos = Vector2(-1, 0)
+blend_point_6/name = &"Player1_SideLaunch 2"
+blend_point_7/node = SubResource("AnimationNodeAnimation_txrxt")
+blend_point_7/pos = Vector2(-1, -1)
+blend_point_7/name = &"Player1_UpSideLaunch 2"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oy53q"]
 animation = &"Player1/Run"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u1ye1"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_46vty"]
 animation = &"Player1/UpShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_votau"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_26rm3"]
 animation = &"Player1/SideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wqp6w"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ni81"]
 animation = &"Player1/UpSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oi4fu"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybkyn"]
 animation = &"Player1/UpShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wiw3i"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_326jw"]
 animation = &"Player1/UpSideShoot"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ooskk"]
 blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_u1ye1")
+blend_point_0/node = SubResource("AnimationNodeAnimation_46vty")
 blend_point_0/pos = Vector2(0, -1)
 blend_point_0/name = &"Player1_UpShoot"
-blend_point_1/node = SubResource("AnimationNodeAnimation_votau")
+blend_point_1/node = SubResource("AnimationNodeAnimation_26rm3")
 blend_point_1/pos = Vector2(1, 0)
 blend_point_1/name = &"Player1_SideShoot"
-blend_point_2/node = SubResource("AnimationNodeAnimation_wqp6w")
+blend_point_2/node = SubResource("AnimationNodeAnimation_8ni81")
 blend_point_2/pos = Vector2(1, -1)
 blend_point_2/name = &"Player1_UpSideShoot"
-blend_point_3/node = SubResource("AnimationNodeAnimation_oi4fu")
+blend_point_3/node = SubResource("AnimationNodeAnimation_ybkyn")
 blend_point_3/pos = Vector2(-1, 0)
 blend_point_3/name = &"Player1_UpShoot 2"
-blend_point_4/node = SubResource("AnimationNodeAnimation_wiw3i")
+blend_point_4/node = SubResource("AnimationNodeAnimation_326jw")
 blend_point_4/pos = Vector2(-1, -1)
 blend_point_4/name = &"Player1_UpSideShoot 2"
 
@@ -230,138 +224,150 @@ animation = &"Player2/Death"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3gc81"]
 animation = &"Player2/EnterIdle"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbtqv"]
-animation = &"Player2/Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ji0ll"]
-animation = &"Player2/JumpUpShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eee8h"]
-animation = &"Player2/JumpDownShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4i1sl"]
-animation = &"Player2/JumpSideShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xu536"]
-animation = &"Player2/JumpUpSideShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_babv2"]
-animation = &"Player2/JumpDownSideShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cjntl"]
-animation = &"Player2/JumpDownSideShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c8dh8"]
-animation = &"Player2/JumpSideShoot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_agaac"]
-animation = &"Player2/JumpUpSideShoot"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_qbab4"]
-blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_ji0ll")
-blend_point_0/pos = Vector2(0, -1)
-blend_point_0/name = &"Player2_JumpUpShoot"
-blend_point_1/node = SubResource("AnimationNodeAnimation_eee8h")
-blend_point_1/pos = Vector2(0, 1)
-blend_point_1/name = &"Player2_JumpDownShoot"
-blend_point_2/node = SubResource("AnimationNodeAnimation_4i1sl")
-blend_point_2/pos = Vector2(-1, 0)
-blend_point_2/name = &"Player2_JumpSideShoot"
-blend_point_3/node = SubResource("AnimationNodeAnimation_xu536")
-blend_point_3/pos = Vector2(-1, -1)
-blend_point_3/name = &"Player2_JumpUpSideShoot"
-blend_point_4/node = SubResource("AnimationNodeAnimation_babv2")
-blend_point_4/pos = Vector2(-1, 1)
-blend_point_4/name = &"Player2_JumpDownSideShoot"
-blend_point_5/node = SubResource("AnimationNodeAnimation_cjntl")
-blend_point_5/pos = Vector2(1, 1)
-blend_point_5/name = &"Player2_JumpDownSideShoot 2"
-blend_point_6/node = SubResource("AnimationNodeAnimation_c8dh8")
-blend_point_6/pos = Vector2(1, 0)
-blend_point_6/name = &"Player2_JumpSideShoot 2"
-blend_point_7/node = SubResource("AnimationNodeAnimation_agaac")
-blend_point_7/pos = Vector2(1, -1)
-blend_point_7/name = &"Player2_JumpUpSideShoot 2"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ixt6i"]
-animation = &"Player2/Launch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ubfnj"]
-animation = &"Player2/DownLaunch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fjpqj"]
-animation = &"Player2/UpLaunch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8hcn"]
-animation = &"Player2/SideLaunch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8da4v"]
-animation = &"Player2/UpSideLaunch"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1e68m"]
-animation = &"Player2/DownSideLaunch"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_c2pjr"]
-blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_ixt6i")
-blend_point_0/pos = Vector2(0, 0)
-blend_point_0/name = &"Player2_Launch"
-blend_point_1/node = SubResource("AnimationNodeAnimation_ubfnj")
-blend_point_1/pos = Vector2(0, -1)
-blend_point_1/name = &"Player2_DownLaunch"
-blend_point_2/node = SubResource("AnimationNodeAnimation_fjpqj")
-blend_point_2/pos = Vector2(0, 1)
-blend_point_2/name = &"Player2_UpLaunch"
-blend_point_3/node = SubResource("AnimationNodeAnimation_n8hcn")
-blend_point_3/pos = Vector2(1, 0)
-blend_point_3/name = &"Player2_SideLaunch"
-blend_point_4/node = SubResource("AnimationNodeAnimation_8da4v")
-blend_point_4/pos = Vector2(1, 1)
-blend_point_4/name = &"Player2_UpSideLaunch"
-blend_point_5/node = SubResource("AnimationNodeAnimation_1e68m")
-blend_point_5/pos = Vector2(1, -1)
-blend_point_5/name = &"Player2_DownSideLaunch"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_srwc4"]
 animation = &"Player2/Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbtqv"]
+animation = &"Player2/Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mu4x6"]
 animation = &"Player2/Jump"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p2owp"]
+animation = &"Player2/JumpUpShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d1a0i"]
+animation = &"Player2/JumpDownShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cr7w3"]
+animation = &"Player2/JumpSideShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_00wbp"]
+animation = &"Player2/JumpUpSideShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_27plj"]
+animation = &"Player2/JumpDownSideShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wtutf"]
+animation = &"Player2/JumpDownSideShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w7814"]
+animation = &"Player2/JumpSideShoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h2olw"]
+animation = &"Player2/JumpUpSideShoot"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_qbab4"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_p2owp")
+blend_point_0/pos = Vector2(0, -1)
+blend_point_0/name = &"Player2_JumpUpShoot"
+blend_point_1/node = SubResource("AnimationNodeAnimation_d1a0i")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_1/name = &"Player2_JumpDownShoot"
+blend_point_2/node = SubResource("AnimationNodeAnimation_cr7w3")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_2/name = &"Player2_JumpSideShoot"
+blend_point_3/node = SubResource("AnimationNodeAnimation_00wbp")
+blend_point_3/pos = Vector2(-1, -1)
+blend_point_3/name = &"Player2_JumpUpSideShoot"
+blend_point_4/node = SubResource("AnimationNodeAnimation_27plj")
+blend_point_4/pos = Vector2(-1, 1)
+blend_point_4/name = &"Player2_JumpDownSideShoot"
+blend_point_5/node = SubResource("AnimationNodeAnimation_wtutf")
+blend_point_5/pos = Vector2(1, 1)
+blend_point_5/name = &"Player2_JumpDownSideShoot 2"
+blend_point_6/node = SubResource("AnimationNodeAnimation_w7814")
+blend_point_6/pos = Vector2(1, 0)
+blend_point_6/name = &"Player2_JumpSideShoot 2"
+blend_point_7/node = SubResource("AnimationNodeAnimation_h2olw")
+blend_point_7/pos = Vector2(1, -1)
+blend_point_7/name = &"Player2_JumpUpSideShoot 2"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p4x8i"]
+animation = &"Player2/DownLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3wp36"]
+animation = &"Player2/UpLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u1r66"]
+animation = &"Player2/SideLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_470oh"]
+animation = &"Player2/UpSideLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0xhg0"]
+animation = &"Player2/DownSideLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xbqtx"]
+animation = &"Player2/DownSideLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gawn0"]
+animation = &"Player2/SideLaunch"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kehlu"]
+animation = &"Player2/UpSideLaunch"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_c2pjr"]
+blend_mode = 1
+blend_point_0/node = SubResource("AnimationNodeAnimation_p4x8i")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_0/name = &"Player2_DownLaunch"
+blend_point_1/node = SubResource("AnimationNodeAnimation_3wp36")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_1/name = &"Player2_UpLaunch"
+blend_point_2/node = SubResource("AnimationNodeAnimation_u1r66")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_2/name = &"Player2_SideLaunch"
+blend_point_3/node = SubResource("AnimationNodeAnimation_470oh")
+blend_point_3/pos = Vector2(-1, -1)
+blend_point_3/name = &"Player2_UpSideLaunch"
+blend_point_4/node = SubResource("AnimationNodeAnimation_0xhg0")
+blend_point_4/pos = Vector2(-1, 1)
+blend_point_4/name = &"Player2_DownSideLaunch"
+blend_point_5/node = SubResource("AnimationNodeAnimation_xbqtx")
+blend_point_5/pos = Vector2(1, 1)
+blend_point_5/name = &"Player2_DownSideLaunch 2"
+blend_point_6/node = SubResource("AnimationNodeAnimation_gawn0")
+blend_point_6/pos = Vector2(1, 0)
+blend_point_6/name = &"Player2_SideLaunch 2"
+blend_point_7/node = SubResource("AnimationNodeAnimation_kehlu")
+blend_point_7/pos = Vector2(1, -1)
+blend_point_7/name = &"Player2_UpSideLaunch 2"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_717ct"]
 animation = &"Player2/Run"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_attpf"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ij3d8"]
 animation = &"Player2/UpShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_47kwp"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dnts2"]
 animation = &"Player2/SideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1aauq"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qyas2"]
 animation = &"Player2/UpSideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nwjm5"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vwa37"]
 animation = &"Player2/SideShoot"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fm440"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_um3oq"]
 animation = &"Player2/UpSideShoot"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_oi4fu"]
 blend_mode = 1
-blend_point_0/node = SubResource("AnimationNodeAnimation_attpf")
+blend_point_0/node = SubResource("AnimationNodeAnimation_ij3d8")
 blend_point_0/pos = Vector2(0, -1)
 blend_point_0/name = &"Player2_UpShoot"
-blend_point_1/node = SubResource("AnimationNodeAnimation_47kwp")
+blend_point_1/node = SubResource("AnimationNodeAnimation_dnts2")
 blend_point_1/pos = Vector2(1, 0)
 blend_point_1/name = &"Player2_SideShoot"
-blend_point_2/node = SubResource("AnimationNodeAnimation_1aauq")
+blend_point_2/node = SubResource("AnimationNodeAnimation_qyas2")
 blend_point_2/pos = Vector2(1, -1)
 blend_point_2/name = &"Player2_UpSideShoot"
-blend_point_3/node = SubResource("AnimationNodeAnimation_nwjm5")
+blend_point_3/node = SubResource("AnimationNodeAnimation_vwa37")
 blend_point_3/pos = Vector2(-1, 0)
 blend_point_3/name = &"Player2_SideShoot 2"
-blend_point_4/node = SubResource("AnimationNodeAnimation_fm440")
+blend_point_4/node = SubResource("AnimationNodeAnimation_um3oq")
 blend_point_4/pos = Vector2(-1, -1)
 blend_point_4/name = &"Player2_UpSideShoot 2"
 
@@ -385,25 +391,25 @@ states/Death/position = Vector2(425, 207)
 states/End/position = Vector2(1127, 71)
 states/EnterIdle/node = SubResource("AnimationNodeAnimation_3gc81")
 states/EnterIdle/position = Vector2(334, -23)
+states/Fall/node = SubResource("AnimationNodeAnimation_srwc4")
+states/Fall/position = Vector2(791, 81)
 states/Idle/node = SubResource("AnimationNodeAnimation_jbtqv")
 states/Idle/position = Vector2(340, 114)
+states/Jump/node = SubResource("AnimationNodeAnimation_mu4x6")
+states/Jump/position = Vector2(954, 10)
 states/Jump_Shoot/node = SubResource("AnimationNodeBlendSpace2D_qbab4")
 states/Jump_Shoot/position = Vector2(810, 263)
 states/Launch/node = SubResource("AnimationNodeBlendSpace2D_c2pjr")
 states/Launch/position = Vector2(908, 182)
-states/Player2_Fall/node = SubResource("AnimationNodeAnimation_srwc4")
-states/Player2_Fall/position = Vector2(791, 81)
-states/Player2_Jump/node = SubResource("AnimationNodeAnimation_mu4x6")
-states/Player2_Jump/position = Vector2(954, 10)
-states/Player2_Run/node = SubResource("AnimationNodeAnimation_717ct")
-states/Player2_Run/position = Vector2(739, -30)
+states/Run/node = SubResource("AnimationNodeAnimation_717ct")
+states/Run/position = Vector2(739, -30)
 states/Shoot/node = SubResource("AnimationNodeBlendSpace2D_oi4fu")
 states/Shoot/position = Vector2(611, 275)
 states/Start/position = Vector2(132, 81)
 states/WallClimb/node = SubResource("AnimationNodeAnimation_eknmi")
 states/WallClimb/position = Vector2(597, 168)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wiw3i"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_agaac"), "Player2_Jump", "Player2_Fall", SubResource("AnimationNodeStateMachineTransition_fm440")]
-graph_offset = Vector2(5, 52)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wiw3i"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_agaac"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_fm440")]
+graph_offset = Vector2(140, -66)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bgyt3"]
 advance_mode = 2
@@ -417,10 +423,10 @@ advance_expression = "playerNum == -1"
 states/Player-1/node = SubResource("AnimationNodeStateMachine_qjj5u")
 states/Player-1/position = Vector2(411, 15)
 states/Player1/node = SubResource("AnimationNodeStateMachine_2aakk")
-states/Player1/position = Vector2(431, 117)
+states/Player1/position = Vector2(427, 113)
 states/Start/position = Vector2(213, 100)
 transitions = ["Start", "Player1", SubResource("AnimationNodeStateMachineTransition_bgyt3"), "Start", "Player-1", SubResource("AnimationNodeStateMachineTransition_3gc81")]
-graph_offset = Vector2(-70, -107)
+graph_offset = Vector2(-25, -16)
 
 [sub_resource type="Animation" id="Animation_qjj5u"]
 resource_name = "Hit Animation"
@@ -492,10 +498,9 @@ recallDistance = 63.999999999997954
 z_index = -4
 texture_filter = 1
 material = SubResource("ShaderMaterial_oy53q")
-position = Vector2(0, -9)
 texture = SubResource("PortableCompressedTexture2D_qjj5u")
 region_enabled = true
-region_rect = Rect2(192, 250, 48, 50)
+region_rect = Rect2(96, 0, 48, 50)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "layer_section": false,
@@ -524,6 +529,7 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "552d987a81502f5c6e980739daee7594"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839479529]
+position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_v0iea")
 one_way_collision_margin = 2.0
 
@@ -532,10 +538,11 @@ position = Vector2(0, -22)
 collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StackDetectorArea" unique_id=1488717505]
+position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="StackMarker" type="Marker2D" parent="." unique_id=410288628]
-position = Vector2(0, -40)
+position = Vector2(0, -31)
 gizmo_extents = 16.0
 
 [node name="AnimationController" type="Node2D" parent="." unique_id=758506808]

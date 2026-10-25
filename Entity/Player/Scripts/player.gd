@@ -88,6 +88,8 @@ const LOCKED := ["Launch", "Shoot", "Jump_Shoot"]   # must play to the end
 var queued := ""
 var queued_travel := false
 
+var TPclone: CharacterBody2D
+
 func _ready() -> void:
 	for name in ["Player1/Run", "Player1/Idle", "Player1/WallClimb", "Player2/Run", "Player2/Idle", "Player2/WallClimb"]:
 		var a = $AnimationPlayer.get_animation(name)
@@ -157,8 +159,11 @@ func _physics_process(delta: float) -> void:
 					target = clone_2[i]
 		if target != null and is_instance_valid(target):
 			var recordPos = global_position
+			TPclone = target
 			global_position = target.global_position
 			target.global_position = recordPos
+			await get_tree().create_timer(0.25).timeout
+			TPclone = null
 		else:
 			target = null
 	elif Input.is_action_just_pressed(GameProgress.content.tp_right % deviceNum):
@@ -184,8 +189,11 @@ func _physics_process(delta: float) -> void:
 					target = clone_2[i]
 		if target != null and is_instance_valid(target):
 			var recordPos = global_position
+			TPclone = target
 			global_position = target.global_position
 			target.global_position = recordPos
+			await get_tree().create_timer(0.5).timeout
+			TPclone = null
 		else:
 			target = null
 	
