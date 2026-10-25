@@ -33,7 +33,7 @@ class_name Player
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
-@onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum] 
+@onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum]
 
 var InputDir := Vector2.ZERO
 var Speed: float
@@ -89,6 +89,8 @@ var queued := ""
 var queued_travel := false
 
 var TPclone: CharacterBody2D
+
+var mergeOutOfRange: bool = false
 
 func _ready() -> void:
 	for name in ["Player1/Run", "Player1/Idle", "Player1/WallClimb", "Player2/Run", "Player2/Idle", "Player2/WallClimb"]:
@@ -222,7 +224,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if is_on_wall() and !climbed:
+				if $RayCast2D.is_colliding() and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
@@ -247,7 +249,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if is_on_wall() and !climbed:
+				if $RayCast2D.is_colliding() and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
@@ -275,7 +277,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if is_on_wall() and !climbed:
+				if $RayCast2D.is_colliding() and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
@@ -311,7 +313,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if is_on_wall() and !climbed:
+				if $RayCast2D.is_colliding() and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
@@ -343,7 +345,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if is_on_wall():
+				if $RayCast2D.is_colliding() and !climbed:
 					_change_state(States.Climb)
 		States.Clone:
 			velocity.y += _get_gravity() * delta
@@ -416,7 +418,7 @@ func _physics_process(delta: float) -> void:
 			if wallClimbTimer < 0.0:
 				_change_state(States.Fall)
 			
-			if is_on_wall():
+			if $RayCast2D.is_colliding():
 				if (Input.is_action_pressed("climb_%d" % deviceNum)):
 					pass
 				else:
@@ -625,9 +627,17 @@ func _change_state(NewState: States) -> void:
 				if playerNum == -1:
 					if group_2[group_2.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_2[group_2.size() - 1]._change_state(States.Recall)
+					else:
+						mergeOutOfRange = true
+						await get_tree().create_timer(0.1).timeout
+						mergeOutOfRange = false
 				elif playerNum == 1:
 					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
+					else:
+						mergeOutOfRange = true
+						await get_tree().create_timer(0.1).timeout
+						mergeOutOfRange = false
 		States.Recall:
 			stackDetectorArea.monitoring = false
 			_play("Death", false, true)

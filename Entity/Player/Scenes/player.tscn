@@ -216,7 +216,7 @@ states/Start/position = Vector2(175, 100)
 states/WallClimb/node = SubResource("AnimationNodeAnimation_1sw03")
 states/WallClimb/position = Vector2(668, 213)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_86nqc"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_2aakk"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_cj8ce")]
-graph_offset = Vector2(125, 157.93681)
+graph_offset = Vector2(101, -69.06319)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2aakk"]
 animation = &"Player2/Death"
@@ -426,7 +426,7 @@ states/Player1/node = SubResource("AnimationNodeStateMachine_2aakk")
 states/Player1/position = Vector2(427, 113)
 states/Start/position = Vector2(213, 100)
 transitions = ["Start", "Player1", SubResource("AnimationNodeStateMachineTransition_bgyt3"), "Start", "Player-1", SubResource("AnimationNodeStateMachineTransition_3gc81")]
-graph_offset = Vector2(-25, -16)
+graph_offset = Vector2(28, -1)
 
 [sub_resource type="Animation" id="Animation_qjj5u"]
 resource_name = "Hit Animation"
@@ -466,16 +466,12 @@ _data = {
 &"RESET": SubResource("Animation_2aakk")
 }
 
-[sub_resource type="Curve" id="Curve_e7par"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.508829, 0.0, 0, 0]
-point_count = 2
-
 [node name="Player" type="CharacterBody2D" unique_id=504046361]
 z_index = 1
 collision_mask = 2
 safe_margin = 0.1
 script = ExtResource("1_fre4f")
-baseSpeed = 99.9999999999968
+baseSpeed = 149.9999999999952
 maxSpeed = 199.9999999999936
 acceleration = 1.1999999999999615
 deceleration = 0.499999999999984
@@ -542,7 +538,7 @@ position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="StackMarker" type="Marker2D" parent="." unique_id=410288628]
-position = Vector2(0, -31)
+position = Vector2(0, -40)
 gizmo_extents = 16.0
 
 [node name="AnimationController" type="Node2D" parent="." unique_id=758506808]
@@ -567,29 +563,18 @@ parameters/Player1/Shoot/blend_position = Vector2(0, 0)
 [node name="HitAnimationPlayer" type="AnimationPlayer" parent="." unique_id=789967177]
 libraries/ = SubResource("AnimationLibrary_bgyt3")
 
-[node name="ParticlesManager" type="Node2D" parent="." unique_id=363614598]
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="ParticlesManager" unique_id=77911002]
-position = Vector2(9, -15)
-emitting = false
-amount = 25
-lifetime = 0.5
-explosiveness = 1.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 200.0
-angular_velocity_max = 499.01
-scale_amount_min = 2.0
-scale_amount_max = 3.0
-scale_amount_curve = SubResource("Curve_e7par")
-color = Color(0.43529412, 0.8980392, 0.9137255, 1)
-
 [node name="Label" type="Label" parent="." unique_id=952355495]
+visible = false
 texture_filter = 1
 offset_left = -19.0
 offset_top = -57.0
 offset_right = 21.0
 offset_bottom = -34.0
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=479067139]
+position = Vector2(0, 25)
+target_position = Vector2(20, 0)
+collision_mask = 2
 
 [connection signal="body_entered" from="StackDetectorArea" to="." method="_on_clone_enter"]
 [connection signal="body_exited" from="StackDetectorArea" to="." method="_on_clone_exited"]

@@ -3,6 +3,7 @@ class_name Room
 
 @export var roomType: roomTypes
 @export var enabledInputs: inputs
+@export var tutorial: tutorials
 
 @onready var checkpoint_1_1 := $"Checkpoint1-1"
 @onready var checkpoint_2_1 := $"Checkpoint2-1"
@@ -11,9 +12,10 @@ class_name Room
 @onready var cameraCheckpoint_1 := $"CameraCheckpoint1"
 @onready var cameraCheckpoint_2 := $"CameraCheckpoint2"
 @onready var cameraController := $"/root/Game/CameraController"
-@onready var camera := $"/root/Game/NormalViewport/SubViewport/Camera2D"
+@onready var camera := $"/root/Game/NormalViewport/LevelContainer/SubViewport/Camera2D"
 @onready var checkpoint_1 := checkpoint_1_1
 @onready var checkpoint_2 := checkpoint_2_1
+@onready var popUpMenu := $"/root/Game/InGameUI".get_node("PopUpMenu")
 
 var player_1: Player
 var player_2: Player
@@ -38,6 +40,16 @@ enum inputs{
 	Merge,
 	TP,
 	All
+}
+
+enum tutorials{
+	None,
+	Run,
+	Climb,
+	Shoot,
+	Launch,
+	Merge,
+	TP
 }
 
 func _process(_delta: float) -> void:
@@ -92,6 +104,23 @@ func _activate_room() -> void:
 			GameProgress.content.merge = GameProgress.merge
 			GameProgress.content.tp_left = GameProgress.tp_left
 			GameProgress.content.tp_right = GameProgress.tp_right
+	
+	#tutorial
+	match tutorial:
+		tutorials.Run:
+			popUpMenu._tutorial_pop_up(5)
+		tutorials.Climb:
+			popUpMenu._tutorial_pop_up(1)
+		tutorials.Shoot:
+			popUpMenu._tutorial_pop_up(0)
+		tutorials.Launch:
+			popUpMenu._tutorial_pop_up(3)
+		tutorials.Merge:
+			popUpMenu._tutorial_pop_up(4)
+		tutorials.TP:
+			popUpMenu._tutorial_pop_up(2)
+		tutorials.None:
+			pass
 
 func _reset_room() -> void:
 	var children: Array[Node] = get_children()

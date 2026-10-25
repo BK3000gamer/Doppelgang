@@ -11,15 +11,15 @@ class_name Door
 
 var currentActivations := 0
 var inputTimer: float = 0.0
-var useTimerRec: bool
 var _is_open := false
+var _solved := false
+var _timing := false
 
 func _ready() -> void:
 	add_to_group("doors")
 	# Force the initial visual setup without playing a transition sound.
 	_is_open = not startsOpen
 	_update_door(false)
-	useTimerRec = useTimer
 
 func activate(play_sound: bool = true) -> void:
 	if _is_open:
@@ -51,38 +51,47 @@ func _update_door(play_sound: bool = true) -> void:
 
 func _process(delta: float) -> void:
 	currentActivations = 0
-	inputTimer -= delta
-	
-	for i in range(inputs.size()):
-		if inputs[i].is_active:
+	for input in inputs:
+		if input.is_active:
 			currentActivations += 1
-	if useTimer and currentActivations == 1:
+	var all_active := currentActivations == inputs.size()
+
+	# Untimed doors: follow the inputs directly.
+	if not useTimer or inputTime <= 0.0:
+		_set_powered(all_active)
+		return
+
+	# Timed doors: once solved, stay that way until reset() is called.
+	if _solved:
+		return
+
+	if all_active:
+		_solved = true
+		_timing = false
+		_set_powered(true)
+		return
+
+	# First input starts the window.
+	if not _timing and currentActivations >= 1:
+		_timing = true
 		inputTimer = inputTime
-		useTimer = false
-	if inputTime == 0.0:
-		if currentActivations == inputs.size():
-			if startsOpen:
-				deactivate()
-			else:
-				activate()
-		else:
-			if startsOpen:
-				activate()
-			else:
-				deactivate()
+
+	if _timing:
+		inputTimer -= delta
+		if inputTimer <= 0.0:
+			# Ran out of time: wipe the inputs and re-arm for another attempt.
+			_timing = false
+			for input in inputs:
+				input.reset()
+
+func _set_powered(powered: bool) -> void:
+	# "Powered" means open for normal doors, closed for startsOpen doors.
+	if powered != startsOpen:
+		activate()
 	else:
-		if inputTimer > 0.0:
-			if currentActivations == inputs.size():
-				if startsOpen:
-					deactivate()
-				else:
-					activate()
-			else:
-				if startsOpen:
-					activate()
-				else:
-					deactivate()
+		deactivate()
 
 func reset():
+	_solved = false
+	_timing = false
 	_update_door()
-	useTimer = useTimerRec

@@ -367,11 +367,11 @@ texture = ExtResource("4_ecu0b")
 shape = SubResource("RectangleShape2D_pa6b8")
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("5_t2u7g")]
-position = Vector2(1524, 101)
+position = Vector2(688, 91)
 collision_mask = 6
 
 [node name="Player2" parent="." unique_id=644745631 groups=["player_2"] instance=ExtResource("5_t2u7g")]
-position = Vector2(1924, 101)
+position = Vector2(1088, 91)
 collision_mask = 10
 playerNum = 1
 

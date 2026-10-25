@@ -195,7 +195,7 @@ states/Start/position = Vector2(175, 100)
 states/WallClimb/node = SubResource("AnimationNodeAnimation_1sw03")
 states/WallClimb/position = Vector2(668, 213)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_86nqc"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_2aakk"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_cj8ce")]
-graph_offset = Vector2(125, 157.93681)
+graph_offset = Vector2(101, -69.06319)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2aakk"]
 animation = &"Player2/Death"
@@ -203,8 +203,14 @@ animation = &"Player2/Death"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3gc81"]
 animation = &"Player2/EnterIdle"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_srwc4"]
+animation = &"Player2/Fall"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbtqv"]
 animation = &"Player2/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mu4x6"]
+animation = &"Player2/Jump"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p2owp"]
 animation = &"Player2/JumpUpShoot"
@@ -308,12 +314,6 @@ blend_point_7/node = SubResource("AnimationNodeAnimation_kehlu")
 blend_point_7/pos = Vector2(1, -1)
 blend_point_7/name = &"Player2_UpSideLaunch 2"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_srwc4"]
-animation = &"Player2/Fall"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mu4x6"]
-animation = &"Player2/Jump"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_717ct"]
 animation = &"Player2/Run"
 
@@ -370,25 +370,25 @@ states/Death/position = Vector2(425, 207)
 states/End/position = Vector2(1127, 71)
 states/EnterIdle/node = SubResource("AnimationNodeAnimation_3gc81")
 states/EnterIdle/position = Vector2(334, -23)
+states/Fall/node = SubResource("AnimationNodeAnimation_srwc4")
+states/Fall/position = Vector2(791, 81)
 states/Idle/node = SubResource("AnimationNodeAnimation_jbtqv")
 states/Idle/position = Vector2(340, 114)
+states/Jump/node = SubResource("AnimationNodeAnimation_mu4x6")
+states/Jump/position = Vector2(954, 10)
 states/Jump_Shoot/node = SubResource("AnimationNodeBlendSpace2D_qbab4")
 states/Jump_Shoot/position = Vector2(810, 263)
 states/Launch/node = SubResource("AnimationNodeBlendSpace2D_c2pjr")
 states/Launch/position = Vector2(908, 182)
-states/Player2_Fall/node = SubResource("AnimationNodeAnimation_srwc4")
-states/Player2_Fall/position = Vector2(791, 81)
-states/Player2_Jump/node = SubResource("AnimationNodeAnimation_mu4x6")
-states/Player2_Jump/position = Vector2(954, 10)
-states/Player2_Run/node = SubResource("AnimationNodeAnimation_717ct")
-states/Player2_Run/position = Vector2(739, -30)
+states/Run/node = SubResource("AnimationNodeAnimation_717ct")
+states/Run/position = Vector2(739, -30)
 states/Shoot/node = SubResource("AnimationNodeBlendSpace2D_oi4fu")
 states/Shoot/position = Vector2(611, 275)
 states/Start/position = Vector2(132, 81)
 states/WallClimb/node = SubResource("AnimationNodeAnimation_eknmi")
 states/WallClimb/position = Vector2(597, 168)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wiw3i"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_agaac"), "Player2_Jump", "Player2_Fall", SubResource("AnimationNodeStateMachineTransition_fm440")]
-graph_offset = Vector2(5, 52)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wiw3i"), "EnterIdle", "Idle", SubResource("AnimationNodeStateMachineTransition_agaac"), "Jump", "Fall", SubResource("AnimationNodeStateMachineTransition_fm440")]
+graph_offset = Vector2(140, -66)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bgyt3"]
 advance_mode = 2

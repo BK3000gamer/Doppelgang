@@ -581,6 +581,7 @@ shape = SubResource("RectangleShape2D_h7hpo")
 [node name="Room6" parent="." unique_id=137994605 instance=ExtResource("1_tiv73")]
 position = Vector2(2976, -360)
 roomType = 2
+tutorial = 6
 
 [node name="CollisionShape2D" parent="Room6" index="0" unique_id=299480520]
 position = Vector2(0, 36)
@@ -812,14 +813,14 @@ shape = SubResource("RectangleShape2D_vu0fh")
 position = Vector2(408, -76)
 useTimer = true
 inputs = [NodePath("../InteractableButton3"), NodePath("../InteractableButton4")]
-inputTime = 0.999999999999968
+inputTime = 1.999999999999936
 
 [node name="Door2" parent="Room7" unique_id=1940184419 node_paths=PackedStringArray("inputs") instance=ExtResource("4_u1m0g")]
 position = Vector2(408, 52)
 rotation = -3.1415925
 useTimer = true
 inputs = [NodePath("../InteractableButton"), NodePath("../InteractableButton2")]
-inputTime = 0.999999999999968
+inputTime = 1.999999999999936
 
 [node name="Room8" parent="." unique_id=1636311735 instance=ExtResource("1_tiv73")]
 position = Vector2(4576, -328)
@@ -919,11 +920,11 @@ shape = SubResource("RectangleShape2D_042ok")
 shape = SubResource("RectangleShape2D_kc58o")
 
 [node name="Player1" parent="." unique_id=504046361 groups=["player_1"] instance=ExtResource("1_mh18r")]
-position = Vector2(-288, 132)
+position = Vector2(-288, 123)
 collision_mask = 6
 
 [node name="Player2" parent="." unique_id=918836812 groups=["player_2"] instance=ExtResource("1_mh18r")]
-position = Vector2(-240, 132)
+position = Vector2(-240, 123)
 collision_mask = 10
 playerNum = 1
 
