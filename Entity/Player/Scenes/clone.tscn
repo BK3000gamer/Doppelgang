@@ -1,18 +1,89 @@
-[gd_scene format=3 uid="uid://do4qtrr6np4n5"]
+[gd_scene format=4 uid="uid://do4qtrr6np4n5"]
 
 [ext_resource type="Script" uid="uid://cnya5lpt8qwyn" path="res://Entity/Player/Scripts/clone.gd" id="1_f60lt"]
+[ext_resource type="AnimationLibrary" uid="uid://0ka6c7c21wge" path="res://Entity/Player/Animations/Clone1.res" id="2_ikygh"]
+[ext_resource type="AnimationLibrary" uid="uid://by5kceufjul6p" path="res://Entity/Player/Animations/Clone2.res" id="3_ig4qv"]
 
-[sub_resource type="Gradient" id="Gradient_v0iea"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mm0d5"]
-gradient = SubResource("Gradient_v0iea")
+[sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_f60lt"]
+_data = PackedByteArray("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")
+size_override = Vector2(384, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(32, 32)
+size = Vector2(15, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50nb2"]
-size = Vector2(32, 4)
+size = Vector2(15, 12)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a644o"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ikygh"]
+animation = &"Clone1/Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ig4qv"]
+animation = &"Clone1/Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kcpn0"]
+animation = &"Clone1/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a644o"]
+animation = &"Clone1/Launch"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7hyjh"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ikygh"]
+states/Death/node = SubResource("AnimationNodeAnimation_ikygh")
+states/Death/position = Vector2(348, 71)
+states/Fall/node = SubResource("AnimationNodeAnimation_ig4qv")
+states/Fall/position = Vector2(556, 67)
+states/Idle/node = SubResource("AnimationNodeAnimation_kcpn0")
+states/Idle/position = Vector2(467, 109)
+states/Launch/node = SubResource("AnimationNodeAnimation_a644o")
+states/Launch/position = Vector2(373, 168)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_7hyjh")]
+graph_offset = Vector2(94, -19)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_se878"]
+animation = &"Clone2/Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d5275"]
+animation = &"Clone2/Fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hsf4n"]
+animation = &"Clone2/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qhipb"]
+animation = &"Clone2/Launch"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_08vgv"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_kcpn0"]
+states/Death/node = SubResource("AnimationNodeAnimation_se878")
+states/Death/position = Vector2(428, 56)
+states/Fall/node = SubResource("AnimationNodeAnimation_d5275")
+states/Fall/position = Vector2(474, 106)
+states/Idle/node = SubResource("AnimationNodeAnimation_hsf4n")
+states/Idle/position = Vector2(387, 166)
+states/Launch/node = SubResource("AnimationNodeAnimation_qhipb")
+states/Launch/position = Vector2(722, 78)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_08vgv")]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_git0c"]
+advance_mode = 2
+advance_expression = "playerNum == -1"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5x514"]
+advance_mode = 2
+advance_expression = "playerNum == 1"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ig4qv"]
+states/Player-1/node = SubResource("AnimationNodeStateMachine_ikygh")
+states/Player-1/position = Vector2(379, 1)
+states/Player1/node = SubResource("AnimationNodeStateMachine_kcpn0")
+states/Player1/position = Vector2(366, 167)
+transitions = ["Start", "Player-1", SubResource("AnimationNodeStateMachineTransition_git0c"), "Start", "Player1", SubResource("AnimationNodeStateMachineTransition_5x514")]
+graph_offset = Vector2(-37, -29)
 
 [node name="Clone" type="CharacterBody2D" unique_id=1897861543]
 collision_mask = 2
@@ -26,10 +97,39 @@ launchSpeed = 999.999999999968
 recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=561660019]
-scale = Vector2(0.125, 32)
-texture = SubResource("GradientTexture1D_mm0d5")
+texture_filter = 1
+position = Vector2(0, -8)
+texture = SubResource("PortableCompressedTexture2D_f60lt")
+region_enabled = true
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": true,
+"layer_section": true,
+"output_section": false,
+"pending_changes": {},
+"slice_section": true
+}
+metadata/_aseprite_wizard_config_ = {
+"convert_fps_field": 10.0,
+"convert_ms_field": 100.0,
+"convert_to_fps": true,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"scale": "1.0",
+"slice": "Player2",
+"source": "res://Entity/Player/Sprites/CloneAnimation.aseprite",
+"source_uid": 6810138705679631672
+}
+metadata/_aseprite_wizard_source_file_hash_ = "bd103665d6b85787966afde064ca95c2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2003127166]
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1475856007]
@@ -39,6 +139,16 @@ collision_layer = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1222306829]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_50nb2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=293744414]
+libraries/ = SubResource("AnimationLibrary_a644o")
+libraries/Clone1 = ExtResource("2_ikygh")
+libraries/Clone2 = ExtResource("3_ig4qv")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1411220420]
+tree_root = SubResource("AnimationNodeStateMachine_ig4qv")
+advance_expression_base_node = NodePath("..")
+anim_player = NodePath("../AnimationPlayer")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_clone_enter"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_clone_exited"]

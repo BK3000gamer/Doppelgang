@@ -158,6 +158,7 @@ shape = SubResource("RectangleShape2D_p642h")
 [node name="Room2" parent="." unique_id=1227487037 instance=ExtResource("1_uhyyw")]
 position = Vector2(640, 0)
 roomType = 1
+enabledInputs = 4
 
 [node name="CollisionShape2D" parent="Room2" index="0" unique_id=299480520]
 position = Vector2(224, 0)

@@ -28,13 +28,12 @@ class_name Player
 @export var recallDistance: float
 
 @onready var recordJumpHeight := jumpHeight
-@onready var Sprite := $Sprite2D
-@onready var animationPlayer := $AnimationPlayer
 @onready var hitAnimationPlayer := $HitAnimationPlayer
 @onready var stackDetectorArea := $StackDetectorArea
 @onready var parent := get_parent()
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
+@onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum] 
 
 var InputDir := Vector2.ZERO
 var Speed: float
@@ -85,6 +84,16 @@ var PreviousState: States
 var carrier: Player = null
 var carried_player: Player = null
 
+const LOCKED := ["Launch", "Shoot", "Jump_Shoot"]   # must play to the end
+var queued := ""
+var queued_travel := false
+
+func _ready() -> void:
+	for name in ["Player1/Run", "Player1/Idle", "Player1/WallClimb", "Player2/Run", "Player2/Idle", "Player2/WallClimb"]:
+		var a = $AnimationPlayer.get_animation(name)
+		if a:
+			a.loop_mode = Animation.LOOP_LINEAR
+
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is Player:
 		return
@@ -121,6 +130,8 @@ func _physics_process(delta: float) -> void:
 	elif playerNum == 1:
 		set_collision_mask_value(4, true)
 		set_collision_mask_value(3, false)
+	
+	$Sprite2D.modulate = Color.from_hsv(0, 0, 1, 1)
 	
 	#TP
 	if Input.is_action_just_pressed(GameProgress.content.tp_left % deviceNum):
@@ -359,6 +370,11 @@ func _physics_process(delta: float) -> void:
 			Speed *= acceleration
 			velocity.x = InputDir.x * min(Speed, maxSpeed)
 			
+			if InputDir.x == 0:
+				_play("Idle")
+			else:
+				_play("Run")
+			
 			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
 				_change_state(States.Clone)
 			
@@ -386,6 +402,8 @@ func _physics_process(delta: float) -> void:
 				if collider is MovingPlatform and "velocity" in collider:
 					platformDelta = collider.deltaPos
 					break
+			
+			$Sprite2D.modulate = Color.from_hsv(0, (1 - (wallClimbTimer / wallClimbTime)), 1, 1)
 			
 			if wallClimbTimer < 0.0:
 				_change_state(States.Fall)
@@ -449,6 +467,11 @@ func _process(delta: float) -> void:
 		if controllerMap[deviceID] == playerNum:
 			deviceNum = deviceID
 	
+	$Label.text = States.find_key(CurrentState)
+	
+	if queued != "" and _anim_done():
+		_run(queued, queued_travel)
+	
 	group_1 = get_tree().get_nodes_in_group("player_1")
 	group_2 = get_tree().get_nodes_in_group("player_2")
 	player_1 = get_tree().get_first_node_in_group("player_1")
@@ -465,20 +488,6 @@ func _process(delta: float) -> void:
 	jumpBufferTimer -= delta
 	coyoteTimer -= delta
 	launchTimer -= delta
-	if InputDir.x < 0:
-		Sprite.flip_h = true
-	else:
-		Sprite.flip_h = false
-	
-	#match CurrentState:
-		#States.Idle:
-			#Sprite.play("Idle")
-		#States.Run:
-			#Sprite.play("Run")
-		#States.Jump:
-			#Sprite.play("Jump")
-		#States.Fall:
-			#Sprite.play("Jump")
 
 func _change_state(NewState: States) -> void:
 	PreviousState = CurrentState
@@ -490,26 +499,34 @@ func _change_state(NewState: States) -> void:
 			cloned = false
 			climbed = false
 			stackDetectorArea.monitoring = true
+			_play("Idle")
 		States.Run:
 			jumpHeight = recordJumpHeight
 			Speed = baseSpeed
 			cloned = false
 			climbed = false
 			stackDetectorArea.monitoring = true
+			_play("Run")
 		States.Jump:
 			velocity.y = jumpVelocity
 			velocity.x += 40 * InputDir.x
 			Momentum = velocity.x
 			stackDetectorArea.monitoring = true
+			_play("Jump")
 		States.Fall:
 			coyoteTimer = coyoteTime
 			Momentum = velocity.x
 			stackDetectorArea.monitoring = true
+			if PreviousState == States.Jump:
+				return
+			else:
+				_play("Fall")
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 			hitAnimationPlayer.play("Hit Animation")
 			stackDetectorArea.monitoring = false
+			_play("Launch", false, true)
 		States.Clone:
 			var clone: CharacterBody2D
 			
@@ -559,6 +576,7 @@ func _change_state(NewState: States) -> void:
 					launchDir = Vector2(InputDir.x, -InputDir.y)
 					_change_state(States.Launch)
 					clone._change_state(States.Duplicate)
+					return
 				elif (Input.is_action_pressed("jump_%d" % deviceNum)):
 					if InputDir == Vector2.ZERO:
 						launchDir = Vector2.UP
@@ -566,6 +584,7 @@ func _change_state(NewState: States) -> void:
 						launchDir = InputDir
 					_change_state(States.Launch)
 					clone._change_state(States.Duplicate)
+					return
 				else:
 					if InputDir == Vector2.ZERO:
 						clone.launchDir = Vector2.UP
@@ -574,6 +593,10 @@ func _change_state(NewState: States) -> void:
 					clone._change_state(States.Launch)
 					clone.move_and_slide()
 			stackDetectorArea.monitoring = false
+			if PreviousState == States.Jump or PreviousState == States.Fall:
+				_play("Jump_Shoot")
+			else:
+				_play("Shoot")
 		States.Duplicate:
 			stackDetectorArea.monitoring = false
 		States.Disabled:
@@ -586,6 +609,7 @@ func _change_state(NewState: States) -> void:
 			wallClimbTimer = wallClimbTime
 			climbed = true
 			stackDetectorArea.monitoring = true
+			_play("WallClimb")
 		States.Merge:
 			stackDetectorArea.monitoring = false
 			if !group_1.is_empty() and !group_2.is_empty():
@@ -597,10 +621,12 @@ func _change_state(NewState: States) -> void:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
 		States.Recall:
 			stackDetectorArea.monitoring = false
+			_play("Death", false, true)
 		States.Death:
 			velocity = Vector2.ZERO
 			hitAnimationPlayer.play("Hit Animation")
 			stackDetectorArea.monitoring = false
+			_play("Death", false, true)
 	
 func _attach_player(top_player: Player) -> void:
 	carried_player = top_player
@@ -625,3 +651,22 @@ func _detach_player(state: States) -> void:
 func _respawn() -> void:
 	global_position = checkpoint
 	_change_state(States.Idle)
+
+func _play(anim: String, use_travel := false, force := false) -> void:
+	var current := String(playback.get_current_node())
+	# Locked animation still running: remember the request and wait
+	if not force and current != anim and current in LOCKED and not _anim_done():
+		queued = anim
+		queued_travel = use_travel
+		return
+	_run(anim, use_travel)
+
+func _run(anim: String, use_travel: bool) -> void:
+	queued = ""
+	if use_travel:
+		playback.travel(anim)
+	else:
+		playback.start(anim)
+
+func _anim_done() -> bool:
+	return playback.get_current_play_position() >= playback.get_current_length() - 0.02

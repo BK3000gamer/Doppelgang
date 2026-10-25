@@ -14,6 +14,7 @@ class_name Clone
 @onready var recordJumpHeight := jumpHeight
 @onready var Sprite := $Sprite2D
 @onready var parent := get_parent()
+@onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum] 
 
 var dir: int
 var jumpVelocity: float
@@ -49,6 +50,10 @@ var carrier: CharacterBody2D
 var carried_player: Player = null
 
 var holdTimer: float
+
+const LOCKED := ["Launch"]   # must play to the end
+var queued := ""
+var queued_travel := false
 
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is Player:
@@ -150,11 +155,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _process(delta: float) -> void:
-	if playerNum == -1:
-		Sprite.modulate = Color.SKY_BLUE
-	elif playerNum == 1:
-		Sprite.modulate = Color.INDIAN_RED
-	
 	player_1 = get_tree().get_first_node_in_group("player_1")
 	player_2 = get_tree().get_first_node_in_group("player_2")
 	
@@ -167,6 +167,7 @@ func _change_state(NewState: States) -> void:
 		States.Idle:
 			jumpHeight = recordJumpHeight
 			velocity = Vector2.ZERO
+			_play("Idle")
 		States.Fall:
 			if velocity.x == 0:
 				dir = 0
@@ -174,7 +175,29 @@ func _change_state(NewState: States) -> void:
 				dir = 1
 			elif velocity.x <0:
 				dir = -1
+			_play("Fall")
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
-			
+			_play("Launch")
+		States.Recall:
+			_play("Death")
+
+func _play(anim: String, use_travel := false, force := false) -> void:
+	var current := String(playback.get_current_node())
+	# Locked animation still running: remember the request and wait
+	if not force and current != anim and current in LOCKED and not _anim_done():
+		queued = anim
+		queued_travel = use_travel
+		return
+	_run(anim, use_travel)
+
+func _run(anim: String, use_travel: bool) -> void:
+	queued = ""
+	if use_travel:
+		playback.travel(anim)
+	else:
+		playback.start(anim)
+
+func _anim_done() -> bool:
+	return playback.get_current_play_position() >= playback.get_current_length() - 0.02
