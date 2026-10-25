@@ -6,6 +6,7 @@ var timer := 0.0
 var cooldownTimer := 0.0
 var entered := false
 var played := false
+var _break_sound_played := false
 @onready var collision := $CollisionShape2D
 @onready var animationPlayer := $AnimationPlayer
 
@@ -15,6 +16,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		timer = time
 		cooldownTimer = cooldown
 		if !played:
+			_break_sound_played = false
 			animationPlayer.play("Break")
 			played = true
 
@@ -23,6 +25,10 @@ func _process(delta: float) -> void:
 		timer -= delta
 		cooldownTimer -= delta
 	if timer < 0.0:
+		# Play once when the platform stops supporting the player.
+		if not _break_sound_played:
+			AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.PLATFORM_BREAK)
+			_break_sound_played = true
 		collision.set_deferred("disabled", true)
 	if cooldownTimer < 0.0:
 		collision.set_deferred("disabled", false)

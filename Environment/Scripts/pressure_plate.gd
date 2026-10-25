@@ -40,6 +40,8 @@ func _update_active_state() -> void:
 	active_changed.emit(is_active)
 	
 	if is_active:
+		# Play once when the plate becomes pressed, rather than every physics frame.
+		AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.PRESSURE_PLATE)
 		activated.emit()
 	else:
 		deactivated.emit()

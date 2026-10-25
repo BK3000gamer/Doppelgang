@@ -43,11 +43,32 @@ func _process(_delta: float) -> void:#Get players
 
 func _interact(body: Node2D) -> void:
 	interacted.emit(body)
+	var was_active := is_active
 
 	if toggle_mode:
 		set_active(!is_active)
 	else:
 		set_active(true)
+	AudioManager.create_2d_audio_at_location(global_position, _get_press_sound(was_active))
+
+func _get_press_sound(was_active: bool) -> SoundEffect.Type:
+	# Only a newly activated button can complete a pair.
+	if was_active or not is_active:
+		return SoundEffect.Type.BUTTON_PRESS_1
+	for node in get_tree().get_nodes_in_group("doors"):
+		if not node is Door:
+			continue
+		var door := node as Door
+		if door.inputs.size() != 2 or not door.inputs.has(self):
+			continue
+		var pair_complete := true
+		for input in door.inputs:
+			if not is_instance_valid(input) or not input is InteractableButton or not input.is_active:
+				pair_complete = false
+				break
+		if pair_complete:
+			return SoundEffect.Type.BUTTON_PRESS_2
+	return SoundEffect.Type.BUTTON_PRESS_1
 
 func set_active(value: bool) -> void:
 	if is_active == value:
