@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Singletons/sound_effect.gd" id="1_settings"]
+[ext_resource type="AudioStream" path="res://sounds/mech door open.wav" id="2_sound"]
+
+[resource]
+resource_name = "Door Open"
+script = ExtResource("1_settings")
+type = 3
+stream = ExtResource("2_sound")

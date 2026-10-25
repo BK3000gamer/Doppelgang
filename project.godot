@@ -24,6 +24,7 @@ animation/loop/enabled=false
 ControllerMap="*uid://boytd2t4k8oy6"
 GameProgress="*uid://bwjcn4kb6a4o3"
 InputHelper="*uid://dtetbf04fene8"
+AudioManager="*res://Singletons/audio_manager.tscn"
 
 [display]
 
