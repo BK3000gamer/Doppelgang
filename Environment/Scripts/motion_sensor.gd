@@ -33,9 +33,9 @@ func _physics_process(_delta: float) -> void:
 		$Sprite2D.material.set_shader_parameter("outline_colour", Color(1, 1, 1, 0))
 
 func _on_body_entered(body: Node2D) -> void:
-	player_number = body.playerNum
 	if !_is_valid_body(body):
 		return
+	player_number = body.playerNum
 	
 	if !detected_bodies.has(body):
 		detected_bodies.append(body)
@@ -71,6 +71,7 @@ func _activate_sensor() -> void:
 		return
 	
 	is_active = true
+	AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.MOTION_SENSOR)
 	_update_visual_state()
 	active_changed.emit(is_active)
 

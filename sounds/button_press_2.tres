@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Singletons/sound_effect.gd" id="1_settings"]
+[ext_resource type="AudioStream" path="res://sounds/button-press-2.mp3" id="2_sound"]
+
+[resource]
+resource_name = "Button Press 2"
+script = ExtResource("1_settings")
+type = 1
+stream = ExtResource("2_sound")

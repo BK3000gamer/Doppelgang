@@ -1,0 +1,17 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://Singletons/audio_manager.gd" id="1_manager"]
+[ext_resource type="Script" path="res://Singletons/sound_effect.gd" id="2_settings"]
+[ext_resource type="Resource" path="res://sounds/pressure_plate.tres" id="3_pressure_plate"]
+[ext_resource type="Resource" path="res://sounds/door_open.tres" id="4_door_open"]
+[ext_resource type="Resource" path="res://sounds/door_close.tres" id="5_door_close"]
+[ext_resource type="Resource" path="res://sounds/take_damage.tres" id="6_take_damage"]
+[ext_resource type="Resource" path="res://sounds/button_press_1.tres" id="7_button_press_1"]
+[ext_resource type="Resource" path="res://sounds/button_press_2.tres" id="8_button_press_2"]
+[ext_resource type="Resource" path="res://sounds/platform_break.tres" id="9_platform_break"]
+[ext_resource type="Resource" path="res://sounds/motion_sensor.tres" id="10_motion_sensor"]
+[ext_resource type="Resource" path="res://sounds/clone_spawn.tres" id="11_clone_spawn"]
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_manager")
+sound_effects = Array[ExtResource("2_settings")]([ExtResource("3_pressure_plate"), ExtResource("4_door_open"), ExtResource("5_door_close"), ExtResource("6_take_damage"), ExtResource("7_button_press_1"), ExtResource("8_button_press_2"), ExtResource("9_platform_break"), ExtResource("10_motion_sensor"), ExtResource("11_clone_spawn")])

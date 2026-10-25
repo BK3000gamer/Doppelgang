@@ -529,6 +529,7 @@ func _change_state(NewState: States) -> void:
 				set_collision_mask_value(1, false)
 				clone.global_position = global_position
 				parent.add_child(clone)
+				AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.CLONE_SPAWN)
 				
 				if (InputDir.y > 0.0 and is_on_floor()):
 					launchDir = Vector2(InputDir.x, -InputDir.y)
@@ -562,6 +563,9 @@ func _change_state(NewState: States) -> void:
 					if group_1[group_1.size() - 1].global_position.distance_to(global_position) < recallDistance:
 						group_1[group_1.size() - 1]._change_state(States.Recall)
 		States.Death:
+			# Repeated hazard contacts during the same death should not replay the sound.
+			if PreviousState != States.Death:
+				AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.TAKE_DAMAGE)
 			velocity = Vector2.ZERO
 			hitAnimationPlayer.play("Hit Animation")
 	

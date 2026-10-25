@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dhptwh1d6tekb"
+path="res://.godot/imported/mech door close.wav-f655aec277ded3c33273f42ec5f0d563.sample"
+
+[deps]
+
+source_file="res://sounds/mech door close.wav"
+dest_files=["res://.godot/imported/mech door close.wav-f655aec277ded3c33273f42ec5f0d563.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
