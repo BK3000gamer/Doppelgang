@@ -415,19 +415,19 @@ script = ExtResource("1_uibqc")
 
 [node name="Checkpoint1-1" type="Marker2D" parent="." unique_id=1564129974]
 position = Vector2(-288, 132)
-gizmo_extents = 16.0
+gizmo_extents = 25.0
 
 [node name="Checkpoint2-1" type="Marker2D" parent="." unique_id=417000062]
 position = Vector2(-240, 132)
-gizmo_extents = 16.0
+gizmo_extents = 25.0
 
 [node name="Checkpoint1-2" type="Marker2D" parent="." unique_id=1196488787]
 position = Vector2(240, 132)
-gizmo_extents = 16.0
+gizmo_extents = 25.0
 
 [node name="Checkpoint2-2" type="Marker2D" parent="." unique_id=1534871572]
 position = Vector2(288, 132)
-gizmo_extents = 16.0
+gizmo_extents = 25.0
 
 [node name="CameraCheckpoint1" type="Marker2D" parent="." unique_id=771365507]
 

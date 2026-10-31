@@ -8,9 +8,7 @@ class_name Player
 @export var playerNum: int = -1
 
 @export_category("Stats")
-@export var baseSpeed: float
-@export var maxSpeed: float
-@export var acceleration: float
+@export var Speed: float
 @export var deceleration: float
 @export var jumpHeight: float
 @export var jumpTimeToPeak: float
@@ -37,7 +35,6 @@ class_name Player
 @onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum]
 
 var InputDir := Vector2.ZERO
-var Speed: float
 var Momentum: float
 var jumpVelocity: float
 var jumpGravity: float
@@ -250,14 +247,13 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if $RayCast2D.is_colliding() and !climbed:
+				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Run:
-			Speed *= acceleration
-			velocity.x = InputDir.x * min(Speed, maxSpeed)
+			velocity.x = InputDir.x * Speed
 			
 			if carrier:
 				velocity += carrier.velocity
@@ -275,19 +271,18 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if $RayCast2D.is_colliding() and !climbed:
+				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Jump:
-			Speed *= acceleration
 			Momentum *= deceleration
 			
 			if InputDir.x == 0.0:
 				velocity.x = Momentum
 			else:
-				velocity.x = InputDir.x * min(Speed, maxSpeed)
+				velocity.x = InputDir.x * Speed
 			velocity.y += _get_gravity() * delta
 			
 			if velocity.y < 0.0:
@@ -303,19 +298,18 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if $RayCast2D.is_colliding() and !climbed:
+				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Fall:
-			Speed *= acceleration
 			Momentum *= deceleration
 			
 			if InputDir.x == 0.0:
 				velocity.x = Momentum
 			else:
-				velocity.x = InputDir.x * min(Speed, maxSpeed)
+				velocity.x = InputDir.x * Speed
 			velocity.y += _get_gravity() * delta
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
@@ -339,15 +333,15 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if $RayCast2D.is_colliding() and !climbed:
+				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
 			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
 				_change_state(States.Merge)
 		States.Launch:
 			if launchTimer < 0.0:
-				velocity.x = clamp(velocity.x, -maxSpeed, maxSpeed)
-				velocity.y = max(velocity.y, -maxSpeed)
+				velocity.x = clamp(velocity.x, -Speed, Speed)
+				velocity.y = max(velocity.y, -Speed)
 				_change_state(States.Fall)
 				if is_on_floor():
 					if InputDir.x == 0.0:
@@ -371,7 +365,7 @@ func _physics_process(delta: float) -> void:
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
-				if $RayCast2D.is_colliding() and !climbed:
+				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 		States.Clone:
 			velocity.y += _get_gravity() * delta
@@ -403,8 +397,7 @@ func _physics_process(delta: float) -> void:
 		States.Disabled:
 			velocity.y += _get_gravity() * delta
 		States.Carried:
-			Speed *= acceleration
-			velocity.x = InputDir.x * min(Speed, maxSpeed)
+			velocity.x = InputDir.x * Speed
 			
 			if InputDir.x == 0:
 				_play("Idle")
@@ -444,7 +437,7 @@ func _physics_process(delta: float) -> void:
 			if wallClimbTimer < 0.0:
 				_change_state(States.Fall)
 			
-			if $RayCast2D.is_colliding():
+			if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()):
 				if (Input.is_action_pressed("climb_%d" % deviceNum)):
 					pass
 				else:
@@ -551,7 +544,6 @@ func _change_state(NewState: States) -> void:
 			_play("Idle")
 		States.Run:
 			jumpHeight = recordJumpHeight
-			Speed = baseSpeed
 			cloned = false
 			climbed = false
 			stackDetectorArea.monitoring = true

@@ -8,7 +8,7 @@ func _process(_delta: float) -> void:
 	if player.InputDir.x < 0:
 		Sprite.flip_h = true
 		$"../RayCast2D".target_position.x = -20
-	else:
+	elif player.InputDir.x > 0:
 		Sprite.flip_h = false
 		$"../RayCast2D".target_position.x = 20
 	

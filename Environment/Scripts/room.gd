@@ -92,10 +92,9 @@ func _activate_room() -> void:
 			pass
 		inputs.Clone:
 			GameProgress.content.clone = GameProgress.clone
+			GameProgress.content.merge = GameProgress.merge
 		inputs.Merge:
 			GameProgress.content.merge = GameProgress.merge
-			GameProgress.content.tp_left = GameProgress.tp_left
-			GameProgress.content.tp_right = GameProgress.tp_right
 		inputs.TP:
 			GameProgress.content.tp_left = GameProgress.tp_left
 			GameProgress.content.tp_right = GameProgress.tp_right

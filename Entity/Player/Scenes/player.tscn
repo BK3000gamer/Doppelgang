@@ -471,9 +471,7 @@ z_index = 1
 collision_mask = 2
 safe_margin = 0.1
 script = ExtResource("1_fre4f")
-baseSpeed = 149.9999999999952
-maxSpeed = 199.9999999999936
-acceleration = 1.1999999999999615
+Speed = 199.9999999999936
 deceleration = 0.499999999999984
 jumpHeight = 47.999999999998465
 jumpTimeToPeak = 0.249999999999992
@@ -573,6 +571,11 @@ offset_bottom = -34.0
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=479067139]
 position = Vector2(0, 25)
+target_position = Vector2(20, 0)
+collision_mask = 2
+
+[node name="RayCast2D2" type="RayCast2D" parent="." unique_id=349048714]
+position = Vector2(0, -7)
 target_position = Vector2(20, 0)
 collision_mask = 2
 
