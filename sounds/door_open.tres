@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dbqvkc0yhp28t"]
 
-[ext_resource type="Script" path="res://Singletons/sound_effect.gd" id="1_settings"]
-[ext_resource type="AudioStream" path="res://sounds/mech door open.wav" id="2_sound"]
+[ext_resource type="Script" uid="uid://dgpuxe7uapgtd" path="res://Singletons/sound_effect.gd" id="1_settings"]
+[ext_resource type="AudioStream" uid="uid://bdvq5dcamu0vw" path="res://sounds/mech door open.wav" id="2_sound"]
 
 [resource]
 resource_name = "Door Open"

@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://0j23nwcycwpt"]
 
-[ext_resource type="Script" path="res://Singletons/sound_effect.gd" id="1_settings"]
-[ext_resource type="AudioStream" path="res://sounds/platform-break.mp3" id="2_sound"]
+[ext_resource type="Script" uid="uid://dgpuxe7uapgtd" path="res://Singletons/sound_effect.gd" id="1_settings"]
+[ext_resource type="AudioStream" uid="uid://cickurriw1oyu" path="res://sounds/platform-break.mp3" id="2_sound"]
 
 [resource]
 resource_name = "Platform Break"
