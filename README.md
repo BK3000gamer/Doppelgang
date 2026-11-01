@@ -9,10 +9,11 @@ Cloning couch co-op 2D puzzle platformer
 - Jayson Andrew Loulier - 105257937
 - Rogier Wang - 104005449
 - Nick Chan - 104557856
+- Leonardo Vergara - 103641855
 
 ## Player controls [Keyboard] (Controller):
 
-- [A] [D} or (LS): Run
+- [A] [D] or (LS): Run
 - [SPACE] or (✕): Jump
 - [J] or (L1): Climb
 - [W] [A] [S] [D] or (LS): Directions
