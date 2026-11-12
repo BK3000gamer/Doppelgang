@@ -96,10 +96,16 @@ var TPclone: CharacterBody2D
 var mergeOutOfRange: bool = false
 
 func _ready() -> void:
-	for name in ["Player1/Run", "Player1/Idle", "Player1/WallClimb", "Player2/Run", "Player2/Idle", "Player2/WallClimb"]:
-		var a = $AnimationPlayer.get_animation(name)
+	for aniName in ["Player1/Run", "Player1/Idle", "Player1/WallClimb", "Player2/Run", "Player2/Idle", "Player2/WallClimb"]:
+		var a = $AnimationPlayer.get_animation(aniName)
 		if a:
 			a.loop_mode = Animation.LOOP_LINEAR
+	
+	if playerNum == -1:
+		$GPUParticles2D.texture.gradient.set_color(0, Color("6fe5e9"))
+	else:
+		$GPUParticles2D.texture.gradient.set_color(0, Color("ff6cf5"))
+
 #Attempt to add playerside clone dropthrough
 func _find_clone() -> Clone:
 	for i in range(get_slide_collision_count()):
@@ -370,10 +376,9 @@ func _physics_process(delta: float) -> void:
 					_change_state(States.Climb)
 		States.Clone:
 			velocity.y += _get_gravity() * delta
+			if cloned or (group_2.size() > 0 and clone_1.size() >= cloneNum):
+				$Sprite2D.modulate = Color.from_hsv(0, 0.4, 1, 1)
 			await get_tree().create_timer(0.1).timeout
-			
-			# Maybe put code for when transitioning from carrier or carried state here
-			# Or just instant
 			
 			if velocity.y < 0.0:
 				_change_state(States.Fall)
@@ -573,6 +578,7 @@ func _change_state(NewState: States) -> void:
 			cameraController._screen_shake(playerNum)
 			stackDetectorArea.monitoring = false
 			_play("Launch", false, true)
+			$GPUParticles2D.emitting = true
 		States.Clone:
 			var clone: CharacterBody2D
 			
@@ -585,33 +591,36 @@ func _change_state(NewState: States) -> void:
 				if !clone_1.has(group_2[i]):
 					clone_1.append(group_2[i])
 			
+			cameraController._screen_shake(playerNum)
 			if !cloned:
-				hitAnimationPlayer.play("Hit Animation")
-				cameraController._screen_shake(playerNum)
 				if playerNum == -1:
 					if group_2.is_empty():
 						clone = playerScene.instantiate()
 						clone.playerNum = 1
 						clone.add_to_group("player_2")
 						clone.name = "Player" + "2"
+						hitAnimationPlayer.play("Hit Animation")
 					elif group_2.size() > 0:
 						if clone_1.size() < cloneNum:
 							clone = cloneScene.instantiate()
 							clone.playerNum = -1
 							clone.add_to_group("player_2")
 							clone.name = "Clone" + "1" + "-" + str(clone_1.size() + 1)
+							hitAnimationPlayer.play("Hit Animation")
 				elif playerNum == 1:
 					if group_1.is_empty():
 						clone = playerScene.instantiate()
 						clone.playerNum = -1
 						clone.add_to_group("player_1")
 						clone.name = "Player" + "1"
+						hitAnimationPlayer.play("Hit Animation")
 					elif group_1.size() > 0:
 						if clone_2.size() < cloneNum:
 							clone = cloneScene.instantiate()
 							clone.playerNum = 1
 							clone.add_to_group("player_1")
 							clone.name = "Clone" + "2" + "-" + str(clone_2.size() + 1)
+							hitAnimationPlayer.play("Hit Animation")
 			
 			if clone != null:
 				cloned = true

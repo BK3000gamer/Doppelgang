@@ -85,6 +85,37 @@ states/Player1/position = Vector2(366, 167)
 transitions = ["Start", "Player-1", SubResource("AnimationNodeStateMachineTransition_git0c"), "Start", "Player1", SubResource("AnimationNodeStateMachineTransition_5x514")]
 graph_offset = Vector2(-37, -29)
 
+[sub_resource type="Gradient" id="Gradient_2aakk"]
+resource_local_to_scene = true
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.71686745)
+colors = PackedColorArray(0.43529412, 0.8980392, 0.9137255, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ikygh"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_2aakk")
+width = 100
+height = 100
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_ig4qv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.702248, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ji0ll"]
+curve = SubResource("Curve_ig4qv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kcpn0"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 2.5
+gravity = Vector3(0, 0, 0)
+scale_min = 0.04
+scale_max = 0.08
+scale_curve = SubResource("CurveTexture_ji0ll")
+
 [node name="Clone" type="CharacterBody2D" unique_id=1897861543]
 collision_mask = 2
 script = ExtResource("1_f60lt")
@@ -152,6 +183,16 @@ libraries/Clone2 = ExtResource("3_ig4qv")
 tree_root = SubResource("AnimationNodeStateMachine_ig4qv")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=850504086]
+z_index = -5
+emitting = false
+amount = 500
+texture = SubResource("GradientTexture2D_ikygh")
+lifetime = 0.4
+one_shot = true
+fixed_fps = 120
+process_material = SubResource("ParticleProcessMaterial_kcpn0")
 
 [connection signal="body_entered" from="StackDetectorArea" to="." method="_on_clone_enter"]
 [connection signal="body_exited" from="StackDetectorArea" to="." method="_on_clone_exited"]

@@ -55,6 +55,12 @@ const LOCKED := ["Launch"]   # must play to the end
 var queued := ""
 var queued_travel := false
 
+func _ready() -> void:
+	if playerNum == -1:
+		$GPUParticles2D.texture.gradient.set_color(0, Color("6fe5e9"))
+	else:
+		$GPUParticles2D.texture.gradient.set_color(0, Color("ff6cf5"))
+
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is CharacterBody2D:
 		return
@@ -177,6 +183,7 @@ func _change_state(NewState: States) -> void:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 			stackDetectorArea.monitoring = false
+			$GPUParticles2D.emitting = true
 		States.Carried:
 			velocity = Vector2.ZERO
 			stackDetectorArea.monitoring = false

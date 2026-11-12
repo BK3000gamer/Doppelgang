@@ -334,43 +334,34 @@ func _bg_offset(sub: SubViewport, offset: Vector2) -> Vector2:
 	return offset * (s / n)
 
 func _screen_shake(playerNum: int) -> void:
-	match viewType:
-		viewTypes.Normal:
-			views["normal"].camera.screen_shake(5, 0.5)
-			views["normal"].bg_camera.screen_shake(5, 0.5)
-		viewTypes.SingleHorizontal:
-			views["normal"].camera.screen_shake(5, 0.5)
-			views["normal"].bg_camera.screen_shake(5, 0.5)
-		viewTypes.SingleVertical:
-			views["normal"].camera.screen_shake(5, 0.5)
-			views["normal"].bg_camera.screen_shake(5, 0.5)
-		viewTypes.Horizontal:
-			if player_1.global_position.x < player_2.global_position.x:
-				if playerNum == -1:
-					views["horizontal"].camera_1.screen_shake(5, 0.25)
-					views["horizontal"].bg_camera_1.screen_shake(5, 0.25)
-				elif playerNum == 1:
-					views["horizontal"].camera_2.screen_shake(5, 0.25)
-					views["horizontal"].bg_camera_2.screen_shake(5, 0.25)
-			else:
-				if playerNum == -1:
-					views["horizontal"].camera_2.screen_shake(5, 0.25)
-					views["horizontal"].bg_camera_2.screen_shake(5, 0.25)
-				elif playerNum == 1:
-					views["horizontal"].camera_1.screen_shake(5, 0.25)
-					views["horizontal"].bg_camera_1.screen_shake(5, 0.25)
-		viewTypes.Vertical:
-			if player_1.global_position.y < player_2.global_position.y:
-				if playerNum == -1:
-					views["vertical"].camera_1.screen_shake(5, 0.25)
-					views["vertical"].bg_camera_1.screen_shake(5, 0.25)
-				elif playerNum == 1:
-					views["vertical"].camera_2.screen_shake(5, 0.25)
-					views["vertical"].bg_camera_2.screen_shake(5, 0.25)
-			else:
-				if playerNum == -1:
-					views["vertical"].camera_2.screen_shake(5, 0.5)
-					views["vertical"].bg_camera_2.screen_shake(5, 0.5)
-				elif playerNum == 1:
-					views["vertical"].camera_1.screen_shake(5, 0.5)
-					views["vertical"].bg_camera_1.screen_shake(5, 0.5)
+	views["normal"].camera.screen_shake(10, 0.25)
+	views["normal"].bg_camera.screen_shake(10, 0.25)
+	if player_1 and player_2:
+		if player_1.global_position.x < player_2.global_position.x:
+			if playerNum == -1:
+				views["horizontal"].camera_1.screen_shake(10, 0.25)
+				views["horizontal"].bg_camera_1.screen_shake(10, 0.25)
+			elif playerNum == 1:
+				views["horizontal"].camera_2.screen_shake(10, 0.25)
+				views["horizontal"].bg_camera_2.screen_shake(10, 0.25)
+		else:
+			if playerNum == -1:
+				views["horizontal"].camera_2.screen_shake(10, 0.25)
+				views["horizontal"].bg_camera_2.screen_shake(10, 0.25)
+			elif playerNum == 1:
+				views["horizontal"].camera_1.screen_shake(10, 0.25)
+				views["horizontal"].bg_camera_1.screen_shake(10, 0.25)
+		if player_1.global_position.y < player_2.global_position.y:
+			if playerNum == -1:
+				views["vertical"].camera_1.screen_shake(10, 0.25)
+				views["vertical"].bg_camera_1.screen_shake(10, 0.25)
+			elif playerNum == 1:
+				views["vertical"].camera_2.screen_shake(10, 0.25)
+				views["vertical"].bg_camera_2.screen_shake(10, 0.25)
+		else:
+			if playerNum == -1:
+				views["vertical"].camera_2.screen_shake(10, 0.25)
+				views["vertical"].bg_camera_2.screen_shake(10, 0.25)
+			elif playerNum == 1:
+				views["vertical"].camera_1.screen_shake(10, 0.25)
+				views["vertical"].bg_camera_1.screen_shake(10, 0.25)
