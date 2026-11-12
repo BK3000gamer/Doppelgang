@@ -528,11 +528,10 @@ shape = SubResource("RectangleShape2D_v0iea")
 one_way_collision_margin = 2.0
 
 [node name="StackDetectorArea" type="Area2D" parent="." unique_id=1255301810]
-position = Vector2(0, -22)
+position = Vector2(0, -13)
 collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StackDetectorArea" unique_id=1488717505]
-position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_iuy3d")
 
 [node name="StackMarker" type="Marker2D" parent="." unique_id=410288628]

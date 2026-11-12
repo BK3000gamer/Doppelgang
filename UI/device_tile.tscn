@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://djqbtutq0oiad"]
+
+[ext_resource type="Script" uid="uid://cinyw5ptfacnp" path="res://UI/device_tile.gd" id="1_fn38v"]
+
+[node name="DeviceTile" type="PanelContainer" unique_id=280211578]
+offset_right = 40.0
+offset_bottom = 40.0
+tooltip_text = "Move device left on LeftButton, Move device right on RightButton."
+script = ExtResource("1_fn38v")
+
+[node name="Stack" type="VBoxContainer" parent="." unique_id=297690557]
+layout_mode = 2
+
+[node name="Tag" type="Label" parent="Stack" unique_id=1737992083]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.59607846, 0.59607846, 0.59607846, 1)
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 1
+
+[node name="Name" type="Label" parent="Stack" unique_id=1336779718]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+
+[node name="Arrows" type="HBoxContainer" parent="Stack" unique_id=1153441237]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Left" type="Button" parent="Stack/Arrows" unique_id=365578443]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 13
+text = "<"
+
+[node name="Right" type="Button" parent="Stack/Arrows" unique_id=574982884]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 13
+text = ">"

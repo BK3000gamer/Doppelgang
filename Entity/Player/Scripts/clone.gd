@@ -14,6 +14,7 @@ class_name Clone
 @onready var Sprite := $Sprite2D
 @onready var parent := get_parent()
 @onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum] 
+@onready var stackDetectorArea := $StackDetectorArea
 
 var dir: int
 var jumpVelocity: float
@@ -46,7 +47,7 @@ enum States {
 var CurrentState := States.Idle
 
 var carrier: CharacterBody2D
-var carried_player: Player = null
+var carried_player: CharacterBody2D = null
 
 var holdTimer: float
 
@@ -55,23 +56,16 @@ var queued := ""
 var queued_travel := false
 
 func _on_clone_enter(body: Node2D) -> void:
-	if not body is Player:
+	if not body is CharacterBody2D:
 		return
-	var top_player := body as Player
+	var top_player := body as CharacterBody2D
 	if top_player == self:
 		return
 	if carried_player != null:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
-	if top_player.velocity.y <= 0.0:
-		return
-	set_collision_mask_value(1, true)
-	set_collision_layer_value(2, true)
-	# Add something for pressing down direction for stepping down from platform clone
-	#if (Input.is_action_pressed("down_%d" % body.deviceNum)):
-		#holdTimer = holdTime
-		#if holdTimer < 0:
+	_attach_player(top_player)
 		
 func _on_clone_exited(body: Node2D) -> void:
 	if not body is Player:
@@ -79,8 +73,7 @@ func _on_clone_exited(body: Node2D) -> void:
 	var top_player := body as Player
 	if top_player == self:
 		return
-	set_collision_mask_value(1, false)
-	set_collision_layer_value(2, false)
+	body._detach_player(States.Fall)
 	
 func _get_gravity() -> float:
 	return jumpGravity if velocity.y < 0.0 else fallGravity
@@ -128,6 +121,11 @@ func _physics_process(delta: float) -> void:
 			
 			if velocity.y < 0.0:
 				_change_state(States.Fall)
+		States.Carried:
+			if carrier:
+				global_position.y = carrier.get_node("StackMarker").global_position.y
+				velocity.x = carrier.velocity.x
+				velocity.y = carrier.velocity.y
 		States.Recall:
 			if playerNum == -1:
 				if player_1:
@@ -144,8 +142,6 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(0.1).timeout
 			queue_free()
 	
-	if carrier != null:
-		velocity += carrier.velocity
 	for index in get_slide_collision_count():
 		var collision: KinematicCollision2D = get_slide_collision(index)
 		if collision.get_collider().name == "Player":
@@ -165,6 +161,7 @@ func _change_state(NewState: States) -> void:
 			jumpHeight = recordJumpHeight
 			velocity = Vector2.ZERO
 			_play("Idle")
+			stackDetectorArea.monitoring = true
 		States.Fall:
 			if velocity.x == 0:
 				dir = 0
@@ -173,11 +170,28 @@ func _change_state(NewState: States) -> void:
 			elif velocity.x <0:
 				dir = -1
 			_play("Fall")
+			stackDetectorArea.monitoring = true
 		States.Launch:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
+			stackDetectorArea.monitoring = false
+		States.Carried:
+			velocity = Vector2.ZERO
+			stackDetectorArea.monitoring = false
+			_play("Idle")
 		States.Recall:
+			stackDetectorArea.monitoring = false
 			_play("Death")
+
+func _attach_player(top_player: CharacterBody2D) -> void:
+	carried_player = top_player
+	
+	top_player.carrier = self
+	top_player._change_state(top_player.States.Carried)
+	
+	top_player.global_position.y = $StackMarker.global_position.y
+	
+	top_player.set_collision_mask_value(1, false)
 
 func _play(anim: String, use_travel := false, force := false) -> void:
 	var current := String(playback.get_current_node())

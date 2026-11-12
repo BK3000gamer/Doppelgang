@@ -83,8 +83,8 @@ enum States {
 var CurrentState = States.Idle
 var PreviousState: States
 
-var carrier: Player = null
-var carried_player: Player = null
+var carrier: CharacterBody2D = null
+var carried_player: CharacterBody2D = null
 
 const LOCKED := ["Launch", "Shoot", "Jump_Shoot"]   # must play to the end
 var queued := ""
@@ -122,9 +122,9 @@ func clone_drop() -> void:
 		
 
 func _on_clone_enter(body: Node2D) -> void:
-	if not body is Player:
+	if not body is CharacterBody2D:
 		return
-	var top_player := body as Player
+	var top_player := body as CharacterBody2D
 	if top_player == self:
 		return
 	if carried_player != null:
@@ -410,6 +410,9 @@ func _physics_process(delta: float) -> void:
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_detach_player(States.Jump)
 			
+			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+				_change_state(States.Merge)
+			
 			if carrier:
 				global_position.y = carrier.get_node("StackMarker").global_position.y
 				velocity.x += carrier.velocity.x
@@ -681,7 +684,7 @@ func _change_state(NewState: States) -> void:
 			stackDetectorArea.monitoring = false
 			_play("Death", false, true)
 	
-func _attach_player(top_player: Player) -> void:
+func _attach_player(top_player: CharacterBody2D) -> void:
 	carried_player = top_player
 	
 	top_player.carrier = self

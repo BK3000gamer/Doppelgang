@@ -31,42 +31,50 @@ script = ExtResource("1_r4raw")
 visible = false
 custom_minimum_size = Vector2(160, 80)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 script = ExtResource("2_trw78")
 
-[node name="ColorRect" type="ColorRect" parent="PopUpMenu/ResetMenu" unique_id=1883303559]
+[node name="Dim" type="ColorRect" parent="PopUpMenu/ResetMenu" unique_id=1597363461]
 layout_mode = 2
-color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+color = Color(0.25, 0.25, 0.25, 0.74509805)
 
-[node name="MarginContainer" type="MarginContainer" parent="PopUpMenu/ResetMenu" unique_id=851015672]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PopUpMenu/ResetMenu/MarginContainer" unique_id=863955251]
+[node name="Centre" type="CenterContainer" parent="PopUpMenu/ResetMenu" unique_id=974232308]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=1535556380]
+[node name="Panel" type="PanelContainer" parent="PopUpMenu/ResetMenu/Centre" unique_id=1941371515]
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-text = "Restart Level?"
+
+[node name="Margin" type="MarginContainer" parent="PopUpMenu/ResetMenu/Centre/Panel" unique_id=851015672]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Buttons" type="VBoxContainer" parent="PopUpMenu/ResetMenu/Centre/Panel/Margin" unique_id=863955251]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons" unique_id=1535556380]
+layout_mode = 2
+text = "RESTART LEVEL?"
 label_settings = SubResource("LabelSettings_e7par")
 horizontal_alignment = 1
 
-[node name="Reset" type="Button" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=949304030]
+[node name="Reset" type="Button" parent="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons" unique_id=949304030]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 12
-text = "Yes"
+text = "YES"
 script = ExtResource("3_jpmjn")
 
-[node name="ResetMenuClose" type="Button" parent="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer" unique_id=574689596]
+[node name="ResetMenuClose" type="Button" parent="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons" unique_id=574689596]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 12
-text = "No"
+text = "NO"
 
 [node name="TutorialMenu" type="MarginContainer" parent="PopUpMenu" unique_id=1682309318]
 visible = false
@@ -89,10 +97,58 @@ hframes = 3
 vframes = 2
 frame = 5
 
-[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=1896062598]
-process_mode = 3
+[node name="PauseMenu" type="MarginContainer" parent="PopUpMenu" unique_id=1624413496]
+visible = false
+layout_mode = 2
 script = ExtResource("4_pause")
 
-[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu" method="_on_reset_pressed"]
-[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/Reset" to="PopUpMenu/ResetMenu" method="_on_reset_pressed"]
-[connection signal="pressed" from="PopUpMenu/ResetMenu/MarginContainer/VBoxContainer/ResetMenuClose" to="PopUpMenu" method="_on_reset_menu_close_pressed"]
+[node name="Dim" type="ColorRect" parent="PopUpMenu/PauseMenu" unique_id=131397871]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.64705884)
+
+[node name="Centre" type="CenterContainer" parent="PopUpMenu/PauseMenu" unique_id=726601638]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="PopUpMenu/PauseMenu/Centre" unique_id=2049483665]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="PopUpMenu/PauseMenu/Centre/Panel" unique_id=1871863527]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Buttons" type="VBoxContainer" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin" unique_id=941701165]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=1587797611]
+layout_mode = 2
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="Resume" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=1164708999]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "RESUME"
+script = ExtResource("3_jpmjn")
+
+[node name="MainMenu" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=196783016]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="Exit" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=2048480074]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/Reset" to="PopUpMenu" method="_on_reset_pressed"]
+[connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/Reset" to="PopUpMenu/ResetMenu" method="_on_reset_pressed"]
+[connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/ResetMenuClose" to="PopUpMenu" method="_on_reset_menu_close_pressed"]
+[connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/Resume" to="PopUpMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/MainMenu" to="PopUpMenu/PauseMenu" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/Exit" to="PopUpMenu/PauseMenu" method="_on_exit_pressed"]

@@ -9,7 +9,7 @@ _data = PackedByteArray("AAADAAUAAAABAAAAgAEAAJAAAAAyBgAAUklGRioGAABXRUJQVlA4TB4
 size_override = Vector2(384, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(15, 40)
+size = Vector2(15, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50nb2"]
 size = Vector2(15, 12)
@@ -41,7 +41,7 @@ states/Idle/position = Vector2(467, 109)
 states/Launch/node = SubResource("AnimationNodeAnimation_a644o")
 states/Launch/position = Vector2(373, 168)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_7hyjh")]
-graph_offset = Vector2(94, -19)
+graph_offset = Vector2(64, -46)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_se878"]
 animation = &"Clone2/Death"
@@ -88,7 +88,7 @@ graph_offset = Vector2(-37, -29)
 [node name="Clone" type="CharacterBody2D" unique_id=1897861543]
 collision_mask = 2
 script = ExtResource("1_f60lt")
-maxSpeed = 99.9999999999968
+maxSpeed = 199.9999999999936
 jumpHeight = 63.999999999997954
 jumpTimeToPeak = 0.249999999999992
 jumpTimeToDecent = 0.1999999999999936
@@ -98,9 +98,9 @@ recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=561660019]
 texture_filter = 1
+position = Vector2(0, 1)
 texture = SubResource("PortableCompressedTexture2D_f60lt")
 region_enabled = true
-region_rect = Rect2(0, 0, 48, 48)
 metadata/_aseprite_wizard_interface_config_ = {
 "animation_section": true,
 "layer_section": true,
@@ -129,16 +129,19 @@ metadata/_aseprite_wizard_config_ = {
 metadata/_aseprite_wizard_source_file_hash_ = "bd103665d6b85787966afde064ca95c2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2003127166]
-position = Vector2(0, 4)
+position = Vector2(-3.2014214e-09, 9)
 shape = SubResource("RectangleShape2D_cvnsp")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=1475856007]
-position = Vector2(0, -18)
+[node name="StackDetectorArea" type="Area2D" parent="." unique_id=1475856007]
+position = Vector2(0, -13)
 collision_layer = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1222306829]
-position = Vector2(0, 4)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StackDetectorArea" unique_id=1222306829]
 shape = SubResource("RectangleShape2D_50nb2")
+
+[node name="StackMarker" type="Marker2D" parent="." unique_id=1539982576]
+position = Vector2(0, -40)
+gizmo_extents = 16.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=293744414]
 libraries/ = SubResource("AnimationLibrary_a644o")
@@ -150,5 +153,5 @@ tree_root = SubResource("AnimationNodeStateMachine_ig4qv")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_clone_enter"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_clone_exited"]
+[connection signal="body_entered" from="StackDetectorArea" to="." method="_on_clone_enter"]
+[connection signal="body_exited" from="StackDetectorArea" to="." method="_on_clone_exited"]
