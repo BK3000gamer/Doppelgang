@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://dnjr35lohdq5j" path="res://Entity/Player/Scripts/camera_controller.gd" id="1_qxrlw"]
 [ext_resource type="Shader" uid="uid://bdenufw0wjyuc" path="res://Shaders/pixel_offset.gdshader" id="2_uda3f"]
 [ext_resource type="PackedScene" uid="uid://ho06xd8t2jp3" path="res://Environment/Scenes/parallax_background.tscn" id="3_5ubxa"]
-[ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/in_game_ui.tscn" id="3_wrm1d"]
+[ext_resource type="Script" uid="uid://bw4s86wldg0b5" path="res://Entity/Player/Scripts/camera_2d.gd" id="3_jycte"]
+[ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/Scenes/in_game_ui.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Levels/level.tscn" id="4_uda3f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vshje"]
@@ -69,6 +70,7 @@ size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/BackgroundContainer/SubViewport" unique_id=1130135499]
+script = ExtResource("3_jycte")
 
 [node name="ParallaxBackground" parent="NormalViewport/BackgroundContainer/SubViewport" unique_id=1422039757 instance=ExtResource("3_5ubxa")]
 
@@ -88,6 +90,7 @@ render_target_update_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1584254544]
 limit_enabled = false
+script = ExtResource("3_jycte")
 
 [node name="HorizontalViewport" type="HBoxContainer" parent="." unique_id=1188303144]
 visible = false
@@ -111,6 +114,7 @@ size = Vector2i(320, 360)
 render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half1/BackgroundContainer/SubViewport" unique_id=1944077612]
+script = ExtResource("3_jycte")
 
 [node name="ParallaxBackground" parent="HorizontalViewport/Half1/BackgroundContainer/SubViewport" unique_id=1497339333 instance=ExtResource("3_5ubxa")]
 
@@ -128,6 +132,7 @@ render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half1/LevelContainer/SubViewport" unique_id=1582717937]
 limit_enabled = false
+script = ExtResource("3_jycte")
 
 [node name="Half2" type="Control" parent="HorizontalViewport" unique_id=1461141259]
 custom_minimum_size = Vector2(320, 360)
@@ -145,6 +150,7 @@ size = Vector2i(320, 360)
 render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half2/BackgroundContainer/SubViewport" unique_id=2048570765]
+script = ExtResource("3_jycte")
 
 [node name="ParallaxBackground" parent="HorizontalViewport/Half2/BackgroundContainer/SubViewport" unique_id=468903249 instance=ExtResource("3_5ubxa")]
 
@@ -162,6 +168,7 @@ render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="HorizontalViewport/Half2/LevelContainer/SubViewport" unique_id=337165461]
 limit_enabled = false
+script = ExtResource("3_jycte")
 
 [node name="VerticalViewport" type="VBoxContainer" parent="." unique_id=58535937]
 visible = false
@@ -185,6 +192,7 @@ size = Vector2i(640, 180)
 render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half1/BackgroundContainer/SubViewport" unique_id=2052588741]
+script = ExtResource("3_jycte")
 
 [node name="ParallaxBackground" parent="VerticalViewport/Half1/BackgroundContainer/SubViewport" unique_id=817977117 instance=ExtResource("3_5ubxa")]
 
@@ -202,6 +210,7 @@ render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half1/LevelContainer/SubViewport" unique_id=880919578]
 limit_enabled = false
+script = ExtResource("3_jycte")
 
 [node name="Half2" type="Control" parent="VerticalViewport" unique_id=1276998583]
 custom_minimum_size = Vector2(640, 180)
@@ -219,6 +228,7 @@ size = Vector2i(640, 180)
 render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half2/BackgroundContainer/SubViewport" unique_id=113288481]
+script = ExtResource("3_jycte")
 
 [node name="ParallaxBackground" parent="VerticalViewport/Half2/BackgroundContainer/SubViewport" unique_id=1783040792 instance=ExtResource("3_5ubxa")]
 
@@ -236,6 +246,7 @@ render_target_update_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="VerticalViewport/Half2/LevelContainer/SubViewport" unique_id=1764857025]
 limit_enabled = false
+script = ExtResource("3_jycte")
 
 [node name="InGameUI" parent="." unique_id=934436243 instance=ExtResource("3_wrm1d")]
 offset_left = 320.0

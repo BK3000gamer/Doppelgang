@@ -471,6 +471,7 @@ z_index = 1
 collision_mask = 2
 safe_margin = 0.1
 script = ExtResource("1_fre4f")
+playerNum = null
 Speed = 199.9999999999936
 deceleration = 0.499999999999984
 jumpHeight = 47.999999999998465
@@ -487,6 +488,7 @@ wallClimbTime = 19.99999999999936
 wallClimbMultiplier = 14.99999999999952
 recallSpeed = 999.999999999968
 recallDistance = 63.999999999997954
+holdTime = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1927245529]
 z_index = -4

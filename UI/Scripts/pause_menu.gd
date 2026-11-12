@@ -1,6 +1,6 @@
 extends MarginContainer
 
-const MAIN_MENU := "res://UI/start_menu.tscn"
+const MAIN_MENU := "res://UI/Scenes/start_menu.tscn"
 
 func _on_main_menu_pressed() -> void:
 	# Scene changes do not clear SceneTree.paused automatically.

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djqbtutq0oiad"]
 
-[ext_resource type="Script" uid="uid://cinyw5ptfacnp" path="res://UI/device_tile.gd" id="1_fn38v"]
+[ext_resource type="Script" uid="uid://cinyw5ptfacnp" path="res://UI/Scripts/device_tile.gd" id="1_fn38v"]
 
 [node name="DeviceTile" type="PanelContainer" unique_id=280211578]
 offset_right = 40.0

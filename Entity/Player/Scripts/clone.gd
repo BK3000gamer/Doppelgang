@@ -65,6 +65,8 @@ func _on_clone_enter(body: Node2D) -> void:
 		return
 	if top_player.global_position.y >= global_position.y: #Checks for if the other player is on top.
 		return
+	if body.CurrentState == body.States.Launch:
+		return
 	_attach_player(top_player)
 		
 func _on_clone_exited(body: Node2D) -> void:

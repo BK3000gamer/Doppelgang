@@ -5,19 +5,19 @@ extends MarginContainer
 	0: $Margin/Content/Row/CardUnassigned,
 	1: $Margin/Content/Row/CardP2}
 @onready var columns: Dictionary[int, VBoxContainer] = {
-	-1: $Margin/Content/Row/CardP1/Scroll/DevicesP1,
-	0: $Margin/Content/Row/CardUnassigned/Scroll/DevicesUnassigned,
-	1: $Margin/Content/Row/CardP2/Scroll/DevicesP2}
+	-1: $Margin/Content/Row/CardP1/Column/Scroll/DevicesP1,
+	0: $Margin/Content/Row/CardUnassigned/Column/Scroll/DevicesUnassigned,
+	1: $Margin/Content/Row/CardP2/Column/Scroll/DevicesP2}
 @onready var statuses: Dictionary[int, Label] = {
-	-1: $Margin/Content/Row/CardP1/StatusP1,
-	0: $Margin/Content/Row/CardUnassigned/StatusUnassigned,
-	1: $Margin/Content/Row/CardP2/StatusP2}
-@onready var start_button: Button = $Margin/Content/Hint/Footer/Start
+	-1: $Margin/Content/Row/CardP1/Column/StatusP1,
+	0: $Margin/Content/Row/CardUnassigned/Column/StatusUnassigned,
+	1: $Margin/Content/Row/CardP2/Column/StatusP2}
+@onready var start_button: Button = $Margin/Content/Footer/Start
 @onready var hint: Label = $Margin/Content/Hint
 
 const PLAYER_COLORS := [Color("79bffa"), Color("f5b477")]
 const MUTED := Color("a6b1c2")
-const DeviceTile := preload("res://UI/device_tile.tscn")
+const DeviceTile := preload("res://UI/Scenes/device_tile.tscn")
 var controllerMap: Dictionary[int, int] = {}
 var stick_held: Dictionary[int, bool] = {}
 
@@ -114,7 +114,7 @@ func _update_status() -> void:
 		tile.setup(device, slot)
 		tile.move_requested.connect(_move_device)
 	start_button.disabled = not _both_players_selected()
-	hint.text = "Ready! Enter / Start to play" if _both_players_selected() else "A / D or left / right on each device"
+	hint.text = "Ready! Enter / Start to play" if _both_players_selected() else "A / D or DPAD < / > on each device"
 
 func _start_game() -> void:
 	if not _both_players_selected():

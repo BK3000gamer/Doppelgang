@@ -33,6 +33,7 @@ class_name Player
 @onready var playerScene := load("res://Entity/Player/Scenes/player.tscn")
 @onready var cloneScene := load("res://Entity/Player/Scenes/clone.tscn")
 @onready var playback = $AnimationTree["parameters/Player%d/playback" % playerNum]
+@onready var cameraController := $"/root/Game/CameraController"
 
 var InputDir := Vector2.ZERO
 var Momentum: float
@@ -569,6 +570,7 @@ func _change_state(NewState: States) -> void:
 			velocity = launchDir * launchSpeed
 			launchTimer = launchTime
 			hitAnimationPlayer.play("Hit Animation")
+			cameraController._screen_shake(playerNum)
 			stackDetectorArea.monitoring = false
 			_play("Launch", false, true)
 		States.Clone:
@@ -585,6 +587,7 @@ func _change_state(NewState: States) -> void:
 			
 			if !cloned:
 				hitAnimationPlayer.play("Hit Animation")
+				cameraController._screen_shake(playerNum)
 				if playerNum == -1:
 					if group_2.is_empty():
 						clone = playerScene.instantiate()
@@ -681,6 +684,7 @@ func _change_state(NewState: States) -> void:
 				AudioManager.create_2d_audio_at_location(global_position, SoundEffect.Type.TAKE_DAMAGE)
 			velocity = Vector2.ZERO
 			hitAnimationPlayer.play("Hit Animation")
+			cameraController._screen_shake(playerNum)
 			stackDetectorArea.monitoring = false
 			_play("Death", false, true)
 	

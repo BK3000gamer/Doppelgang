@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://b0u0ioleal0rf"]
+
+[ext_resource type="Script" uid="uid://dtsksbbijlv4e" path="res://UI/Scripts/start_menu.gd" id="1_r263a"]
+[ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/Scripts/button.gd" id="2_tui1u"]
+
+[node name="StartMenu" type="Control" unique_id=591349785]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r263a")
+
+[node name="Background" type="ColorRect" parent="." unique_id=655926340]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.20392157, 0.20392157, 0.20392157, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=647749613]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="CenterContainer" unique_id=1876084142]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Buttons" type="VBoxContainer" parent="CenterContainer/Margin" unique_id=1037057278]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NewGame" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=8558023]
+layout_mode = 2
+text = "NEW GAME"
+script = ExtResource("2_tui1u")
+
+[node name="LoadGame" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=2052599924]
+layout_mode = 2
+text = "LOAD GAME"
+
+[node name="Setting" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=903306547]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="Credits" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=2063905869]
+layout_mode = 2
+text = "CREDITS"
+
+[node name="QuitGame" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=685468900]
+layout_mode = 2
+text = "EXIT"
+
+[connection signal="pressed" from="CenterContainer/Margin/Buttons/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="CenterContainer/Margin/Buttons/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="CenterContainer/Margin/Buttons/QuitGame" to="." method="_on_quit_game_pressed"]

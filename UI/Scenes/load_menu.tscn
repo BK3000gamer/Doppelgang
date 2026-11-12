@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpymy3wyey51x"]
 
-[ext_resource type="Script" uid="uid://b4u7qnf0p1x8v" path="res://UI/load_menu.gd" id="1_tlgdu"]
-[ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/button.gd" id="2_hnwv5"]
+[ext_resource type="Script" uid="uid://b4u7qnf0p1x8v" path="res://UI/Scripts/load_menu.gd" id="1_tlgdu"]
+[ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/Scripts/button.gd" id="2_hnwv5"]
 
 [node name="LoadMenu" type="Control" unique_id=993023887]
 layout_mode = 3
