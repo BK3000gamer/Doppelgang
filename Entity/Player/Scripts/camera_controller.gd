@@ -1,6 +1,8 @@
 extends Node2D
 class_name Camera
 
+@export var deadZone: float
+
 @onready var views := {
 	"normal": {
 		root = $"/root/Game/NormalViewport",
@@ -62,6 +64,8 @@ var tween: Tween
 
 const HALF_VIEW_W := 160.0
 
+var targetPos: float
+
 func _ready() -> void:
 	views["horizontal"].subviewport_1.world_2d = views["normal"].subviewport.world_2d
 	views["horizontal"].subviewport_2.world_2d = views["normal"].subviewport.world_2d
@@ -71,7 +75,7 @@ func _ready() -> void:
 	_offset_parallax(views["horizontal"].bg_subviewport_1, 1.0)
 	_offset_parallax(views["horizontal"].bg_subviewport_2, -1.0)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	player_1 = get_tree().get_first_node_in_group("player_1")
 	player_2 = get_tree().get_first_node_in_group("player_2")
 	
@@ -199,9 +203,13 @@ func _physics_process(_delta: float) -> void:
 				if player_1 and player_2:
 					cam_pos.x = (player_1.global_position.x + player_2.global_position.x) / 2.0
 				elif player_1:
-					cam_pos.x = player_1.global_position.x
+					cam_pos.x = views["normal"].camera.global_position.x
+					if abs(cam_pos.x - player_1.global_position.x) > deadZone:
+						cam_pos.x = _deadzone(player_1.global_position.x, cam_pos.x, player_1.velocity.x, delta)
 				elif player_2:
-					cam_pos.x = player_2.global_position.x
+					cam_pos.x = views["normal"].camera.global_position.x
+					if abs(cam_pos.x - player_2.global_position.x) > deadZone:
+						cam_pos.x = _deadzone(player_2.global_position.x, cam_pos.x, player_2.velocity.x, delta)
 				
 				cam_pos.x = clamp(cam_pos.x, currentRoom.cameraCheckpoint_1.global_position.x, currentRoom.cameraCheckpoint_2.global_position.x)
 				
@@ -255,9 +263,13 @@ func _physics_process(_delta: float) -> void:
 				if player_1 and player_2:
 					cam_pos.y = (player_1.global_position.y + player_2.global_position.y) / 2.0
 				elif player_1:
-					cam_pos.y = player_1.global_position.y
+					cam_pos.y = views["normal"].camera.global_position.y
+					if abs(cam_pos.y - player_1.global_position.y) > deadZone:
+						cam_pos.y = _deadzone(player_1.global_position.y, cam_pos.y, player_1.velocity.y, delta)
 				elif player_2:
-					cam_pos.y = player_2.global_position.y
+					cam_pos.y = views["normal"].camera.global_position.y
+					if abs(cam_pos.y - player_2.global_position.y) > deadZone:
+						cam_pos.y = _deadzone(player_2.global_position.y, cam_pos.y, player_2.velocity.y, delta)
 				
 				cam_pos.y = clamp(cam_pos.y, currentRoom.cameraCheckpoint_1.global_position.y, currentRoom.cameraCheckpoint_2.global_position.y)
 				
@@ -365,3 +377,8 @@ func _screen_shake(playerNum: int) -> void:
 			elif playerNum == 1:
 				views["vertical"].camera_1.screen_shake(10, 0.25)
 				views["vertical"].bg_camera_1.screen_shake(10, 0.25)
+
+func _deadzone(playerPos: float, cameraPos: float, followSpeed: float, delta: float) -> float:
+	targetPos = playerPos
+	cameraPos = move_toward(cameraPos, targetPos, abs(followSpeed) * delta)
+	return cameraPos
