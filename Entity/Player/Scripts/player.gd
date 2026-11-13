@@ -103,8 +103,10 @@ func _ready() -> void:
 	
 	if playerNum == -1:
 		$GPUParticles2D.texture.gradient.set_color(0, Color("6fe5e9"))
+		$PointLight2D.color = Color("6fe5e9")
 	else:
 		$GPUParticles2D.texture.gradient.set_color(0, Color("ff6cf5"))
+		$PointLight2D.color = Color("ff6cf5")
 
 #Attempt to add playerside clone dropthrough
 func _find_clone() -> Clone:
@@ -466,6 +468,8 @@ func _physics_process(delta: float) -> void:
 			global_position += platformDelta
 		States.Merge:
 			velocity.y += _get_gravity() * delta
+			if mergeOutOfRange:
+				$Sprite2D.modulate = Color.from_hsv(0, 0.4, 1, 1)
 			await get_tree().create_timer(0.1).timeout
 			
 			if velocity.y < 0.0:

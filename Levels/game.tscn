@@ -5,7 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://ho06xd8t2jp3" path="res://Environment/Scenes/parallax_background.tscn" id="3_5ubxa"]
 [ext_resource type="Script" uid="uid://bw4s86wldg0b5" path="res://Entity/Player/Scripts/camera_2d.gd" id="3_jycte"]
 [ext_resource type="PackedScene" uid="uid://cu3l6tsmnjtcn" path="res://UI/Scenes/in_game_ui.tscn" id="3_wrm1d"]
-[ext_resource type="PackedScene" uid="uid://c7ems4ky3aqga" path="res://Levels/level.tscn" id="4_uda3f"]
+[ext_resource type="PackedScene" uid="uid://cw67ga6bs1bdq" path="res://Levels/tutorial_level.tscn" id="5_jycte"]
+
+[sub_resource type="Environment" id="Environment_ev4ff"]
+background_mode = 3
+tonemap_mode = 1
+glow_enabled = true
+glow_intensity = 2.0
+glow_bloom = 0.45
+glow_blend_mode = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vshje"]
 shader = ExtResource("2_uda3f")
@@ -52,6 +60,9 @@ shader_parameter/cam_offset = Vector2(0, 0)
 [node name="CameraController" type="Node2D" parent="." unique_id=388081032 groups=["camera"]]
 script = ExtResource("1_qxrlw")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=29966059]
+environment = SubResource("Environment_ev4ff")
+
 [node name="NormalViewport" type="Control" parent="." unique_id=10652201]
 layout_mode = 3
 anchors_preset = 0
@@ -86,7 +97,7 @@ handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Level" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1337777124 instance=ExtResource("4_uda3f")]
+[node name="Tutorial Level" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1741904549 instance=ExtResource("5_jycte")]
 
 [node name="Camera2D" type="Camera2D" parent="NormalViewport/LevelContainer/SubViewport" unique_id=1584254544]
 limit_enabled = false

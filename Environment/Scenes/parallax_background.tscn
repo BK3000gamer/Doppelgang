@@ -26,3 +26,6 @@ repeat_times = 6
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2" unique_id=64743360]
 z_index = -20
 texture = ExtResource("2_231ro")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1138891994]
+color = Color(0.44291076, 0.44291076, 0.44291073, 1)

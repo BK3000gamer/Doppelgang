@@ -88,8 +88,8 @@ graph_offset = Vector2(-37, -29)
 [sub_resource type="Gradient" id="Gradient_2aakk"]
 resource_local_to_scene = true
 interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.71686745)
-colors = PackedColorArray(0.43529412, 0.8980392, 0.9137255, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.64457834, 0.71686745)
+colors = PackedColorArray(0.43529412, 0.8980392, 0.9137255, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ikygh"]
 resource_local_to_scene = true
@@ -128,6 +128,7 @@ launchSpeed = 999.999999999968
 recallSpeed = 999.999999999968
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=561660019]
+self_modulate = Color(0.5, 0.5, 0.5, 1)
 texture_filter = 1
 position = Vector2(0, 1)
 texture = SubResource("PortableCompressedTexture2D_f60lt")
