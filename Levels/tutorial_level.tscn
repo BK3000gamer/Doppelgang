@@ -14,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Entity/Player/Scenes/player.tscn" id="11_aowvf"]
 [ext_resource type="PackedScene" uid="uid://bh7peoju0f7pl" path="res://Environment/Scenes/interactable_button.tscn" id="12_73pmg"]
 [ext_resource type="PackedScene" uid="uid://dpli1b0kptvsv" path="res://Environment/Scenes/level_transition.tscn" id="13_ce83k"]
-[ext_resource type="PackedScene" uid="uid://bfykd6qrnxkqb" path="res://Levels/chapter_1.tscn" id="14_iq0ro"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dg6a4"]
 size = Vector2(640, 360)
@@ -31,7 +30,7 @@ size = Vector2(64, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_enwdo"]
 size = Vector2(96, 8)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_iq0ro"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ce83k"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b6vii"]
@@ -67,7 +66,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_uv1mr"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_iq0ro"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_blxuw"]
@@ -200,7 +199,7 @@ waitTime = 0.5999999999999808
 [node name="NinePatchRect" parent="Room1/Falling Platform" index="0" unique_id=1534618689]
 offset_left = -48.0
 offset_right = 48.0
-texture = SubResource("ViewportTexture_iq0ro")
+texture = SubResource("ViewportTexture_ce83k")
 
 [node name="CollisionShape2D" parent="Room1/Falling Platform" index="1" unique_id=37473589]
 shape = SubResource("RectangleShape2D_b6vii")
@@ -294,7 +293,7 @@ inputs = [NodePath("../MotionSensor")]
 [node name="NinePatchRect" parent="Room2/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="0" unique_id=780333250]
 offset_top = -16.0
 offset_bottom = 16.0
-texture = SubResource("ViewportTexture_uv1mr")
+texture = SubResource("ViewportTexture_iq0ro")
 
 [node name="CollisionShape2D" parent="Room2/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="2" unique_id=270251958]
 shape = SubResource("RectangleShape2D_blxuw")
@@ -554,7 +553,7 @@ one_way_collision_direction = Vector2(-1, 0)
 
 [node name="LevelTransition" parent="." unique_id=860769215 instance=ExtResource("13_ce83k")]
 position = Vector2(2944, 0)
-nextLevel = ExtResource("14_iq0ro")
+nextLevel = "chapter_1"
 
 [node name="CollisionShape2D" parent="LevelTransition" index="0" unique_id=354537846]
 shape = SubResource("RectangleShape2D_uv1mr")

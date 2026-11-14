@@ -245,6 +245,7 @@ size = Vector2(56, 72)
 [node name="Chapter 1" type="Node2D" unique_id=714554862]
 
 [node name="Room1" parent="." unique_id=1542920506 instance=ExtResource("1_tiv73")]
+enabledInputs = 1
 
 [node name="CollisionShape2D" parent="Room1" index="0" unique_id=299480520]
 shape = SubResource("RectangleShape2D_7xrft")
@@ -744,7 +745,6 @@ shape = SubResource("RectangleShape2D_iu8vf")
 [node name="Room7" parent="." unique_id=285989523 instance=ExtResource("1_tiv73")]
 position = Vector2(3776, -328)
 roomType = 1
-enabledInputs = 4
 
 [node name="CollisionShape2D" parent="Room7" index="0" unique_id=299480520]
 shape = SubResource("RectangleShape2D_362ls")

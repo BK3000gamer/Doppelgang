@@ -53,10 +53,6 @@ var group_2: Array
 var clone_1: Array
 var clone_2: Array
 
-var clone_under: Clone = null
-var clone_dropthrough: Clone = null
-var holdTimer: float
-
 var cloned: bool = false
 var climbed: bool = false
 
@@ -84,6 +80,11 @@ enum States {
 var CurrentState = States.Idle
 var PreviousState: States
 
+var clone_input := "disabled_%d"
+var merge_input := "disabled_%d"
+var tp_left_input := "disabled_%d"
+var tp_right_input := "disabled_%d"
+
 var carrier: CharacterBody2D = null
 var carried_player: CharacterBody2D = null
 
@@ -91,7 +92,7 @@ const LOCKED := ["Launch", "Shoot", "Jump_Shoot"]   # must play to the end
 var queued := ""
 var queued_travel := false
 
-var TPclone: CharacterBody2D
+var target: CharacterBody2D
 
 var mergeOutOfRange: bool = false
 
@@ -107,28 +108,6 @@ func _ready() -> void:
 	else:
 		$GPUParticles2D.texture.gradient.set_color(0, Color("ff6cf5"))
 		$PointLight2D.color = Color("ff6cf5")
-
-#Attempt to add playerside clone dropthrough
-func _find_clone() -> Clone:
-	for i in range(get_slide_collision_count()):
-		var collision := get_slide_collision(i)
-		var collider = collision.get_collider()
-		if collision.get_normal().y < -0.7 and collider is Clone:
-			return collider as Clone
-	return null
-	
-func clone_drop() -> void:
-	if not is_on_floor():
-		return
-	if not Input.is_action_pressed("down_%d" % deviceNum):
-		return
-	var platform := _find_clone()
-	if platform == null:
-		return
-	add_collision_exception_with(platform)
-	clone_dropthrough = platform
-	holdTimer = holdTime
-		
 
 func _on_clone_enter(body: Node2D) -> void:
 	if not body is CharacterBody2D:
@@ -170,16 +149,13 @@ func _physics_process(delta: float) -> void:
 	$Sprite2D.modulate = Color.from_hsv(0, 0, 1, 1)
 	
 	#TP
-	if Input.is_action_just_pressed(GameProgress.content.tp_left % deviceNum):
+	if Input.is_action_just_pressed(tp_left_input % deviceNum):
 		var distance = 1000.0
-		var target: CharacterBody2D
 		if playerNum == -1:
 			for i in range(clone_1.size()):
 				if !is_instance_valid(clone_1[i]):
 					continue
 				if clone_1[i].global_position.x < global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
-					set_collision_mask_value(1, false)
-					clone_1[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_1[i].global_position)
 					target = clone_1[i]
 		elif playerNum == 1:
@@ -187,29 +163,32 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_2[i]):
 					continue
 				if clone_2[i].global_position.x < global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
-					set_collision_mask_value(1, false)
-					clone_2[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_2[i].global_position)
 					target = clone_2[i]
 		if target != null and is_instance_valid(target):
 			var recordPos = global_position
-			TPclone = target
+			set_collision_mask_value(1, false)
+			target.set_collision_mask_value(1, false)
+			stackDetectorArea.monitoring = false
+			target.stackDetectorArea.monitoring = false
 			global_position = target.global_position
 			target.global_position = recordPos
 			await get_tree().create_timer(0.25).timeout
-			TPclone = null
+			set_collision_mask_value(1, true)
+			target.set_collision_mask_value(1, true)
+			stackDetectorArea.monitoring = true
+			target.stackDetectorArea.monitoring = true
+			target._change_state(States.Idle)
+			target = null
 		else:
 			target = null
-	elif Input.is_action_just_pressed(GameProgress.content.tp_right % deviceNum):
+	elif Input.is_action_just_pressed(tp_right_input % deviceNum):
 		var distance = 1000.0
-		var target: CharacterBody2D
 		if playerNum == -1:
 			for i in range(clone_1.size()):
 				if !is_instance_valid(clone_1[i]):
 					continue
 				if clone_1[i].global_position.x > global_position.x and global_position.distance_to(clone_1[i].global_position) < distance:
-					set_collision_mask_value(1, false)
-					clone_1[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_1[i].global_position)
 					target = clone_1[i]
 		elif playerNum == 1:
@@ -217,17 +196,23 @@ func _physics_process(delta: float) -> void:
 				if !is_instance_valid(clone_2[i]):
 					continue
 				if clone_2[i].global_position.x > global_position.x and global_position.distance_to(clone_2[i].global_position) < distance:
-					set_collision_mask_value(1, false)
-					clone_2[i].set_collision_mask_value(1, false)
 					distance = global_position.distance_to(clone_2[i].global_position)
 					target = clone_2[i]
 		if target != null and is_instance_valid(target):
 			var recordPos = global_position
-			TPclone = target
+			set_collision_mask_value(1, false)
+			target.set_collision_mask_value(1, false)
+			stackDetectorArea.monitoring = false
+			target.stackDetectorArea.monitoring = false
 			global_position = target.global_position
 			target.global_position = recordPos
-			await get_tree().create_timer(0.5).timeout
-			TPclone = null
+			await get_tree().create_timer(0.25).timeout
+			set_collision_mask_value(1, true)
+			target.set_collision_mask_value(1, true)
+			stackDetectorArea.monitoring = true
+			target.stackDetectorArea.monitoring = true
+			target._change_state(States.Idle)
+			target = null
 		else:
 			target = null
 	
@@ -252,14 +237,14 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 		States.Run:
 			velocity.x = InputDir.x * Speed
@@ -276,14 +261,14 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 		States.Jump:
 			Momentum *= deceleration
@@ -303,14 +288,14 @@ func _physics_process(delta: float) -> void:
 				else:
 					_change_state(States.Run)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 		States.Fall:
 			Momentum *= deceleration
@@ -338,14 +323,14 @@ func _physics_process(delta: float) -> void:
 					else:
 						_change_state(States.Run)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
 				if ($RayCast2D.is_colliding() or $RayCast2D2.is_colliding()) and !climbed:
 					_change_state(States.Climb)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 		States.Launch:
 			if launchTimer < 0.0:
@@ -370,7 +355,7 @@ func _physics_process(delta: float) -> void:
 					jumpBufferTimer = 0.0
 					_change_state(States.Jump)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_pressed("climb_%d" % deviceNum)):
@@ -412,13 +397,13 @@ func _physics_process(delta: float) -> void:
 			else:
 				_play("Run")
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_detach_player(States.Jump)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 			
 			if carrier:
@@ -456,13 +441,13 @@ func _physics_process(delta: float) -> void:
 			else:
 				_change_state(States.Fall)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.clone % deviceNum)):
+			if (Input.is_action_just_pressed(clone_input % deviceNum)):
 				_change_state(States.Clone)
 			
 			if (Input.is_action_just_pressed("jump_%d" % deviceNum)):
 				_change_state(States.Jump)
 			
-			if (Input.is_action_just_pressed(GameProgress.content.merge % deviceNum)):
+			if (Input.is_action_just_pressed(merge_input % deviceNum)):
 				_change_state(States.Merge)
 			
 			global_position += platformDelta
@@ -501,20 +486,7 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(0.1).timeout
 			set_collision_layer_value(1, true)
 	
-	if clone_dropthrough == null:
-		clone_drop()
-		
-	if clone_dropthrough != null:
-		holdTimer -= delta
-		
-		if holdTimer <= 0.0:
-			if is_instance_valid(clone_dropthrough):
-				remove_collision_exception_with(clone_dropthrough)
-				clone_dropthrough = null
-				
-	
 	move_and_slide()
-	clone_under = _find_clone()
 	
 func _process(delta: float) -> void:
 	controllerMap = ControllerMap.controllerMap

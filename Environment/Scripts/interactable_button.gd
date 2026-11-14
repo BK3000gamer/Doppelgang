@@ -21,7 +21,8 @@ var bodies : Array[Player] = []
 var player_1: Player
 var player_2: Player
 
-func _process(_delta: float) -> void:#Get players
+func _process(_delta: float) -> void:
+	#Get players
 	player_1 = get_tree().get_first_node_in_group("player_1")
 	player_2 = get_tree().get_first_node_in_group("player_2")
 	

@@ -18,6 +18,7 @@ extends MarginContainer
 const PLAYER_COLORS := [Color("79bffa"), Color("f5b477")]
 const MUTED := Color("a6b1c2")
 const DeviceTile := preload("res://UI/Scenes/device_tile.tscn")
+const Level := preload(("res://Levels/tutorial_level.tscn"))
 var controllerMap: Dictionary[int, int] = {}
 var stick_held: Dictionary[int, bool] = {}
 
@@ -120,13 +121,15 @@ func _start_game() -> void:
 	if not _both_players_selected():
 		return
 	ControllerMap.controllerMap = controllerMap.duplicate()
+	GameProgress.content.controllerMap = ControllerMap.controllerMap
 	get_tree().change_scene_to_file("res://Levels/game.tscn")
 
 func _on_back_pressed() -> void:
-	get_tree().change_scene_to_file("res://UI/start_menu.tscn")
+	get_tree().change_scene_to_file("res://UI/Scenes/start_menu.tscn")
 
 func _on_test_game_pressed() -> void:
 	# Keep the existing development shortcut separate from two-player validation.
 	ControllerMap.controllerMap.clear()
 	ControllerMap.controllerMap[-1] = -1
+	GameProgress.content.controllerMap = ControllerMap.controllerMap
 	get_tree().change_scene_to_file("res://Levels/game.tscn")

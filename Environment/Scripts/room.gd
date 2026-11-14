@@ -37,7 +37,6 @@ enum roomTypes {
 enum inputs{
 	None,
 	Clone,
-	Merge,
 	TP,
 	All
 }
@@ -69,17 +68,19 @@ func _process(_delta: float) -> void:
 
 func _activate_room() -> void:
 	cameraController.currentRoom = self
-	GameProgress.content.currentRoom = self
+	GameProgress.content.currentRoom = str(get_path())
 	
 	#set checkpoint
 	if player_1:
 		if player_1.CurrentState == player_1.States.Disabled:
 			player_1._change_state(player_1.States.Idle)
 		player_1.checkpoint = checkpoint_1.global_position
+		GameProgress.content.currentCheckpoint1 = player_1.checkpoint
 	if player_2:
 		if player_2.CurrentState == player_2.States.Disabled:
 			player_2._change_state(player_2.States.Idle)
 		player_2.checkpoint = checkpoint_2.global_position
+		GameProgress.content.currentCheckpoint2 = player_2.checkpoint
 	
 	#move camera
 	if !activated:
@@ -93,16 +94,36 @@ func _activate_room() -> void:
 		inputs.Clone:
 			GameProgress.content.clone = GameProgress.clone
 			GameProgress.content.merge = GameProgress.merge
-		inputs.Merge:
-			GameProgress.content.merge = GameProgress.merge
+			if player_1:
+				player_1.clone_input = GameProgress.clone
+				player_1.merge_input = GameProgress.merge
+			if player_2:
+				player_2.clone_input = GameProgress.clone
+				player_2.merge_input = GameProgress.merge
 		inputs.TP:
 			GameProgress.content.tp_left = GameProgress.tp_left
 			GameProgress.content.tp_right = GameProgress.tp_right
+			if player_1:
+				player_1.tp_left_input = GameProgress.tp_left
+				player_1.tp_right_input = GameProgress.tp_right
+			if player_2:
+				player_2.tp_left_input = GameProgress.tp_left
+				player_2.tp_right_input = GameProgress.tp_right
 		inputs.All:
 			GameProgress.content.clone = GameProgress.clone
 			GameProgress.content.merge = GameProgress.merge
 			GameProgress.content.tp_left = GameProgress.tp_left
 			GameProgress.content.tp_right = GameProgress.tp_right
+			if player_1:
+				player_1.clone_input = GameProgress.clone
+				player_1.merge_input = GameProgress.merge
+				player_1.tp_left_input = GameProgress.tp_left
+				player_1.tp_right_input = GameProgress.tp_right
+			if player_2:
+				player_2.clone_input = GameProgress.clone
+				player_2.merge_input = GameProgress.merge
+				player_2.tp_left_input = GameProgress.tp_left
+				player_2.tp_right_input = GameProgress.tp_right
 	
 	#tutorial
 	match tutorial:

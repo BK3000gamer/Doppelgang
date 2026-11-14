@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bidflfouvoh47" path="res://UI/Scripts/button.gd" id="3_wao8e"]
 [ext_resource type="Texture2D" uid="uid://ce1p33cql1lgf" path="res://Assets/Tutorials/Tutorial.png" id="4_b4smu"]
 [ext_resource type="Script" uid="uid://808hhuc64hre" path="res://UI/Scripts/pause_menu.gd" id="5_rcgug"]
+[ext_resource type="Script" uid="uid://cm3hwlx2vt10e" path="res://UI/Scripts/save_menu.gd" id="6_6g47f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e7par"]
 
@@ -34,6 +35,7 @@ layout_mode = 2
 script = ExtResource("2_6g47f")
 
 [node name="Dim" type="ColorRect" parent="PopUpMenu/ResetMenu" unique_id=1597363461]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
 color = Color(0.25, 0.25, 0.25, 0.74509805)
 
@@ -81,11 +83,13 @@ visible = false
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="PopUpMenu/TutorialMenu" unique_id=75720292]
+[node name="Dim" type="ColorRect" parent="PopUpMenu/TutorialMenu" unique_id=1456428497]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
-color = Color(0.25, 0.25, 0.25, 0.74509805)
+mouse_filter = 2
+color = Color(0, 0, 0, 0.64705884)
 
-[node name="MarginContainer" type="MarginContainer" parent="PopUpMenu/TutorialMenu" unique_id=79284607]
+[node name="MarginContainer" type="CenterContainer" parent="PopUpMenu/TutorialMenu" unique_id=665967504]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -103,6 +107,7 @@ layout_mode = 2
 script = ExtResource("5_rcgug")
 
 [node name="Dim" type="ColorRect" parent="PopUpMenu/PauseMenu" unique_id=131397871]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.64705884)
@@ -139,21 +144,72 @@ script = ExtResource("3_wao8e")
 [node name="SaveGame" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=290995143]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-text = "SAVE GAME"
+text = "SAVE AND QUIT"
 
 [node name="MainMenu" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=196783016]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-text = "MAIN MENU"
+text = "QUIT"
 
-[node name="Exit" type="Button" parent="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons" unique_id=2048480074]
-custom_minimum_size = Vector2(0, 30)
+[node name="SaveMenu" type="MarginContainer" parent="PopUpMenu" unique_id=2116502700]
+visible = false
 layout_mode = 2
-text = "EXIT"
+script = ExtResource("6_6g47f")
+
+[node name="Dim" type="ColorRect" parent="PopUpMenu/SaveMenu" unique_id=1502371088]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.64705884)
+
+[node name="Margin" type="MarginContainer" parent="PopUpMenu/SaveMenu" unique_id=84810443]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Saves" type="VBoxContainer" parent="PopUpMenu/SaveMenu/Margin" unique_id=98637230]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Save1" type="Button" parent="PopUpMenu/SaveMenu/Margin/Saves" unique_id=185329785]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 1"
+script = ExtResource("3_wao8e")
+
+[node name="Save2" type="Button" parent="PopUpMenu/SaveMenu/Margin/Saves" unique_id=1925015463]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 2"
+
+[node name="Save3" type="Button" parent="PopUpMenu/SaveMenu/Margin/Saves" unique_id=954826321]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Slot 3"
+
+[node name="Footer" type="HBoxContainer" parent="PopUpMenu/SaveMenu/Margin/Saves" unique_id=167515128]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Back" type="Button" parent="PopUpMenu/SaveMenu/Margin/Saves/Footer" unique_id=634430162]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "BACK"
+
+[node name="Spacer" type="Control" parent="PopUpMenu/SaveMenu/Margin/Saves/Footer" unique_id=2001966858]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/Reset" to="PopUpMenu" method="_on_reset_pressed"]
 [connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/Reset" to="PopUpMenu/ResetMenu" method="_on_reset_pressed"]
 [connection signal="pressed" from="PopUpMenu/ResetMenu/Centre/Panel/Margin/Buttons/ResetMenuClose" to="PopUpMenu" method="_on_reset_menu_close_pressed"]
 [connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/Resume" to="PopUpMenu" method="_on_resume_pressed"]
+[connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/SaveGame" to="PopUpMenu" method="_on_save_game_pressed"]
 [connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/MainMenu" to="PopUpMenu/PauseMenu" method="_on_main_menu_pressed"]
-[connection signal="pressed" from="PopUpMenu/PauseMenu/Centre/Panel/Margin/Buttons/Exit" to="PopUpMenu/PauseMenu" method="_on_exit_pressed"]
+[connection signal="pressed" from="PopUpMenu/SaveMenu/Margin/Saves/Save1" to="PopUpMenu/SaveMenu" method="_on_save_1_pressed"]
+[connection signal="pressed" from="PopUpMenu/SaveMenu/Margin/Saves/Save2" to="PopUpMenu/SaveMenu" method="_on_save_2_pressed"]
+[connection signal="pressed" from="PopUpMenu/SaveMenu/Margin/Saves/Save3" to="PopUpMenu/SaveMenu" method="_on_save_3_pressed"]
+[connection signal="pressed" from="PopUpMenu/SaveMenu/Margin/Saves/Footer/Back" to="PopUpMenu" method="_on_save_game_pressed"]

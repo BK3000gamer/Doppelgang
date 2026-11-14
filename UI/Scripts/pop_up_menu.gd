@@ -4,6 +4,7 @@ extends MarginContainer
 @onready var TutorialMenu: MarginContainer = $TutorialMenu
 @onready var Tutorial: Sprite2D = $TutorialMenu/MarginContainer/Tutorial
 @onready var PauseMenu := $PauseMenu
+@onready var SaveMenu := $SaveMenu
 
 func toggle_visibility(element) -> void:
 	element.visible = !element.visible
@@ -40,3 +41,11 @@ func _on_reset_pressed() -> void:
 func _on_resume_pressed() -> void:
 	toggle_visibility(PauseMenu)
 	get_tree().paused = false
+
+func _on_save_game_pressed() -> void:
+	toggle_visibility(PauseMenu)
+	toggle_visibility(SaveMenu)
+	if PauseMenu.visible:
+		$PauseMenu/Centre/Panel/Margin/Buttons/Resume.grab_focus()
+	elif SaveMenu.visible:
+		$SaveMenu/Margin/Saves/Save1.grab_focus()

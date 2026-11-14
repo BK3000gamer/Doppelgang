@@ -12,45 +12,64 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tlgdu")
 
-[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=816430973]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="MarginContainer2" unique_id=440442415]
-layout_mode = 2
+[node name="ColorRect" type="ColorRect" parent="." unique_id=440442415]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
 color = Color(0.20511743, 0.20511743, 0.20511743, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2" unique_id=47904891]
-layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+[node name="Margin" type="MarginContainer" parent="." unique_id=47904891]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/MarginContainer" unique_id=198778685]
+[node name="Saves" type="VBoxContainer" parent="Margin" unique_id=198778685]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 8
 
-[node name="Save 1" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=362906664]
+[node name="Save1" type="Button" parent="Margin/Saves" unique_id=362906664]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Slot 1"
 script = ExtResource("2_hnwv5")
 
-[node name="Save 2" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1135553366]
+[node name="Save2" type="Button" parent="Margin/Saves" unique_id=1135553366]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Slot 2"
 
-[node name="Save 3" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer" unique_id=1501308659]
+[node name="Save3" type="Button" parent="Margin/Saves" unique_id=1501308659]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Slot 3"
 
-[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 1" to="." method="_on_save_1_pressed"]
-[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 2" to="." method="_on_save_2_pressed"]
-[connection signal="pressed" from="MarginContainer2/MarginContainer/VBoxContainer/Save 3" to="." method="_on_save_3_pressed"]
+[node name="Footer" type="HBoxContainer" parent="Margin/Saves" unique_id=546262475]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Back" type="Button" parent="Margin/Saves/Footer" unique_id=2059958374]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "BACK"
+
+[node name="Spacer" type="Control" parent="Margin/Saves/Footer" unique_id=111251314]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Start" type="Button" parent="Margin/Saves/Footer" unique_id=317608973]
+custom_minimum_size = Vector2(140, 28)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "START GAME"
+script = ExtResource("2_hnwv5")
+
+[connection signal="pressed" from="Margin/Saves/Save1" to="." method="_on_save_1_pressed"]
+[connection signal="pressed" from="Margin/Saves/Save2" to="." method="_on_save_2_pressed"]
+[connection signal="pressed" from="Margin/Saves/Save3" to="." method="_on_save_3_pressed"]
+[connection signal="pressed" from="Margin/Saves/Footer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Margin/Saves/Footer/Start" to="." method="_on_start_pressed"]
