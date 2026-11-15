@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://by2psph5nnnr7"]
+
+[ext_resource type="Script" uid="uid://ysy42qmaujm2" path="res://Commands/Quit/quit.gd" id="1_gpavh"]
+
+[node name="Quit" type="Node" unique_id=685902663]
+script = ExtResource("1_gpavh")
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

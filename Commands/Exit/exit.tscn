@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://csvi5fup44nr3"]
+
+[ext_resource type="Script" uid="uid://os3yfpeyrkft" path="res://Commands/Exit/exit.gd" id="1_vdd1m"]
+
+[node name="Exit" type="Node" unique_id=1059262357]
+script = ExtResource("1_vdd1m")
+command = "/exit"
+help_text_short = "Exit the console."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

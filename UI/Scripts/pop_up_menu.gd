@@ -19,9 +19,9 @@ func _process(_delta: float) -> void:
 		toggle_visibility(TutorialMenu)
 		get_tree().paused = false
 	
-	if not get_tree().paused and Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause"):
 		toggle_visibility(PauseMenu)
-		get_tree().paused = true
+		get_tree().paused = !get_tree().paused
 		$PauseMenu/Centre/Panel/Margin/Buttons/Resume.grab_focus()
 
 func _tutorial_pop_up(tutorial: int) -> void:

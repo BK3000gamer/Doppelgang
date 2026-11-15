@@ -63,7 +63,6 @@ func _input(event: InputEvent) -> void:
 			direction = 1
 		elif event.keycode == KEY_ESCAPE:
 			_on_back_pressed()
-			get_viewport().set_input_as_handled()
 			return
 	else:
 		if event.button_index == JOY_BUTTON_DPAD_LEFT:
@@ -126,10 +125,3 @@ func _start_game() -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://UI/Scenes/start_menu.tscn")
-
-func _on_test_game_pressed() -> void:
-	# Keep the existing development shortcut separate from two-player validation.
-	ControllerMap.controllerMap.clear()
-	ControllerMap.controllerMap[-1] = -1
-	GameProgress.content.controllerMap = ControllerMap.controllerMap
-	get_tree().change_scene_to_file("res://Levels/game.tscn")

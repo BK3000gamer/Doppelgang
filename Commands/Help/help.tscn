@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ky32yl1mtyhk"]
+
+[ext_resource type="Script" uid="uid://cg7mp6g4l5f2v" path="res://Commands/Help/help.gd" id="1_rnkxp"]
+
+[node name="Help" type="Node" unique_id=1613136358]
+script = ExtResource("1_rnkxp")
+help_text = "Surely you know what this does. If you don't, '/help' display the list of commands and what their functions are"
+help_text_short = "Print list of commands and their functions"
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

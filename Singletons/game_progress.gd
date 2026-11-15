@@ -7,19 +7,24 @@ var tp_right := "tp_right_%d"
 
 const saveLocation := "user://SaveFile%d.json"
 
+var copy: Dictionary = {}
+
 var content: Dictionary = {
 	"clone": "disabled_%d",
 	"merge": "disabled_%d",
 	"tp_left": "disabled_%d",
 	"tp_right": "disabled_%d",
 	"currentRoom": null,
-	"currentChapter": "tutorial_level",
+	"currentChapter": "tutorial",
 	"currentCheckpoint1": Vector2(-288.0, -53.0),
 	"currentCheckpoint2": Vector2(-288.0, 123.0),
 	"controllerMap": {},
 	"player1Deaths": 0,
 	"player2Deaths": 0
 }
+
+func _ready() -> void:
+	copy = content.duplicate(true)
 
 func _save(slot: int):
 	var file = FileAccess.open(saveLocation % slot, FileAccess.WRITE)
@@ -81,4 +86,6 @@ func _start():
 		player_2.merge_input = content.merge
 		player_2.tp_left_input = content.tp_left
 		player_2.tp_right_input = content.tp_right
-	
+
+func _reset() -> void:
+	content = copy.duplicate(true)

@@ -6,11 +6,9 @@ func _on_main_menu_pressed() -> void:
 	# Scene changes do not clear SceneTree.paused automatically.
 	get_tree().paused = false
 	var error := get_tree().change_scene_to_file(MAIN_MENU)
+	GameProgress._reset()
 	if error != OK:
 		get_tree().paused = true
 		push_error("Could not open main menu: %s" % error_string(error))
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-func _on_exit_pressed() -> void:
-	get_tree().quit()

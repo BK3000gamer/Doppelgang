@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://csf4ovakugfxc"]
+
+[ext_resource type="Script" uid="uid://clj8bpbnuq15o" path="res://Commands/Clear/clear.gd" id="1_yjh10"]
+
+[node name="Clear" type="Node" unique_id=918814925]
+script = ExtResource("1_yjh10")
+command = "/clear"
+help_text = "Clear the console' output."
+help_text_short = "Clear the console' output."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

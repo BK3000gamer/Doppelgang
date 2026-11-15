@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://bfykd6qrnxkqb"]
 
+[ext_resource type="Script" uid="uid://ct743x6oxfcf7" path="res://Levels/chapter.gd" id="1_4b8pg"]
 [ext_resource type="PackedScene" uid="uid://df6coxdlbcshd" path="res://Entity/Player/Scenes/player.tscn" id="1_mh18r"]
 [ext_resource type="PackedScene" uid="uid://vjft40w36esj" path="res://Environment/Scenes/room.tscn" id="1_tiv73"]
 [ext_resource type="PackedScene" uid="uid://br58bq2w5rfyp" path="res://Environment/Scenes/spike.tscn" id="2_wj4u7"]
@@ -242,7 +243,9 @@ size = Vector2(48, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc58o"]
 size = Vector2(56, 72)
 
-[node name="Chapter 1" type="Node2D" unique_id=714554862]
+[node name="Chapter 1" type="Node2D" unique_id=1645664870]
+script = ExtResource("1_4b8pg")
+metadata/_custom_type_script = "uid://ct743x6oxfcf7"
 
 [node name="Room1" parent="." unique_id=1542920506 instance=ExtResource("1_tiv73")]
 enabledInputs = 1

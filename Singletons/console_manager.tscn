@@ -1,0 +1,214 @@
+[gd_scene format=3 uid="uid://wkw0hlwvtqyc"]
+
+[ext_resource type="Script" uid="uid://dh5yspbueooh0" path="res://Singletons/console_manager.gd" id="1_levh1"]
+[ext_resource type="Script" uid="uid://cdm1c3q4oc5et" path="res://UI/Scripts/dev_console.gd" id="2_4q8jc"]
+[ext_resource type="Script" uid="uid://6uq7qulkbjw0" path="res://Commands/command_aggregator.gd" id="3_shdtd"]
+[ext_resource type="PackedScene" uid="uid://ky32yl1mtyhk" path="res://Commands/Help/help.tscn" id="4_pswuk"]
+[ext_resource type="PackedScene" uid="uid://qlht3q3oprou" path="res://Commands/Echo/echo.tscn" id="5_5fkoh"]
+[ext_resource type="PackedScene" uid="uid://csf4ovakugfxc" path="res://Commands/Clear/clear.tscn" id="6_47yuc"]
+[ext_resource type="PackedScene" uid="uid://csvi5fup44nr3" path="res://Commands/Exit/exit.tscn" id="7_5dn3g"]
+[ext_resource type="PackedScene" uid="uid://by2psph5nnnr7" path="res://Commands/Quit/quit.tscn" id="8_e7blk"]
+[ext_resource type="Script" uid="uid://bfnuohexw71on" path="res://Commands/run_keyboard_test.gd" id="9_jpm46"]
+[ext_resource type="Script" uid="uid://bpx5554x57hha" path="res://Commands/enable_all_inputs.gd" id="10_dsex2"]
+[ext_resource type="Script" uid="uid://dv77q2x167fix" path="res://Commands/load_chapter.gd" id="11_8mwgl"]
+[ext_resource type="Script" uid="uid://d3fj23ia6tjwa" path="res://Commands/load_room.gd" id="12_3h8nd"]
+[ext_resource type="Script" uid="uid://cet7106b3myha" path="res://Singletons/set_clone_number.gd" id="13_ktomn"]
+
+[node name="ConsoleManager" type="Node" unique_id=90171596]
+process_mode = 3
+script = ExtResource("1_levh1")
+
+[node name="ConsoleCanvasLayer" type="CanvasLayer" parent="." unique_id=1954909925]
+offset = Vector2(0, 180)
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 0, 180)
+
+[node name="Dim" type="ColorRect" parent="ConsoleCanvasLayer" unique_id=275609339]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.64705884)
+
+[node name="DevConsole" type="Control" parent="ConsoleCanvasLayer" unique_id=1044705511]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_4q8jc")
+
+[node name="Panel" type="PanelContainer" parent="ConsoleCanvasLayer/DevConsole" unique_id=1928698602]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="ConsoleCanvasLayer/DevConsole/Panel" unique_id=1883317651]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Content" type="VBoxContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin" unique_id=1107729612]
+layout_mode = 2
+
+[node name="Header" type="Control" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content" unique_id=1021955316]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="Row" type="HBoxContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/Header" unique_id=1846294085]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/Header/Row" unique_id=949889676]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/Header/Row/Panel" unique_id=1309824280]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/Header/Row/Panel/MarginContainer" unique_id=740166271]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "DEBUG/DEV CONSOLE"
+
+[node name="CloseButton" type="Button" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/Header/Row" unique_id=1787657399]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+text = "X"
+
+[node name="CommandHistory" type="ScrollContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content" unique_id=497202463]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/CommandHistory" unique_id=1561246627]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/CommandHistory/Panel" unique_id=1177769188]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="OutputText" type="RichTextLabel" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/CommandHistory/Panel/MarginContainer" unique_id=2064745164]
+layout_mode = 2
+focus_mode = 2
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
+theme_override_font_sizes/bold_italics_font_size = 8
+theme_override_font_sizes/italics_font_size = 8
+theme_override_font_sizes/mono_font_size = 8
+selection_enabled = true
+
+[node name="InputPanel" type="Panel" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content" unique_id=1206799521]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/InputPanel" unique_id=500201679]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEntry" type="LineEdit" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/InputPanel/HBoxContainer" unique_id=334760691]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+keep_editing_on_text_submit = true
+
+[node name="SubmitButton" type="Button" parent="ConsoleCanvasLayer/DevConsole/Panel/Margin/Content/InputPanel/HBoxContainer" unique_id=1899088510]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "	SUBMIT"
+
+[node name="BaseCommand" type="Node" parent="." unique_id=427838148]
+script = ExtResource("3_shdtd")
+
+[node name="Help" parent="BaseCommand" unique_id=1613136358 instance=ExtResource("4_pswuk")]
+help_text = "Surely you know what this does. If you don't, '/help' display the list of commands and what their functions are."
+help_text_short = "Print list of commands and their functions."
+
+[node name="Echo" parent="BaseCommand" unique_id=518434331 instance=ExtResource("5_5fkoh")]
+command = "/echo"
+help_text = "Repeats whatever text inputted after '/echo' back to the console."
+help_text_short = "Repeats <arg> text."
+
+[node name="Clear" parent="BaseCommand" unique_id=918814925 instance=ExtResource("6_47yuc")]
+
+[node name="Exit" parent="BaseCommand" unique_id=1059262357 instance=ExtResource("7_5dn3g")]
+help_text = "Exit the console."
+
+[node name="Quit" parent="BaseCommand" unique_id=685902663 instance=ExtResource("8_e7blk")]
+command = "/quit"
+help_text = "Quit the game."
+help_text_short = "Quit the game."
+
+[node name="RunKeyboardTest" type="Node" parent="BaseCommand" unique_id=1099063254]
+script = ExtResource("9_jpm46")
+command = "/run_keyboard_test"
+group = "Debug"
+help_text = "Launch the game with player one's input as keyboard and player two's input as controller."
+help_text_short = "Run keyboard test scene."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"
+
+[node name="EnableAllInputs" type="Node" parent="BaseCommand" unique_id=6751019]
+script = ExtResource("10_dsex2")
+command = "/enable_all_inputs"
+group = "Debug"
+help_text = "Enable all unlockable inputs."
+help_text_short = "Enable the inputs of all unlockable abilities."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"
+
+[node name="LoadChapter" type="Node" parent="BaseCommand" unique_id=1324282897]
+script = ExtResource("11_8mwgl")
+command = "/load_chapter"
+group = "Load"
+help_text = "Load the chapter with the name inputted after '/load_chapter'."
+help_text_short = "Load <chapter_name>."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"
+
+[node name="LoadRoom" type="Node" parent="BaseCommand" unique_id=1697490501]
+script = ExtResource("12_3h8nd")
+command = "/load_room"
+group = "Load"
+help_text = "Load the room with the room number inputted after '/load_chapter'."
+help_text_short = "Load <room_number>."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"
+
+[node name="SetCloneNumber" type="Node" parent="BaseCommand" unique_id=1801442091]
+script = ExtResource("13_ktomn")
+command = "/set_clone_number"
+group = "Debug"
+help_text = "Set the number of clones the player can spawn to the number inputted after '/set_clone_number'."
+help_text_short = "Set spawnable clone number."
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

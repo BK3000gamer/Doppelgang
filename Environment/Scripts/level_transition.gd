@@ -1,6 +1,8 @@
 extends Area2D
 
 @export var nextLevel: String
+@export var checkpoint1: Vector2
+@export var checkpoint2: Vector2
 
 var player_1: Player
 var player_2: Player
@@ -20,7 +22,7 @@ func _on_body_entered(body: Node2D) -> void:
 		
 	if (player_1 and player_2) or (player_1 and group_2 == []) or (player_2 and group_1 == []):
 		GameProgress.content.currentChapter = nextLevel
-		GameProgress.content.currentCheckpoint1 = Vector2(-288.0, 123.0)
-		GameProgress.content.currentCheckpoint2 = Vector2(-240.0, 123.0)
+		GameProgress.content.currentCheckpoint1 = checkpoint1
+		GameProgress.content.currentCheckpoint2 = checkpoint2
 		GameProgress._start()
 		get_parent().queue_free()

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://qlht3q3oprou"]
+
+[ext_resource type="Script" uid="uid://72h1qw88dr1k" path="res://Commands/Echo/echo.gd" id="1_hsi58"]
+
+[node name="Echo" type="Node" unique_id=518434331]
+script = ExtResource("1_hsi58")
+metadata/_custom_type_script = "uid://b0c3aplsf60x"

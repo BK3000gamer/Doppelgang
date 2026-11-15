@@ -61,7 +61,7 @@ text = "CREDITS"
 
 [node name="QuitGame" type="Button" parent="CenterContainer/Margin/Buttons" unique_id=685468900]
 layout_mode = 2
-text = "EXIT"
+text = "QUIT"
 
 [connection signal="pressed" from="CenterContainer/Margin/Buttons/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="CenterContainer/Margin/Buttons/LoadGame" to="." method="_on_load_game_pressed"]
