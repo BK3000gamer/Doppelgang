@@ -18,7 +18,7 @@ extends MarginContainer
 const PLAYER_COLORS := [Color("79bffa"), Color("f5b477")]
 const MUTED := Color("a6b1c2")
 const DeviceTile := preload("res://UI/Scenes/device_tile.tscn")
-const Level := preload(("res://Levels/tutorial_level.tscn"))
+const Level := preload(("res://Levels/tutorial.tscn"))
 var controllerMap: Dictionary[int, int] = {}
 var stick_held: Dictionary[int, bool] = {}
 

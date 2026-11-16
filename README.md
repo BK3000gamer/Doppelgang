@@ -27,5 +27,15 @@ Cloning couch co-op 2D puzzle platformer
 
 ## Debugging features:
 
-- Keyboard test is for quick tests and doesn’t require a controller. If a controller is connected in this mode, it will default to player 2.
-- The start button in the player select menu can only be clicked using a mouse (I was gonna fix this, but then I’d have to remake the whole menu).
+- [/]: Open Debug Console
+- Debug Commands:
+    - [Base] /help - Print list of commands and their functions.
+    - [Base] /echo - Repeats <arg> text.
+    - [Base] /clear - Clear the console' output.
+    - [Base] /exit - Exit the console.
+    - [Base] /quit - Quit the game.
+    - [Debug] /run_keyboard_test - Run keyboard test scene.
+    - [Debug] /enable_all_inputs - Enable the inputs of all unlockable abilities.
+    - [Load] /load_chapter - Load <chapter_name>.
+    - [Load] /load_room - Load <room_number>.
+    - [Debug] /set_clone_number - Set spawnable clone number.

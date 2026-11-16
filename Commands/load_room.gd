@@ -19,6 +19,7 @@ func run_command(args: Array[String]) -> String:
 					player_1.global_position = checkpoint1.global_position
 				if player_2:
 					player_2.global_position = checkpoint2.global_position
+				ConsoleManager.toggle_visibility()
 				return "Load room%s success\n" % args[0]
 			else:
 				return "Room not found\n"
