@@ -9,7 +9,7 @@ _data = PackedByteArray("AAADAAUAAAABAAAAgAEAAJAAAAAyBgAAUklGRioGAABXRUJQVlA4TB4
 size_override = Vector2(384, 144)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(15, 32)
+size = Vector2(15, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50nb2"]
 size = Vector2(15, 12)
@@ -165,15 +165,15 @@ position = Vector2(-3.2014214e-09, 9)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="StackDetectorArea" type="Area2D" parent="." unique_id=1475856007]
-position = Vector2(0, -13)
+position = Vector2(0, -8)
 collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StackDetectorArea" unique_id=1222306829]
 shape = SubResource("RectangleShape2D_50nb2")
 
-[node name="StackMarker" type="Marker2D" parent="." unique_id=1539982576]
-position = Vector2(0, -40)
-gizmo_extents = 16.0
+[node name="StackMarker" type="Marker2D" parent="." unique_id=147214464]
+position = Vector2(0, -29)
+gizmo_extents = 20.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=293744414]
 libraries/ = SubResource("AnimationLibrary_a644o")

@@ -11,12 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://dsvl0vgej8xue" path="res://Environment/Scenes/motion_sensor.tscn" id="9_eabcg"]
 [ext_resource type="PackedScene" uid="uid://br58bq2w5rfyp" path="res://Environment/Scenes/spike.tscn" id="10_vx8ih"]
 [ext_resource type="PackedScene" uid="uid://bh7peoju0f7pl" path="res://Environment/Scenes/interactable_button.tscn" id="11_eabcg"]
+[ext_resource type="PackedScene" uid="uid://dnflusqux3mon" path="res://Environment/Scenes/recharge.tscn" id="12_3hgmi"]
 [ext_resource type="PackedScene" uid="uid://dqgbftxih4a5i" path="res://Environment/Scenes/door.tscn" id="12_dvejp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81xng"]
 size = Vector2(640, 360)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_eabcg"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_dvejp"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ljfg"]
@@ -34,7 +35,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_dvejp"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_3hgmi"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ugh17"]
@@ -118,7 +119,7 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = SubResource("ViewportTexture_eabcg")
+texture = SubResource("ViewportTexture_dvejp")
 
 [node name="CollisionShape2D" parent="Room1/Falling Platform" index="1" unique_id=37473589]
 shape = SubResource("RectangleShape2D_7ljfg")
@@ -137,7 +138,7 @@ curve = SubResource("Curve2D_eabcg")
 activateType = 2
 
 [node name="NinePatchRect" parent="Room1/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="0" unique_id=780333250]
-texture = SubResource("ViewportTexture_dvejp")
+texture = SubResource("ViewportTexture_3hgmi")
 
 [node name="CollisionShape2D" parent="Room1/Moving Platform/AnimatableBody2D" parent_id_path=PackedInt32Array(1004918871, 944955649) index="2" unique_id=270251958]
 shape = SubResource("RectangleShape2D_ugh17")
@@ -158,7 +159,7 @@ shape = SubResource("RectangleShape2D_p642h")
 [node name="Room2" parent="." unique_id=1227487037 instance=ExtResource("1_uhyyw")]
 position = Vector2(640, 0)
 roomType = 1
-enabledInputs = 4
+enabledInputs = 3
 
 [node name="CollisionShape2D" parent="Room2" index="0" unique_id=299480520]
 position = Vector2(224, 0)
@@ -225,6 +226,9 @@ position = Vector2(-256, 100)
 [node name="Door" parent="Room2" unique_id=2072523590 node_paths=PackedStringArray("inputs") instance=ExtResource("12_dvejp")]
 position = Vector2(-174, 101)
 inputs = [NodePath("../InteractableButton")]
+
+[node name="Recharge" parent="Room2" unique_id=1172932800 instance=ExtResource("12_3hgmi")]
+position = Vector2(283, 13)
 
 [node name="Room3" parent="." unique_id=380648783 instance=ExtResource("1_uhyyw")]
 position = Vector2(1728, 0)

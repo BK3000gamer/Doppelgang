@@ -8,9 +8,11 @@ func _process(_delta: float) -> void:
 	if player.InputDir.x < 0:
 		Sprite.flip_h = true
 		$"../RayCast2D".target_position.x = -20
+		$"../RayCast2D2".target_position.x = -20
 	elif player.InputDir.x > 0:
 		Sprite.flip_h = false
 		$"../RayCast2D".target_position.x = 20
+		$"../RayCast2D2".target_position.x = 20
 	
 	animation_tree["parameters/Player%d/Launch/blend_position" % player.playerNum] = player.launchDir
 	animation_tree["parameters/Player%d/Shoot/blend_position" % player.playerNum] = player.InputDir
